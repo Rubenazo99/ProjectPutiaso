@@ -43,7 +43,7 @@ function CreateEntities()
 
     player:add(Transform(w / 2 - 25 / 2, h / 2 - 80, 0, 1, 1, 25, 25))
     player:add(Velocity(1, 1))
-    player:add(Acceleration(1, 9))
+    player:add(Acceleration(1, 15))
     player:add(Collider(false))
     player:add(Color(200, 0, 0, 1))
 
@@ -76,7 +76,6 @@ function CreateSystem()
                 local acceleration = entity:get("acceleration")
                 local collider = entity:get("collider")
 
-                local previousYPosition = transform.y
 
                 if collider.isColliding == false then
 
@@ -87,7 +86,7 @@ function CreateSystem()
                     if love.keyboard.isDown('w') then
                         
                         collider.isColliding = false
-                        velocity.y = -5
+                        velocity.y = -20
 
                     end
 
@@ -147,14 +146,13 @@ function CreateSystem()
 
                     if entityA ~= entityB then
 
-                        local previousYPosition = transformA.y
                         local transformB = entityB:get("transform")
 
                         if (transformA.x > transformB.x and transformA.x < transformB.x + transformB.width)
                             and (transformA.y + transformA.height > transformB.y and transformA.y + transformA.height * 2 < transformB.y + transformB.height * 2) then
 
                             colliderA.isColliding = true
-                            transformA.y = transformA.y - (previousYPosition + 2 - transformA.y)
+                            transformA.y = (transformA.y - (transformA.y - transformB.y)) - transformA.height
 
                         end
 
