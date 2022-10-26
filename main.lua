@@ -43,7 +43,7 @@ function CreateEntities()
 
     player:add(Transform(w / 2 - 25 / 2, h / 2 - 80, 0, 1, 1, 25, 25))
     player:add(Velocity(1, 1))
-    player:add(Acceleration(1, 15))
+    player:add(Acceleration(1, 50))
     player:add(Collider(false))
     player:add(Color(200, 0, 0, 1))
 
@@ -86,7 +86,7 @@ function CreateSystem()
                     if love.keyboard.isDown('w') then
                         
                         collider.isColliding = false
-                        velocity.y = -20
+                        velocity.y = -10
 
                     end
 
