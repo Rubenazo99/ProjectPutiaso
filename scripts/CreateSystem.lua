@@ -17,7 +17,6 @@ function GravitySystem:update(dt)
             local acceleration = entity:get("acceleration")
             local collider = entity:get("collider")
 
-
             if collider.isColliding == false then
 
                 velocity.y = velocity.y + acceleration.y * dt
@@ -27,6 +26,33 @@ function GravitySystem:update(dt)
 
         end
 
+    end
+
+end
+
+-- Este sistema te permite moverte si estás tocando el suelo
+
+MovementSystem = class("MovementSystem", System)
+
+function MovementSystem:require()
+    return { "transform", "velocity", "movementKeys", "collider" }
+end
+
+function MovementSystem:update(dt)
+
+    for _, entity in pairs(self.targets) do
+        
+        local transform = entity:get("transform")
+        local velocity = entity:get("velocity")
+        local movementKeys = entity:get("movementKeys")
+        local collider = entity:get("collider")
+
+        if collider.isColliding == true then
+
+            if love.keyboard.isDown(movementKeys.left) then transform.x = transform.x - velocity.x * dt end
+            if love.keyboard.isDown(movementKeys.right) then transform.x = transform.x + velocity.x * dt end
+
+        end
     end
 
 end
@@ -51,8 +77,24 @@ function JumpSystem:update(dt)
 
             if love.keyboard.isDown(jump.jumpKey) and collider.isColliding == true then
                 
+                jump.rayActive = false
                 velocity.y = jump.force
                 collider.isColliding = false
+
+            end
+
+            if jump.rayActive == false then
+                
+                if jump.timer < jump.maxTimer then
+                    
+                    jump.timer = jump.timer + dt
+
+                else
+
+                    jump.timer = 0
+                    jump.rayActive = true
+                
+                end
 
             end
 
@@ -101,24 +143,57 @@ function CollisionSystem:update(dt)
 
     for _, entityA in pairs(self.targets) do
 
-        local transformA = entityA:get("transform")
-        local colliderA = entityA:get("collider")
+        if entityA:get("transform").name == "PlayerA" or entityA:get("transform").name == "PlayerB" then
 
-        if colliderA.isColliding == false then
+            local transformA = entityA:get("transform")
+            local colliderA = entityA:get("collider")
 
             for _, entityB in pairs(self.targets) do
 
                 if entityA ~= entityB then
 
-                    local transformB = entityB:get("transform")
+                    if entityA:get("jump").rayActive == true then
 
-                    if (transformA.x > transformB.x and transformA.x < transformB.x + transformB.width)
-                        and (transformA.y + transformA.height > transformB.y and transformA.y + transformA.height * 2 < transformB.y + transformB.height * 2) then
+                        local transformB = entityB:get("transform")
+                        local offset = 15
+                        
+                        local rayA = { origin = { x = transformA.x, y = transformA.y + transformA.height + 5 },
+                                    final = { x = transformA.x, y = transformA.y + transformA.height + offset } }
 
-                        colliderA.isColliding = true
-                        transformA.y = (transformA.y - (transformA.y - transformB.y)) - transformA.height
+                        local rayACollision = ((rayA.origin.x > transformB.x and rayA.origin.x < transformB.x + transformB.width)
+                            and (rayA.final.x > transformB.x and rayA.final.x < transformB.x + transformB.width)) and
+                            ((rayA.origin.y > transformB.y and rayA.origin.y < transformB.y + transformB.height) and
+                            (rayA.final.y > transformB.y and rayA.final.y < transformB.y + transformB.height))
 
+                        local rayB = { origin = { x = transformA.x + transformA.width, y = transformA.y + transformA.height + 5 },
+                                    final = { x = transformA.x + transformA.width, y = transformA.y + transformA.height + offset } }
+
+                        local rayBCollision = ((rayB.origin.x > transformB.x and rayB.origin.x < transformB.x + transformB.width)
+                        and (rayB.final.x > transformB.x and rayB.final.x < transformB.x + transformB.width)) and
+                        ((rayB.origin.y > transformB.y and rayB.origin.y < transformB.y + transformB.height) and
+                        (rayB.final.y > transformB.y and rayB.final.y < transformB.y + transformB.height))
+
+                        if rayACollision or rayBCollision then
+
+                            colliderA.isColliding = true
+                            transformA.y = (transformA.y - (transformA.y - transformB.y)) - transformA.height
+                            if entityA:get("velocity").y ~= 0 then entityA:get("velocity").y = 0 end
+
+                        else
+
+                            colliderA.isColliding = false
+
+                        end
+                    
                     end
+
+                    --if ((transformA.x > transformB.x and transformA.x < transformB.x + transformB.width)
+                    --and (transformA.y + transformA.height > transformB.y and transformA.y + transformA.height * 2 < transformB.y + transformB.height * 2))
+                    --and colliderA.isColliding == false then
+                    --SE VI
+                    --    colliderA.isColliding = true
+                    --    entityA:get("velocity").y = 0
+                    --   transformA.y = (transformA.y - (transformA.y - transformB.y)) - transformA.height
 
                 end
 
