@@ -41,18 +41,23 @@ end
 function MovementSystem:update(dt)
 
     for _, entity in pairs(self.targets) do
-        
+
         local transform = entity:get("transform")
         local velocity = entity:get("velocity")
         local movementKeys = entity:get("movementKeys")
         local collider = entity:get("collider")
 
-        if collider.isColliding == true then
+        if collider.isTouchingWall == false then
 
-            if love.keyboard.isDown(movementKeys.left) then transform.x = transform.x - velocity.x * dt end
-            if love.keyboard.isDown(movementKeys.right) then transform.x = transform.x + velocity.x * dt end
+            if collider.isColliding == true then
+
+                if love.keyboard.isDown(movementKeys.left) then transform.x = transform.x - velocity.x * dt end
+                if love.keyboard.isDown(movementKeys.right) then transform.x = transform.x + velocity.x * dt end
+
+            end
 
         end
+
     end
 
 end
@@ -70,13 +75,13 @@ function JumpSystem:update(dt)
     for _, entity in pairs(self.targets) do
 
         if entity:get("jump") ~= nil then
-            
+
             local velocity = entity:get("velocity")
             local jump = entity:get("jump")
             local collider = entity:get("collider")
 
             if love.keyboard.isDown(jump.jumpKey) and collider.isColliding == true then
-                
+
                 jump.rayActive = false
                 velocity.y = jump.force
                 collider.isColliding = false
@@ -84,16 +89,16 @@ function JumpSystem:update(dt)
             end
 
             if jump.rayActive == false then
-                
+
                 if jump.timer < jump.maxTimer then
-                    
+
                     jump.timer = jump.timer + dt
 
                 else
 
                     jump.timer = 0
                     jump.rayActive = true
-                
+
                 end
 
             end
@@ -131,15 +136,15 @@ function DrawingSystem:draw()
     end
 end
 
--- Este sistema chequea colisiones
+-- Este sistema chequea colisiones del suelo
 
-CollisionSystem = class("CollisionSystem", System)
+GroundCollisionSystem = class("GroundCollisionSystem", System)
 
-function CollisionSystem:requires()
+function GroundCollisionSystem:requires()
     return { "transform", "collider" }
 end
 
-function CollisionSystem:update(dt)
+function GroundCollisionSystem:update(dt)
 
     for _, entityA in pairs(self.targets) do
 
@@ -156,35 +161,44 @@ function CollisionSystem:update(dt)
 
                         local transformB = entityB:get("transform")
                         local offset = 15
-                        
+
                         local rayA = { origin = { x = transformA.x, y = transformA.y + transformA.height + 5 },
-                                    final = { x = transformA.x, y = transformA.y + transformA.height + offset } }
+                            final = { x = transformA.x, y = transformA.y + transformA.height + offset } }
 
-                        local rayACollision = ((rayA.origin.x > transformB.x and rayA.origin.x < transformB.x + transformB.width)
-                            and (rayA.final.x > transformB.x and rayA.final.x < transformB.x + transformB.width)) and
+                        local rayACollision = (
+                            (rayA.origin.x > transformB.x and rayA.origin.x < transformB.x + transformB.width)
+                                and (rayA.final.x > transformB.x and rayA.final.x < transformB.x + transformB.width)) and
                             ((rayA.origin.y > transformB.y and rayA.origin.y < transformB.y + transformB.height) and
-                            (rayA.final.y > transformB.y and rayA.final.y < transformB.y + transformB.height))
+                                (rayA.final.y > transformB.y and rayA.final.y < transformB.y + transformB.height))
 
-                        local rayB = { origin = { x = transformA.x + transformA.width, y = transformA.y + transformA.height + 5 },
-                                    final = { x = transformA.x + transformA.width, y = transformA.y + transformA.height + offset } }
+                        local rayB = { origin = { x = transformA.x + transformA.width,
+                            y = transformA.y + transformA.height + 5 },
+                            final = { x = transformA.x + transformA.width, y = transformA.y + transformA.height + offset } }
 
-                        local rayBCollision = ((rayB.origin.x > transformB.x and rayB.origin.x < transformB.x + transformB.width)
-                        and (rayB.final.x > transformB.x and rayB.final.x < transformB.x + transformB.width)) and
-                        ((rayB.origin.y > transformB.y and rayB.origin.y < transformB.y + transformB.height) and
-                        (rayB.final.y > transformB.y and rayB.final.y < transformB.y + transformB.height))
+                        local rayBCollision = (
+                            (rayB.origin.x > transformB.x and rayB.origin.x < transformB.x + transformB.width)
+                                and (rayB.final.x > transformB.x and rayB.final.x < transformB.x + transformB.width)) and
+                            ((rayB.origin.y > transformB.y and rayB.origin.y < transformB.y + transformB.height) and
+                                (rayB.final.y > transformB.y and rayB.final.y < transformB.y + transformB.height))
 
                         if rayACollision or rayBCollision then
 
-                            colliderA.isColliding = true
-                            transformA.y = (transformA.y - (transformA.y - transformB.y)) - transformA.height
-                            if entityA:get("velocity").y ~= 0 then entityA:get("velocity").y = 0 end
+                            if colliderA.isColliding == false then
+
+                                colliderA.isColliding = true
+                                transformA.y = (transformA.y - (transformA.y - transformB.y)) - transformA.height
+                                if entityA:get("velocity").y ~= 0 then entityA:get("velocity").y = 0 end
+
+                            end
 
                         else
 
-                            colliderA.isColliding = false
+                            if colliderA.isColliding == true then
+                                colliderA.isColliding = false
+                            end
 
                         end
-                    
+
                     end
 
                     --if ((transformA.x > transformB.x and transformA.x < transformB.x + transformB.width)
@@ -200,6 +214,42 @@ function CollisionSystem:update(dt)
                 if colliderA.isColliding == true then break end
 
             end
+        end
+
+    end
+
+end
+
+-- Este sistema chequea que pares al tocar la pared
+
+WallCollisionSystem = class("WallCollisionSystem", System)
+
+function WallCollisionSystem:require()
+    return { "transform", "collider" }
+end
+
+function WallCollisionSystem:update(dt)
+
+    for _, entityA in pairs(self.targets) do
+
+        if entityA:get("transform").name == "PlayerA" or entityA:get("transform").name == "PlayerB" then
+
+            local transformA = entityA:get("transform")
+            local colliderA = entityA:get("collider")
+
+            for _, entityB in pairs(self.targets) do
+
+                if entityA ~= entityB then
+
+                    local transformB = entityB:get("transform")
+                    local colliderB = entityB:get("collider")
+
+                    
+
+                end
+
+            end
+
         end
 
     end
