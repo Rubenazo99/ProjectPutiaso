@@ -10,6 +10,8 @@ player:add(Acceleration(1, 30))
 player:add(Collider())
 
 player:add(Jump("w", -6))
+
+player:add(Direction())
 player:add(MovementKeys("a", "d"))
 
 player:add(Color(200, 0, 0, 1))
@@ -26,6 +28,8 @@ player2:add(Acceleration(1, 30))
 player2:add(Collider())
 
 player2:add(Jump("up", -6))
+
+player2:add(Direction())
 player2:add(MovementKeys("left", "right"))
 
 player2:add(Color(0, 200, 0, 1))
