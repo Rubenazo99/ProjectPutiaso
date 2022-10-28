@@ -1,6 +1,7 @@
 engine = Engine()
 
 engine:addEntity(ground)
+engine:addEntity(ground2)
 engine:addEntity(player)
 --engine:addEntity(player2)
 --engine:addEntity(player3)

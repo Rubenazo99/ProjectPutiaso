@@ -239,13 +239,26 @@ function WallCollisionSystem:update(dt)
 
             for _, entityB in pairs(self.targets) do
 
-                if entityA ~= entityB then
+                if entityA ~= entityB and entityB:get("transform").name == "Wall" then
 
                     local transformB = entityB:get("transform")
-                    local colliderB = entityB:get("collider")
 
+                    if (transformA.x - transformA.width > transformB.x and transformA.x - transformA.width < transformB.x + transformB.width)
+                    and (transformA.y > transformB.y and transformA.y + transformA.height < transformB.y + transformB.height) and
+                    (transformA.x > transformB.x and transformA.x < transformB.x + transformB.width)
+                    then
                     
+                        colliderA.isTouchingWall = true
+                        transformA.x = transformA.x + (transformB.x + transformB.width) - (transformA.x + transformA.width) + transformA.width
+                    
+                    else
 
+                        colliderA.isTouchingWall = false
+
+                    end
+
+                    print(colliderA.isTouchingWall)
+                    
                 end
 
             end
