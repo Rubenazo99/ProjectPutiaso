@@ -1,3 +1,33 @@
+
+
+-- Aquí puedes cambiar las variables de multiple cosas, no toques nada abajo --
+-- ========================================================================= --
+
+-- Variables que afectan el sistema de dar golpes --
+local minAngle, maxAngle = 0, 80 -- El ángulo mínimo debe ser 0 si o sí, y el máximo 80, si no no funcionará
+local distanceFromOther = 50 -- La distancia mínima que tiene que estar el jugador del otro para golpearlo
+
+-- Variables que afectan el sistema de recibir el golpe --
+local jumpMultiplier = 1.4 -- Si usas más de 2 saldrá muy disparado, si usas menos de 1 será muy bajo
+local horizontalMultiplier = 1.5 -- No he mirado el máximo, pero seguro que con más de 2 lo mandas a la mierda, pls no
+
+-- Variables que afectan el sistema de pintar colores --
+local defaultColor = { r = 255, g = 255, b = 255 }
+
+-- ========================================================================= --
+
+--[[
+  _      ____   _____ _____ _____          
+ | |    / __ \ / ____|_   _/ ____|   /\    
+ | |   | |  | | |  __  | || |       /  \   
+ | |   | |  | | | |_ | | || |      / /\ \  
+ | |___| |__| | |__| |_| || |____ / ____ \ 
+ |______\____/ \_____|_____\_____/_/    \_\
+                                           
+ Código hecho por Rubén López García
+
+]]
+
 -- Este sistema hace que haya gravedad
 
 -- Creamos el sistema de gravedad, este, mientras no estés moviendote y estes en el aire
@@ -164,13 +194,19 @@ function DrawingSystem:draw()
         local color = entity:get("color")
 
         if color == nil then
+
+            love.graphics.setColor(love.math.colorFromBytes(defaultColor.r, defaultColor.g, defaultColor.b))
             love.graphics.rectangle("fill", entity:get("transform").x, entity:get("transform").y,
                 entity:get("transform").width, entity:get("transform").height)
+            love.graphics.setColor(1, 1, 1, 1)
+
         else
+            
             love.graphics.setColor(love.math.colorFromBytes(color.r, color.g, color.b))
             love.graphics.rectangle("fill", entity:get("transform").x, entity:get("transform").y,
                 entity:get("transform").width, entity:get("transform").height)
             love.graphics.setColor(1, 1, 1, 1)
+
         end
 
     end
@@ -465,6 +501,10 @@ end
 
 -- Este sistema permite hacer el putiaso
 
+-- Este sistema tiene mucha tela y tiene mucho código, pero básicamente se encarga de golpear
+-- al jugador que esté mas cerca, y dependiendo de cuando mantienes el botón de golpear haces
+-- que el jugador afectado se mueva más hacia los lados o hacia arriba
+
 AttackSystem = class("AttackSystem", System)
 
 function AttackSystem:require()
@@ -477,15 +517,27 @@ function AttackSystem:update(dt)
 
         if entity:get("transform").name == "PlayerA" or entity:get("transform").name == "PlayerB" then
 
+            -- Primero agarramos componentes clave del atacante
+
             local transform = entity:get("transform")
             local collider = entity:get("collider")
             local attackComponent = entity:get("attackComponent")
 
+            -- Miramos si podemos atacar
+
             if attackComponent.canAttack == true then
+
+                -- Si podemos atacar y pulsamos la llave de atacar, procederemos a atacar...
 
                 attackComponent.charging = love.keyboard.isDown(attackComponent.key)
 
+                -- ... cargando el putiaso, eso si, hay que asegurarse que al atacar el timer está en 0
+                -- y que también ya estemos cargando anteriormente, si no se rompería la lógica
+
                 if attackComponent.charging == true and attackComponent.chargingTime < attackComponent.chargingMaxTime then
+
+                    -- Esto solo se ejecutará una vez, esto encoje al jugador, y lo desplaza acorde con la diferencia de estatura que
+                    -- el jugador atacante recibe.
 
                     if attackComponent.alreadyScaled == false then
 
@@ -495,13 +547,25 @@ function AttackSystem:update(dt)
 
                     end
 
+                    -- Aquí vamos sumando el tiempo que carga hasta su máximo, una vez llegues a tu máximo, si todavía no has dejado de atacar
+                    -- se mantendrá en el máximo
+
                     attackComponent.chargingTime = attackComponent.chargingTime + dt
-                    attackComponent.angle = Lerp(0, 60, attackComponent.chargingTime / attackComponent.chargingMaxTime)
-                    --print("ChargingTime: " .. attackComponent.chargingTime .. ". Angle: " .. attackComponent.angle)
+                    attackComponent.angle = Lerp(minAngle, maxAngle, attackComponent.chargingTime / attackComponent.chargingMaxTime)
+                    
+                    -- ========================================================
+                    -- Descomenta esto si quieres ver el ángulo en tiempo real
+                    -- ========================================================
+                    -- print("ChargingTime: " .. attackComponent.chargingTime .. ". Angle: " .. attackComponent.angle)
 
                 elseif attackComponent.charging == false and attackComponent.chargingTime > 0 then
 
+                    -- Si ya no estamos cargando y  el tiempo de carga es mayor que cero, entonces dejamos de
+                    -- cargar, pero hacemos lo siguiente: pillamos todos los jugadores en la partida
+
                     local playerList = { }
+
+                    -- Y por cada jugador aparte del jugador atacante, se mete en la lista playerList
 
                     for _, targetEntity in pairs(self.targets) do
 
@@ -511,14 +575,24 @@ function AttackSystem:update(dt)
 
                     end
 
+                    -- Entonces declaramos ciertas variables, empezando por el jugador más cercano, que se agarra el 1 por defecto,
+                    -- agarramos su transform también, y...
+
                     local closestPlayer = playerList[1]
                     local closestPlayerTransform = closestPlayer:get("transform")
 
-                    -- un bug habrá si al hacerlo justo debajo del otro a lamisma distancia de x hará el choque, hay que añadir la y tambien
+                    -- ... declaramos el vector del jugador y el target, usando el módulo de los dos vectores.
+
                     local playerVector = { x = transform.x + transform.width / 2, y = transform.y + transform.height / 2}
                     local targetVector = { x = closestPlayerTransform.x + closestPlayerTransform.width / 2, y = closestPlayerTransform.y + closestPlayerTransform.height / 2}
                     
+                    -- Y lo calculamos con una pequeña función que he hecho abajo del todo.
+
                     local closestDistance = CalculateModule(playerVector.x, playerVector.y, targetVector.x, targetVector.y)
+
+                    -- Ahora debemos pillar el jugador más cercano al jugador atacante. Si encuentra a uno más cercano substituye las variables
+                    -- closestPlayer y closestDistance, y al acabar mete al más cercano (así es escalable con más jugadores), pero no funcionará si dos
+                    -- jugadores están a la vez (como está hecho ahora)
 
                     for index, player in pairs(playerList) do
 
@@ -535,18 +609,34 @@ function AttackSystem:update(dt)
 
                     end
 
-                    if closestDistance < 50 then
+                    -- Ahora, y antes de lanzarlo, nos aseguramos que está a un mínimo de distancia del jugador, si no podríamos golpearlo incluso si estuviera
+                    -- a 3 años luz del jugador atacante
+
+                    if closestDistance < distanceFromOther then
                         
+                        -- Agarramos el ocmponente jump del recibiente, pues tiene su valor de salto
+
                         local jump = closestPlayer:get("jump");
+
+                        -- Cambiamos el isColliding a false y desactivamos el rayo de salto para evitar que se quede pegado en el suelo
 
                         closestPlayer:get("collider").isColliding = false
                         jump.rayActive = false
 
-                        local totalForce = jump.force * math.abs(math.sin(math.rad(attackComponent.angle))) * 2
+                        -- Hacemos un pequeño cálculo matemático sobre la fuerza vertical usando una fórmula que
+                        -- me he sacado del culo, pero funciona, no tiene bases científicas, lol
+
+                        local totalForce = jump.force * math.abs(math.sin(math.rad(attackComponent.angle))) * jumpMultiplier
+
+                        -- Si la fuerza es menor a un mínimo (este no se puede modificar, tiene que estar hardcodeado), hace el mínimo,
+                        -- pero si es mayor entonces usa esa, no hace falta usar un math.max porque el ángulo ya se capa por si mismo
 
                         if totalForce > -4 then closestPlayer:get("velocity").y = -4
                         else closestPlayer:get("velocity").y = totalForce end
                         closestPlayer:get("hitComponent").hit = true
+
+                        -- Y ahora modificamos el ángulo dependiendo si está la derecha del
+                        -- recibidor del putiaso o a su izquierda
 
                         if transform.x >= closestPlayerTransform.x then
 
@@ -562,6 +652,8 @@ function AttackSystem:update(dt)
 
                     end
 
+                    -- Finalmente reseteamos variables, como el timer, el width y height del atacante y otros.
+
                     attackComponent.chargingTime = attackComponent.chargingMaxTime
                     transform.x = transform.x - attackComponent.minWidth / 2
                     transform.width, transform.height = attackComponent.maxWidth, attackComponent.maxHeight
@@ -576,6 +668,8 @@ function AttackSystem:update(dt)
                 end
 
             else
+
+                -- Si ninguna de estas se cumplen, es porque el jugador está en cooldown, para que no pueda spamear su ataque.
 
                 if attackComponent.canAttack == false then
 
@@ -614,15 +708,19 @@ function RecieveHitSystem:update(dt)
 
     for _, player in pairs(self.targets) do
 
+        -- Nos aseguramos que los componentes afectados tienen el hitComponent, si no peta.
+
         if player:get("hitComponent") ~= nil then
 
             local transformComponent = player:get("transform")
             local hitComponent = player:get("hitComponent")
             local velocityComponent = player:get("velocity")
 
+            -- Mientras esté en true moveremos el personaje, hasta que toque el suelo (en otro sistema)
+
             if hitComponent.hit == true then
 
-                transformComponent.x = transformComponent.x + math.cos(math.rad(hitComponent.angle)) * velocityComponent.x * dt
+                transformComponent.x = transformComponent.x + math.cos(math.rad(hitComponent.angle)) * velocityComponent.x * horizontalMultiplier * dt
 
             end
 
