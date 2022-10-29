@@ -1,12 +1,44 @@
-Transform = Component.create("transform", { "x", "y", "rotation", "scaleX", "scaleY", "width", "height", "name"},
-    { x = 0, y = 0, rotation = 0, scaleX = 1, scaleY = 1, width = 10, height = 10, name = "Default"})
-Collider = Component.create("collider", { "isTrigger", "isColliding", "isTouchingWall" }, { isTrigger = false, isColliding = false, isTouchingWall = false })
-Velocity = Component.create("velocity", { "x", "y" }, { x = 1, y = 1 })
-Acceleration = Component.create("acceleration", { "x", "y" }, { x = 0, y = 0 })
-Color = Component.create("color", { "r", "g", "b", "a" }, { r = 255, g = 255, b = 255, a = 1 })
-Jump = Component.create("jump", { "jumpKey", "force", "rayActive", "timer", "maxTimer" }, { jumpKey = "w", force = -8, rayActive = true, timer = 0, maxTimer = 0.3 })
-MovementKeys = Component.create("movementKeys", { "left", "right" }, { left = "a", right = "d" })
-Direction = Component.create("direction", { "left", "right" }, { left = false, right = true })
+Transform = Component.create("transform", 
+{ "x", "y", "rotation", "scaleX", "scaleY", "width", "height", "name"},
+{ x = 0, y = 0, rotation = 0, scaleX = 1, scaleY = 1, width = 10, height = 10, name = "Default"})
+
+Collider = Component.create("collider",
+{ "isTrigger", "isColliding", "isTouchingLeftWall", "isTouchingRightWall" },
+{ isTrigger = false, isColliding = false, isTouchingLeftWall = false, isTouchingRightWall = false })
+
+Velocity = Component.create("velocity",
+{ "x", "y" },
+{ x = 1, y = 1 })
+
+Acceleration = Component.create("acceleration",
+{ "x", "y" },
+{ x = 0, y = 0 })
+
+Color = Component.create("color",
+{ "r", "g", "b", "a" },
+{ r = 255, g = 255, b = 255, a = 1 })
+
+Jump = Component.create("jump",
+{ "jumpKey", "force", "rayActive", "timer", "maxTimer" },
+{ jumpKey = "w", force = -8, rayActive = true, timer = 0, maxTimer = 0.3 })
+
+MovementKeys = Component.create("movementKeys",
+{ "left", "right" },
+{ left = "a", right = "d" })
+
+Direction = Component.create("direction",
+{ "left", "right", "lastDirection" },
+{ left = false, right = true, lastDirection = "right" })
+
+AttackComponent = Component.create("attackComponent",
+{ "minWidth", "minHeight", "maxWidth", "maxHeight", "canAttack", "charging", "chargingTime", "chargingMaxTime", "angle", "cooldownTimer", "cooldownMaxTimer", "key", "alreadyScaled" },
+{ minWidth = 12, minHeight = 12, maxWidth = 25, maxHeight = 25, canAttack = true, charging = false,
+chargingTime = 0, chargingMaxTime = 1, angle = 0, cooldownTimer = 0, cooldownMaxTimer = 2, key = "e", alreadyScaled = false})
+
+HitComponent = Component.create("hitComponent",
+{ "hit", "angle", "horizontalForce" },
+{ hit = false, angle = 0, horizontalForce = -10 }
+)
 
 
 --[[

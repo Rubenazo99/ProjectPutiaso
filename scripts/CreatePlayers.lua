@@ -10,6 +10,9 @@ player:add(Acceleration(1, 30))
 player:add(Collider())
 
 player:add(Jump("w", -6))
+player:add(AttackComponent())
+
+player:add(HitComponent())
 
 player:add(Direction())
 player:add(MovementKeys("a", "d"))
@@ -28,6 +31,9 @@ player2:add(Acceleration(1, 30))
 player2:add(Collider())
 
 player2:add(Jump("up", -6))
+player2:add(AttackComponent(12, 12, 25, 25, true, false, 0, 1, 0, 0, 2, "p", false))
+
+player2:add(HitComponent())
 
 player2:add(Direction())
 player2:add(MovementKeys("left", "right"))

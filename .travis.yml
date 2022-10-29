@@ -1,39 +1,36 @@
-sudo: false
 language: python
-
-git:
-  depth: 4
+sudo: false
 
 env:
-  - LUA_RUNTIME="luajit"
-    LUA_VERSION="2.0.3"
-  - LUA_RUNTIME="luajit"
-    LUA_VERSION="2.1"
-  - LUA_RUNTIME="luajit"
-    LUA_VERSION="latest"
+  - LUA="lua=5.1"
+  - LUA="lua=5.2"
+  - LUA="lua=5.3"
+  - LUA="luajit=2.0"
+  - LUA="luajit=2.1"
 
 before_install:
   - pip install hererocks
-  - hererocks lua_installations/$LUA_RUNTIME$LUA_VERSION/ --luarocks ^ --$LUA_RUNTIME $LUA_VERSION
-  - export PATH=$PATH:$PWD/lua_installations/$LUA_RUNTIME$LUA_VERSION/bin
+  - hererocks lua_install -r^ --$LUA
+  - export PATH=$PATH:$PWD/lua_install/bin # Add directory with all installed binaries to PATH
 
-before_script:
+install:
+  - luarocks install luacheck
   - luarocks install busted
+  - luarocks install luacov
   - luarocks install luacov-coveralls
-  - busted --version
 
 script:
-  - busted --coverage --output=TAP --lpath='./?/init.lua'
-
-cache:
-  directories:
-    - $PWD/lua_installations
+  - luacheck --std max+busted *.lua spec
+  - busted --verbose --coverage
 
 after_success:
-  - luacov-coveralls
+  - luacov-coveralls --exclude $TRAVIS_BUILD_DIR/lua_install
+
+branches:
+  except:
+    - gh-pages
 
 notifications:
-  recipients:
-    - arne@twobeer.de
   email:
+    on_success: change
     on_failure: always

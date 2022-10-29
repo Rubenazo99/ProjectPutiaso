@@ -54,32 +54,34 @@ function MovementSystem:update(dt)
 
     for _, entity in pairs(self.targets) do
 
-        local transform = entity:get("transform")
-        local velocity = entity:get("velocity")
-        local movementKeys = entity:get("movementKeys")
-        local collider = entity:get("collider")
-        local direction = entity:get("direction")
+        if entity:get("direction") ~= nil then
 
-        -- Si no estamos tocando la pared ya...
-        if collider.isTouchingWall == false then
+            local transform = entity:get("transform")
+            local velocity = entity:get("velocity")
+            local movementKeys = entity:get("movementKeys")
+            local collider = entity:get("collider")
+            local direction = entity:get("direction")
 
-            -- ... y estamos tocando el suelo...
-            if collider.isColliding == true then
+            -- Si no estamos tocando la pared ya...
+            if collider.isTouchingLeftWall == false and collider.isTouchingRightWall == false then
 
-                -- agarramos las variables de direction left y right y las
-                -- sobrescribimos cada frame con esto
-                direction.left = love.keyboard.isDown(movementKeys.left)
-                direction.right = love.keyboard.isDown(movementKeys.right)
+                -- ... y estamos tocando el suelo...
+                if collider.isColliding == true and entity:get("attackComponent").charging == false then
 
-                -- entonces hacemos dos ifs, porque si llegamos a pulsar las dos
-                -- teclas de mover a la vez, haremos que se quede quieto, es como sumar 1 y -1, te da 0 bro
-                if direction.left then transform.x = transform.x - velocity.x * dt end
-                if direction.right then transform.x = transform.x + velocity.x * dt end
+                    -- agarramos las variables de direction left y right y las
+                    -- sobrescribimos cada frame con esto
+                    direction.left = love.keyboard.isDown(movementKeys.left)
+                    direction.right = love.keyboard.isDown(movementKeys.right)
+
+                    -- entonces hacemos dos ifs, porque si llegamos a pulsar las dos
+                    -- teclas de mover a la vez, haremos que se quede quieto, es como sumar 1 y -1, te da 0 bro
+                    if direction.left then transform.x = transform.x - velocity.x * dt  end
+                    if direction.right then transform.x = transform.x + velocity.x * dt end
+
+                end
 
             end
-
         end
-
     end
 
 end
@@ -226,34 +228,43 @@ function GroundCollisionSystem:update(dt)
 
                         -- Con que uno de los dos de true, entonces estará colisionando con el suelo
 
+                        local rayA = nil
+                        local rayACollision = false
+                        local rayB = nil
+                        local rayBCollision = false
 
-                        local rayA = { origin = { x = transformA.x, y = transformA.y + transformA.height + 5 },
-                            final = { x = transformA.x, y = transformA.y + transformA.height + offset } }
+                        if not colliderA.isTouchingLeftWall then
+                            rayA = { origin = { x = transformA.x , y = transformA.y + transformA.height + 5 },
+                                final = { x = transformA.x, y = transformA.y + transformA.height + offset } }
 
-                        local rayACollision = (
-                            (rayA.origin.x > transformB.x and rayA.origin.x < transformB.x + transformB.width)
-                                and (rayA.final.x > transformB.x and rayA.final.x < transformB.x + transformB.width)) and
-                            ((rayA.origin.y > transformB.y and rayA.origin.y < transformB.y + transformB.height) and
-                                (rayA.final.y > transformB.y and rayA.final.y < transformB.y + transformB.height))
+                            rayACollision = (
+                                (rayA.origin.x > transformB.x and rayA.origin.x < transformB.x + transformB.width)
+                                    and (rayA.final.x > transformB.x and rayA.final.x < transformB.x + transformB.width)) and
+                                ((rayA.origin.y > transformB.y and rayA.origin.y < transformB.y + transformB.height) and
+                                    (rayA.final.y > transformB.y and rayA.final.y < transformB.y + transformB.height))
+                        end
 
-                        local rayB = { origin = { x = transformA.x + transformA.width,
-                            y = transformA.y + transformA.height + 5 },
-                            final = { x = transformA.x + transformA.width, y = transformA.y + transformA.height + offset } }
+                        if not colliderA.isTouchingRightWall then
 
-                        local rayBCollision = (
-                            (rayB.origin.x > transformB.x and rayB.origin.x < transformB.x + transformB.width)
-                                and (rayB.final.x > transformB.x and rayB.final.x < transformB.x + transformB.width)) and
-                            ((rayB.origin.y > transformB.y and rayB.origin.y < transformB.y + transformB.height) and
-                                (rayB.final.y > transformB.y and rayB.final.y < transformB.y + transformB.height))
+                            rayB = { origin = { x = transformA.x + transformA.width,
+                                y = transformA.y + transformA.height + 5 },
+                                final = { x = transformA.x + transformA.width, y = transformA.y + transformA.height + offset } }
+
+                            rayBCollision = (
+                                (rayB.origin.x > transformB.x and rayB.origin.x < transformB.x + transformB.width)
+                                    and (rayB.final.x > transformB.x and rayB.final.x < transformB.x + transformB.width)) and
+                                ((rayB.origin.y > transformB.y and rayB.origin.y < transformB.y + transformB.height) and
+                                    (rayB.final.y > transformB.y and rayB.final.y < transformB.y + transformB.height))
+
+                        end
 
                         if rayACollision or rayBCollision then
 
                             if colliderA.isColliding == false then
 
                                 colliderA.isColliding = true
-                                if entityA:get("direction").right == false and entityA:get("direction").left == false then
-                                    transformA.y = (transformA.y - (transformA.y - transformB.y)) - transformA.height
-                                end
+                                entityA:get("hitComponent").hit = false
+                                transformA.y = (transformA.y - (transformA.y - transformB.y)) - transformA.height
                                 if entityA:get("velocity").y ~= 0 then entityA:get("velocity").y = 0 end
 
                             end
@@ -334,7 +345,7 @@ function WallCollisionSystem:update(dt)
                     -- Ahora si, acivamos uno o otro dependiendo en qué dirección nos estamos moviendo, y
                     -- desactivamos la proyección opuesta
 
-                    if direction.left and not direction.right then
+                    if (direction.left and not direction.right) then
 
                         if (transformA.x - transformA.width > transformB.x and transformA.x - transformA.width < transformB.x + transformB.width)
                             and
@@ -346,18 +357,19 @@ function WallCollisionSystem:update(dt)
 
                         then
 
-                            colliderA.isTouchingWall = true
+                            transformA.x = transformA.x + (transformB.x + transformB.width) - (transformA.x + transformA.width) + transformA.width + 0.1
+                            colliderA.isTouchingLeftWall = true
                             -- Obviamente cuando pasa un frame el jugador sigue dentro un poquito, hay que corregir su posición
                             -- para que al dejar de mover esté contra la pared... AUNQUE hay un bug si ocurre por lo que lo movemos ligeramente a un lado
-                            transformA.x = transformA.x + (transformB.x + transformB.width) - (transformA.x + transformA.width) + transformA.width + 0.1
+
 
                         else
 
-                            colliderA.isTouchingWall = false
+                            colliderA.isTouchingLeftWall = false
 
                         end
                     
-                    elseif direction.right and not direction.left then
+                    elseif (direction.right and not direction.left) then
                         
                         if (transformA.x + transformA.width * 2 > transformB.x and transformA.x + transformA.width * 2 < transformB.x + transformB.width)
                             and
@@ -369,14 +381,75 @@ function WallCollisionSystem:update(dt)
 
                         then
 
-                            colliderA.isTouchingWall = true
                             transformA.x = transformA.x - (transformA.x - transformB.x) - transformA.width - 0.1
+                            colliderA.isTouchingRightWall = true
 
                         else
 
-                            colliderA.isTouchingWall = false
+                            colliderA.isTouchingRightWall = false
 
                         end
+
+                    elseif entityA:get("hitComponent").hit == true then
+                        
+                        if (
+                            transformA.x - transformA.width > transformB.x and
+                                transformA.x - transformA.width < transformB.x + transformB.width)
+                            and
+                            (
+                            transformA.y > transformB.y and
+                                transformA.y + transformA.height < transformB.y + transformB.height)
+                            and
+                            (transformA.x > transformB.x and transformA.x < transformB.x + transformB.width)
+                            and
+                            (
+                            transformA.y > transformB.y and
+                                transformA.y + transformA.height < transformB.y + transformB.height)
+
+                        then
+
+                            transformA.x = transformA.x + (transformB.x + transformB.width) -
+                                (transformA.x + transformA.width) + transformA.width + 0.1
+                            colliderA.isTouchingLeftWall = true
+                            -- Obviamente cuando pasa un frame el jugador sigue dentro un poquito, hay que corregir su posición
+                            -- para que al dejar de mover esté contra la pared... AUNQUE hay un bug si ocurre por lo que lo movemos ligeramente a un lado
+
+
+                        else
+
+                            colliderA.isTouchingLeftWall = false
+
+                        end
+
+
+                        if (
+                            transformA.x + transformA.width * 2 > transformB.x and
+                                transformA.x + transformA.width * 2 < transformB.x + transformB.width)
+                            and
+                            (
+                            transformA.y > transformB.y and
+                                transformA.y + transformA.height < transformB.y + transformB.height)
+                            and
+                            (
+                            transformA.x + transformA.width > transformB.x and
+                                transformA.x + transformA.width < transformB.x + transformB.width)
+                            and
+                            (
+                            transformA.y > transformB.y and
+                                transformA.y + transformA.height < transformB.y + transformB.height)
+
+                        then
+
+                            transformA.x = transformA.x - (transformA.x - transformB.x) - transformA.width - 0.1
+                            colliderA.isTouchingRightWall = true
+
+                        else
+
+                            colliderA.isTouchingRightWall = false
+
+                        end
+
+
 
                     end
 
@@ -388,4 +461,184 @@ function WallCollisionSystem:update(dt)
 
     end
 
+end
+
+-- Este sistema permite hacer el putiaso
+
+AttackSystem = class("AttackSystem", System)
+
+function AttackSystem:require()
+    return { "transform", "collider", "attackComponent", "movementKeys"}
+end
+
+function AttackSystem:update(dt)
+
+    for _, entity in pairs(self.targets) do
+
+        if entity:get("transform").name == "PlayerA" or entity:get("transform").name == "PlayerB" then
+
+            local transform = entity:get("transform")
+            local collider = entity:get("collider")
+            local attackComponent = entity:get("attackComponent")
+
+            if attackComponent.canAttack == true then
+
+                attackComponent.charging = love.keyboard.isDown(attackComponent.key)
+
+                if attackComponent.charging == true and attackComponent.chargingTime < attackComponent.chargingMaxTime then
+
+                    if attackComponent.alreadyScaled == false then
+
+                        transform.x, transform.y = transform.x + attackComponent.minWidth / 2, transform.y + attackComponent.maxWidth - attackComponent.minWidth
+                        transform.width, transform.height = attackComponent.minWidth, attackComponent.minHeight
+                        attackComponent.alreadyScaled = true
+
+                    end
+
+                    attackComponent.chargingTime = attackComponent.chargingTime + dt
+                    attackComponent.angle = Lerp(0, 60, attackComponent.chargingTime / attackComponent.chargingMaxTime)
+                    --print("ChargingTime: " .. attackComponent.chargingTime .. ". Angle: " .. attackComponent.angle)
+
+                elseif attackComponent.charging == false and attackComponent.chargingTime > 0 then
+
+                    local playerList = { }
+
+                    for _, targetEntity in pairs(self.targets) do
+
+                        if transform.name ~= targetEntity:get("transform").name and targetEntity:get("attackComponent") ~= nil then
+                            table.insert(playerList, targetEntity)
+                        end
+
+                    end
+
+                    local closestPlayer = playerList[1]
+                    local closestPlayerTransform = closestPlayer:get("transform")
+
+                    -- un bug habrá si al hacerlo justo debajo del otro a lamisma distancia de x hará el choque, hay que añadir la y tambien
+                    local playerVector = { x = transform.x + transform.width / 2, y = transform.y + transform.height / 2}
+                    local targetVector = { x = closestPlayerTransform.x + closestPlayerTransform.width / 2, y = closestPlayerTransform.y + closestPlayerTransform.height / 2}
+                    
+                    local closestDistance = CalculateModule(playerVector.x, playerVector.y, targetVector.x, targetVector.y)
+
+                    for index, player in pairs(playerList) do
+
+                        closestPlayer = player
+                        closestPlayerTransform = closestPlayer:get("transform")
+                        targetVector = { x = closestPlayerTransform.x + closestPlayerTransform.width / 2, y = closestPlayerTransform.y + closestPlayerTransform.height / 2}
+
+                        if CalculateModule(playerVector.x, playerVector.y, targetVector.x, targetVector.y) < closestDistance then
+                            
+                            closestPlayer = player
+                            closestDistance = CalculateModule(playerVector.x, playerVector.y, targetVector.x, targetVector.y)
+
+                        end
+
+                    end
+
+                    if closestDistance < 50 then
+                        
+                        local jump = closestPlayer:get("jump");
+
+                        closestPlayer:get("collider").isColliding = false
+                        jump.rayActive = false
+
+                        local totalForce = jump.force * math.abs(math.sin(math.rad(attackComponent.angle))) * 2
+
+                        if totalForce > -4 then closestPlayer:get("velocity").y = -4
+                        else closestPlayer:get("velocity").y = totalForce end
+                        closestPlayer:get("hitComponent").hit = true
+
+                        if transform.x >= closestPlayerTransform.x then
+
+                            closestPlayer:get("hitComponent").angle = attackComponent.angle + 180
+                            print("He lanzado a " .. closestPlayerTransform.name .. " estando a " .. closestDistance .. " metros de distancia, a un angulo de " .. attackComponent.angle .. " grados a la IZQUIERDA")
+
+                        else
+
+                            closestPlayer:get("hitComponent").angle = attackComponent.angle
+                            print("He lanzado a " .. closestPlayerTransform.name .. " estando a " .. closestDistance .. " metros de distancia, a un angulo de " .. attackComponent.angle .. " grados a la DERECHA")
+
+                        end
+
+                    end
+
+                    attackComponent.chargingTime = attackComponent.chargingMaxTime
+                    transform.x = transform.x - attackComponent.minWidth / 2
+                    transform.width, transform.height = attackComponent.maxWidth, attackComponent.maxHeight
+                    transform.y = (transform.y - (transform.y - transform.y)) - transform.height
+                    attackComponent.alreadyScaled = false
+
+                    attackComponent.chargingTime = 0
+
+                    attackComponent.canAttack = false
+                    attackComponent.cooldownTimer = 0
+
+                end
+
+            else
+
+                if attackComponent.canAttack == false then
+
+                    if (attackComponent.cooldownTimer < attackComponent.cooldownMaxTimer) then
+
+                        attackComponent.cooldownTimer = attackComponent.cooldownTimer + dt
+                    else
+
+                        attackComponent.cooldownTimer = attackComponent.cooldownMaxTimer
+                        attackComponent.canAttack = true
+
+                    end
+
+                    --print("Cooldown: " .. attackComponent.cooldownTimer .. "/" .. attackComponent.cooldownMaxTimer)
+
+                end
+
+            end
+
+
+        end
+
+    end
+
+end
+
+-- Este sistema permite recibir el putiaso
+
+RecieveHitSystem = class("RecieveHitSystem", System)
+
+function RecieveHitSystem:require()
+    return { "transform", "velocity", "hitComponent"}
+end
+
+function RecieveHitSystem:update(dt)
+
+    for _, player in pairs(self.targets) do
+
+        if player:get("hitComponent") ~= nil then
+
+            local transformComponent = player:get("transform")
+            local hitComponent = player:get("hitComponent")
+            local velocityComponent = player:get("velocity")
+
+            if hitComponent.hit == true then
+
+                transformComponent.x = transformComponent.x + math.cos(math.rad(hitComponent.angle)) * velocityComponent.x * dt
+
+            end
+
+        end
+
+    end
+
+end
+
+
+-- Functiones random
+
+function Lerp(a, b, t)
+    return (1 - t) * a + t * b
+end
+
+function CalculateModule(ax, ay, bx, by)
+    return math.sqrt((bx - ax)^2 + (by - ay)^2)
 end
