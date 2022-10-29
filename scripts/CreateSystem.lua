@@ -3,12 +3,15 @@
 -- Aquí puedes cambiar las variables de multiple cosas, no toques nada abajo --
 -- ========================================================================= --
 
+-- Variables que afectan al raycast del jugador --
+local offset = 15 -- Déjalo en 15, pero puedes intentar reducirlo si quieres
+
 -- Variables que afectan el sistema de dar golpes --
 local minAngle, maxAngle = 0, 80 -- El ángulo mínimo debe ser 0 si o sí, y el máximo 80, si no no funcionará
 local distanceFromOther = 50 -- La distancia mínima que tiene que estar el jugador del otro para golpearlo
 
 -- Variables que afectan el sistema de recibir el golpe --
-local jumpMultiplier = 1.4 -- Si usas más de 2 saldrá muy disparado, si usas menos de 1 será muy bajo
+local jumpMultiplier = 1.8 -- Si usas más de 2 saldrá muy disparado, si usas menos de 1 será muy bajo
 local horizontalMultiplier = 1.5 -- No he mirado el máximo, pero seguro que con más de 2 lo mandas a la mierda, pls no
 
 -- Variables que afectan el sistema de pintar colores --
@@ -242,25 +245,29 @@ function GroundCollisionSystem:update(dt)
                 -- y nos aseguramos que el jugador no colisione consigo mismo de esta forma...
                 if entityA ~= entityB then
 
+                    local transformB = entityB:get("transform")
+
                     -- ahora, ya tenemos la entidad A (jugador) y entidad B (suelo)
                     -- Aquí comparamos que el componente jump.rayActive esté activo, esto
                     -- significa que si está activo tenemos que activar los raycast
                     if entityA:get("jump").rayActive == true then
 
-                        local transformB = entityB:get("transform")
-                        local offset = 15
+
 
                         -- Aquí creamos los 2 raycast, rayA, que está a la x dle jugador, y el otro, rayB, que está a su derecha
 
+                        -- **************************************
+                        --              C       D
+                        --              C       D
                         --              XXXXXXXXX
                         --              XXXXXXXXX
                         --              XXXXXXXXX
                         --              XXXXXXXXX
-                        --              O       P
-                        --              O       P
+                        --              A       B
+                        --              A       B
                         -- **************************************
 
-                        -- O = rayA, P = rayB
+                        -- A = rayA, B = rayB, C = rayC, D = rayD
 
                         -- Con que uno de los dos de true, entonces estará colisionando con el suelo
 
@@ -268,6 +275,8 @@ function GroundCollisionSystem:update(dt)
                         local rayACollision = false
                         local rayB = nil
                         local rayBCollision = false
+
+                        -- Si no estamos tocando la pared de la izquierda sacamos el rayo de suelo de izquierda
 
                         if not colliderA.isTouchingLeftWall then
                             rayA = { origin = { x = transformA.x , y = transformA.y + transformA.height + 5 },
@@ -279,6 +288,8 @@ function GroundCollisionSystem:update(dt)
                                 ((rayA.origin.y > transformB.y and rayA.origin.y < transformB.y + transformB.height) and
                                     (rayA.final.y > transformB.y and rayA.final.y < transformB.y + transformB.height))
                         end
+
+                        -- Si no estamos tocando la pared de la derecha sacamos el rayo de suelo de derecha
 
                         if not colliderA.isTouchingRightWall then
 
@@ -294,6 +305,7 @@ function GroundCollisionSystem:update(dt)
 
                         end
 
+                        -- Si estamos colisionando entonces hacemos lo siguiente (paramos el golpe, corregimos la pos x del jugador y reseteamos la vel)
                         if rayACollision or rayBCollision then
 
                             if colliderA.isColliding == false then
@@ -314,6 +326,37 @@ function GroundCollisionSystem:update(dt)
                         end
 
                     end
+
+                    -- Estos rayos serán activos las 24 horas pues solo mira que si tocamos el techo bajamos el jugador un poquito
+
+                    local rayC = nil
+                    local rayCCollision = false
+                    local rayD = nil
+                    local rayDCollision = false
+
+                    rayC = { origin = { x = transformA.x, y = transformA.y - 5 },
+                        final = { x = transformA.x, y = transformA.y - offset } }
+
+                    rayCCollision = (rayC.origin.x > transformB.x and rayC.origin.x < transformB.x + transformB.width)
+                        and (rayC.origin.y < transformB.y + transformB.height and rayC.origin.y > transformB.y) and
+                        (rayC.final.x > transformB.x and rayC.final.x < transformB.x + transformB.width)
+                        and (rayC.final.y < transformB.y + transformB.height and rayC.final.y > transformB.y)
+
+                    rayD = { origin = { x = transformA.x + transformA.width, y = transformA.y - 5 },
+                        final = { x = transformA.x + transformA.width, y = transformA.y - offset } }
+
+                    rayDCollision = (rayD.origin.x > transformB.x and rayD.origin.x < transformB.x + transformB.width)
+                        and (rayD.origin.y < transformB.y + transformB.height and rayD.origin.y > transformB.y) and
+                        (rayD.final.x > transformB.x and rayD.final.x < transformB.x + transformB.width)
+                        and (rayD.final.y < transformB.y + transformB.height and rayD.final.y > transformB.y)
+
+                    if rayCCollision or rayDCollision then
+
+                        transformA.y = transformA.y + (transformB.y + transformB.height - transformA.y) + transformA.height
+                        entityA:get("velocity").y = 0
+
+                    end
+
 
                     -- código antiguo DO NOT ENABLE DO NOT TOUCH COMO LO TOQUES TE MATO (con cariño)
 

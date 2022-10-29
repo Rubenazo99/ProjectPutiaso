@@ -24,3 +24,12 @@ ground3:initialize()
 
 ground3:add(Transform(w - 200, h / 2 - 200, 0, 1, 1, 80, h / 2, "Wall"))
 ground3:add(Collider(false))
+
+-------------------
+
+ground4 = Entity()
+
+ground4:initialize()
+
+ground4:add(Transform(w / 2 - w / 4, 0, 0, 1, 1, w / 2, 80, "Ground"))
+ground4:add(Collider(false))
