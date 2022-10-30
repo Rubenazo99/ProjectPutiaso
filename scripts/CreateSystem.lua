@@ -793,8 +793,6 @@ end
 
 function DebugMode:update(dt)
 
-    local mouseX, mouseY = love.mouse.getPosition()
-
     for _, entity in pairs(self.targets) do
         
         -- Esto maneja el poder agarrar las entidades con el mouse
@@ -844,7 +842,7 @@ function DebugMode:update(dt)
             end
 
         end
-
+        
     end
 
 end

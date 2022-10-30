@@ -47,17 +47,3 @@ player2:add(Color(0, 200, 0, 1))
 player2:add(DragableComponent())
 
 -------------------------------
-
-player3 = Entity()
-player3:initialize()
-
-player3:add(Transform(w / 2 + 25 * 3 / 2, h / 2 - 80, 0, 1, 1, 25, 25, "PlayerB"))
-player3:add(Velocity(300, 1))
-player3:add(Acceleration(1, 30))
-
-player3:add(Collider(false))
-
-player3:add(Jump("m", -6))
-player3:add(MovementKeys("k", "l"))
-
-player3:add(Color(0, 0, 200, 1))
