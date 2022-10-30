@@ -339,32 +339,36 @@ function GroundCollisionSystem:update(dt)
 
                     -- Estos rayos serán activos las 24 horas pues solo mira que si tocamos el techo bajamos el jugador un poquito
 
-                    local rayC = nil
-                    local rayCCollision = false
-                    local rayD = nil
-                    local rayDCollision = false
+                    if transformB.name ~= "PlayerA" and transformB.name ~= "PlayerB" then
 
-                    rayC = { origin = { x = transformA.x, y = transformA.y - 5 },
-                        final = { x = transformA.x, y = transformA.y - offset } }
+                        local rayC = nil
+                        local rayCCollision = false
+                        local rayD = nil
+                        local rayDCollision = false
 
-                    rayCCollision = (rayC.origin.x > transformB.x and rayC.origin.x < transformB.x + transformB.width)
-                        and (rayC.origin.y < transformB.y + transformB.height and rayC.origin.y > transformB.y) and
-                        (rayC.final.x > transformB.x and rayC.final.x < transformB.x + transformB.width)
-                        and (rayC.final.y < transformB.y + transformB.height and rayC.final.y > transformB.y)
+                        rayC = { origin = { x = transformA.x, y = transformA.y - 5 },
+                            final = { x = transformA.x, y = transformA.y - offset } }
 
-                    rayD = { origin = { x = transformA.x + transformA.width, y = transformA.y - 5 },
-                        final = { x = transformA.x + transformA.width, y = transformA.y - offset } }
+                        rayCCollision = (rayC.origin.x > transformB.x and rayC.origin.x < transformB.x + transformB.width)
+                            and (rayC.origin.y < transformB.y + transformB.height and rayC.origin.y > transformB.y) and
+                            (rayC.final.x > transformB.x and rayC.final.x < transformB.x + transformB.width)
+                            and (rayC.final.y < transformB.y + transformB.height and rayC.final.y > transformB.y)
 
-                    rayDCollision = (rayD.origin.x > transformB.x and rayD.origin.x < transformB.x + transformB.width)
-                        and (rayD.origin.y < transformB.y + transformB.height and rayD.origin.y > transformB.y) and
-                        (rayD.final.x > transformB.x and rayD.final.x < transformB.x + transformB.width)
-                        and (rayD.final.y < transformB.y + transformB.height and rayD.final.y > transformB.y)
+                        rayD = { origin = { x = transformA.x + transformA.width, y = transformA.y - 5 },
+                            final = { x = transformA.x + transformA.width, y = transformA.y - offset } }
 
-                    if rayCCollision or rayDCollision then
+                        rayDCollision = (rayD.origin.x > transformB.x and rayD.origin.x < transformB.x + transformB.width)
+                            and (rayD.origin.y < transformB.y + transformB.height and rayD.origin.y > transformB.y) and
+                            (rayD.final.x > transformB.x and rayD.final.x < transformB.x + transformB.width)
+                            and (rayD.final.y < transformB.y + transformB.height and rayD.final.y > transformB.y)
 
-                        transformA.y = transformA.y + (transformB.y + transformB.height - transformA.y) + transformA.height
-                        entityA:get("jump").rayActive = true
-                        entityA:get("velocity").y = 0
+                        if rayCCollision or rayDCollision then
+
+                            transformA.y = transformA.y + (transformB.y + transformB.height - transformA.y) + transformA.height
+                            entityA:get("jump").rayActive = true
+                            entityA:get("velocity").y = 0
+
+                        end
 
                     end
 

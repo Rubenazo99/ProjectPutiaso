@@ -9,8 +9,8 @@ player:add(Acceleration(1, 30))
 
 player:add(Collider())
 
-player:add(Jump("up", -6))
-player:add(AttackComponent(12, 12, 25, 25, true, false, 0, 1, 0, 0, 2, "e", false))
+player:add(Jump("w", -6))
+player:add(AttackComponent(12, 12, 25, 25, true, false, 0, 1, 0, 0, 0.4, "e", false))
 
 player:add(HitComponent())
 
@@ -31,7 +31,7 @@ player2:add(Acceleration(1, 30))
 player2:add(Collider())
 
 player2:add(Jump("up", -6))
-player2:add(AttackComponent(12, 12, 25, 25, true, false, 0, 1, 0, 0, 2, "p", false))
+player2:add(AttackComponent(12, 12, 25, 25, true, false, 0, 1, 0, 0, 0.4, "p", false))
 
 player2:add(HitComponent())
 

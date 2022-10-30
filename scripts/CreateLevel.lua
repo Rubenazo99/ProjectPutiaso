@@ -10,12 +10,12 @@ for index, object in pairs(require('maps/testmap').layers[1].objects) do
 
 end
 
-for index, ground in pairs(wallList) do
+for index, wall in pairs(wallList) do
     
     local wallPlatform = Entity()
     wallPlatform:initialize()
 
-    wallPlatform:add(Transform(ground.x, ground.y, 0, 1, 1, ground.width, ground.height, "Ground"))
+    wallPlatform:add(Transform(wall.x, wall.y, 0, 1, 1, wall.width, wall.height, "Wall"))
     wallPlatform:add(Collider())
     LevelEngine:addEntity(wallPlatform)
 
