@@ -215,7 +215,7 @@ function DrawingSystem:draw()
 
         else
             
-            love.graphics.setColor(love.math.colorFromBytes(color.r, color.g, color.b))
+            love.graphics.setColor(love.math.colorFromBytes(color.r, color.g, color.b, color.a))
             love.graphics.rectangle("fill", entity:get("transform").x, entity:get("transform").y,
                 entity:get("transform").width, entity:get("transform").height)
             love.graphics.setColor(1, 1, 1, 1)

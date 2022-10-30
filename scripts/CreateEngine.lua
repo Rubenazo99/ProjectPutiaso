@@ -1,18 +1,13 @@
-engine = Engine()
+GameEngine = Engine()
 
-engine:addEntity(ground)
+GameEngine:addEntity(player)
+GameEngine:addEntity(player2)
+GameEngine:addSystem(GravitySystem())
+GameEngine:addSystem(MovementSystem())
+GameEngine:addSystem(AttackSystem())
+GameEngine:addSystem(JumpSystem())
+GameEngine:addSystem(RecieveHitSystem())
 
-engine:addEntity(player)
-engine:addEntity(player2)
---engine:addEntity(player3)
-engine:addSystem(GravitySystem())
-engine:addSystem(MovementSystem())
-engine:addSystem(AttackSystem())
-engine:addSystem(JumpSystem())
-engine:addSystem(WallCollisionSystem())
-engine:addSystem(GroundCollisionSystem())
-engine:addSystem(RecieveHitSystem())
+if debugMode == true then GameEngine:addSystem(DebugMode()) end
 
-if debugMode == true then engine:addSystem(DebugMode()) end
-
-engine:addSystem(DrawingSystem(), "draw")
+GameEngine:addSystem(DrawingSystem(), "draw")

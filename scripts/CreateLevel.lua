@@ -1,11 +1,48 @@
+LevelEngine = Engine()
+
 local w, h = love.graphics.getDimensions()
 
-ground = Entity()
+local wallList = { }
 
-ground:initialize()
+for index, object in pairs(require('maps/testmap').layers[1].objects) do
+    
+    table.insert(wallList, object)
 
-ground:add(Transform(w / 2 - 150, 100, 0, 1, 1, 300, 60, "Ground"))
-ground:add(Collider(false))
-ground:add(DragableComponent())
+end
 
---------------
+for index, ground in pairs(wallList) do
+    
+    local wallPlatform = Entity()
+    wallPlatform:initialize()
+
+    wallPlatform:add(Transform(ground.x, ground.y, 0, 1, 1, ground.width, ground.height, "Ground"))
+    wallPlatform:add(Collider())
+    LevelEngine:addEntity(wallPlatform)
+
+end
+
+local platformList = { }
+
+for index, object in pairs(require('maps/testmap').layers[2].objects) do
+    
+    table.insert(platformList, object)
+
+end
+
+for index, ground in pairs(platformList) do
+    
+    local groundPlatform = Entity()
+    groundPlatform:initialize()
+
+    groundPlatform:add(Transform(ground.x, ground.y, 0, 1, 1, ground.width, ground.height, "Ground"))
+    groundPlatform:add(Collider())
+    LevelEngine:addEntity(groundPlatform)
+
+end
+
+LevelEngine:addEntity(player)
+LevelEngine:addEntity(player2)
+LevelEngine:addSystem(WallCollisionSystem())
+LevelEngine:addSystem(GroundCollisionSystem())
+
+

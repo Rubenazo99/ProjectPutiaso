@@ -24,8 +24,7 @@ Si la mamaste y ya no sabes qué variables tenían, síguete por las variables d
   \_____| \____/ |___|/_/    \_\
                            
 Transform -> Almacena lo básico de lo básico, la posición, rotación, escala, altura y anchura y su nombre.
-Collider -> La que gestiona los colliders, tiene isTrigger por si queremos hacer que lo atraviess igualmente (perfecto para eventos, sin implementar todavía)
-                    después isColliding para el suelo, y isTouchingWall para las parades, todos en true o false
+Collider -> La que gestiona los colliders, tiene isTrigger por si queremos hacer que lo atraviess igualmente (perfecto para eventos, sin implementar todavía) después isColliding para el suelo, y isTouchingWall para las parades, todos en true o false
 Velocity -> Almacena la velocidad actual del jugador tanto en x o y
 Acceleration -> Se encarga de guardar la aceleración tanto de x o y individualmente de la velocidad, se podría modificar para hacer los saltos más crunchy
 Color -> Guarda las 3 variables r g b y la alpha en bytes (0 - 255)
