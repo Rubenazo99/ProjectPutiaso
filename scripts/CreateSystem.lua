@@ -1,3 +1,14 @@
+--[[
+   _____  _____   _____  _______  ______  __  __             _____ 
+  / ____||_   _| / ____||__   __||  ____||  \/  |    /\     / ____|
+ | (___    | |  | (___     | |   | |__   | \  / |   /  \   | (___  
+  \___ \   | |   \___ \    | |   |  __|  | |\/| |  / /\ \   \___ \ 
+  ____) | _| |_  ____) |   | |   | |____ | |  | | / ____ \  ____) |
+ |_____/ |_____||_____/    |_|   |______||_|  |_|/_/    \_\|_____/ 
+                                                                   
+ Código hecho por Rubén López García
+
+]]
 
 -- Aquí puedes cambiar las variables de multiple cosas, no toques nada abajo --
 -- ========================================================================= --
@@ -26,7 +37,7 @@ local defaultColor = { r = 255, g = 255, b = 255 }
  | |___| |__| | |__| |_| || |____ / ____ \ 
  |______\____/ \_____|_____\_____/_/    \_\
                                            
- Código hecho por Rubén López García
+
 
 ]]
 
@@ -596,10 +607,7 @@ function AttackSystem:update(dt)
                     attackComponent.chargingTime = attackComponent.chargingTime + dt
                     attackComponent.angle = Lerp(minAngle, maxAngle, attackComponent.chargingTime / attackComponent.chargingMaxTime)
                     
-                    -- ========================================================
-                    -- Descomenta esto si quieres ver el ángulo en tiempo real
-                    -- ========================================================
-                    -- print("ChargingTime: " .. attackComponent.chargingTime .. ". Angle: " .. attackComponent.angle)
+                    if debugMode == true then print("ChargingTime: " .. attackComponent.chargingTime .. ". Angle: " .. attackComponent.angle) end
 
                 elseif attackComponent.charging == false and attackComponent.chargingTime > 0 then
 
@@ -684,12 +692,14 @@ function AttackSystem:update(dt)
                         if transform.x >= closestPlayerTransform.x then
 
                             closestPlayer:get("hitComponent").angle = attackComponent.angle + 180
-                            print("He lanzado a " .. closestPlayerTransform.name .. " estando a " .. closestDistance .. " metros de distancia, a un angulo de " .. attackComponent.angle .. " grados a la IZQUIERDA")
+                            if debugMode then print("He lanzado a " .. closestPlayerTransform.name .. " estando a "
+                                .. closestDistance .. " metros de distancia, a un angulo de " .. attackComponent.angle .. " grados a la IZQUIERDA") end
 
                         else
 
                             closestPlayer:get("hitComponent").angle = attackComponent.angle
-                            print("He lanzado a " .. closestPlayerTransform.name .. " estando a " .. closestDistance .. " metros de distancia, a un angulo de " .. attackComponent.angle .. " grados a la DERECHA")
+                            if debugMode then print("He lanzado a " .. closestPlayerTransform.name .. " estando a "
+                                .. closestDistance .. " metros de distancia, a un angulo de " .. attackComponent.angle .. " grados a la DERECHA") end
 
                         end
 
@@ -773,7 +783,7 @@ function RecieveHitSystem:update(dt)
 
 end
 
--- Este sistema permite arrastrar la entidad, ¿Quizás podriamos meter meta mecánicas como arrastrar cajas? A saber...
+-- Este sistema permite usa herramientas debug ¿Quizás podriamos meter meta mecánicas como arrastrar cajas? A saber...
 
 DebugMode = class("DebugMode", System)
 

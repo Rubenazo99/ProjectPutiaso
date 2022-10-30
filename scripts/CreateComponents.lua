@@ -7,14 +7,14 @@
  | |____| |__| || |  | || |     | |__| || |\  || |____ | |\  |   | |   | |____  ____) |
   \_____|\____/ |_|  |_||_|      \____/ |_| \_||______||_| \_|   |_|   |______||_____/ 
                                                                                        
+Código hecho por Rubén López García
 
--- Aquí crearemos los componentes que utilizaremos en el juego, eso si, las variables en la tercera línea
--- por cada componente son valores por defecto, NO los modifiques aquí, ves a [ CreatePlayers ] para modificar las variables
--- o eliminar las de default y poner custom
 
--- Si la mamaste y ya no sabes qué variables tenían, síguete por las variables default
+Aquí crearemos los componentes que utilizaremos en el juego, eso si, las variables en la tercera línea
+por cada componente son valores por defecto, NO los modifiques aquí, ves a [ CreatePlayers ] para modificar las variables
+o eliminar las de default y poner custom
 
-================================================================================================================
+Si la mamaste y ya no sabes qué variables tenían, síguete por las variables default
 
    _____  _    _   __           
   / ____|| |  | | /_/     /\    
@@ -69,7 +69,7 @@ Velocity = Component.create("velocity",
 { x = 1, y = 1 })
 --[[
 
-x -> la velocidad del personaje en la x [ NO MODIFICABLE ]
+x -> la velocidad del personaje en la x [ MODIFICABLE ]
 y -> la velocidad del personaje en la y [ NO MODIFICABLE ]
 
 ]]
@@ -80,7 +80,7 @@ Acceleration = Component.create("acceleration",
 --[[
 
 x -> la aceleración del personaje en la x (sin usar) [ NO MODIFICABLE ]
-y -> la aceleración del personaje en la y [ NO MODIFICABLE ]
+y -> la aceleración del personaje en la y [ MODIFICABLE ]
 
 ]]
 
@@ -114,10 +114,8 @@ MovementKeys = Component.create("movementKeys",
 { left = "a", right = "d" })
 --[[
 
-r -> la cantidad de rojo del color [ MODIFICABLE ]
-g -> la cantidad de verde del color [ MODIFICABLE ]
-b -> la cantidad de azul del color [ MODIFICABLE ]
-a -> cantidda de transparencia del color [ MODIFICABLE ]
+left -> La tecla que usarás para moverte a la izquierda [ MODIFICABLE ]
+right -> La tecla que usarás para moverte a la derecha [ MODIFICABLE ]
 
 ]]
 
