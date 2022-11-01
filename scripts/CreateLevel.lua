@@ -2,17 +2,22 @@ LevelEngine = Engine()
 
 local w, h = love.graphics.getDimensions()
 
-local wallList = { }
+local platformGroundList = { }
+local platformWallList = { }
 
-for index, object in pairs(require('maps/testmap').layers[1].objects) do
+local platformWallEntities = { }
+
+for index, wallObject in pairs(require('maps/testmap').layers[2].objects) do
     
-    table.insert(wallList, object)
+    table.insert(platformWallList, wallObject)
 
 end
 
-for index, wall in pairs(wallList) do
+for index, wall in pairs(platformWallList) do
     
     local wallPlatform = Entity()
+    table.insert(platformWallEntities, wallPlatform)
+
     wallPlatform:initialize()
 
     wallPlatform:add(Transform(wall.x, wall.y, 0, 1, 1, wall.width, wall.height, "Wall"))
@@ -21,15 +26,13 @@ for index, wall in pairs(wallList) do
 
 end
 
-local platformList = { }
-
-for index, object in pairs(require('maps/testmap').layers[2].objects) do
+for index, object in pairs(require('maps/testmap').layers[3].objects) do
     
-    table.insert(platformList, object)
+    table.insert(platformGroundList, object)
 
 end
 
-for index, ground in pairs(platformList) do
+for index, ground in pairs(platformGroundList) do
     
     local groundPlatform = Entity()
     groundPlatform:initialize()
@@ -40,9 +43,33 @@ for index, ground in pairs(platformList) do
 
 end
 
-LevelEngine:addEntity(player)
-LevelEngine:addEntity(player2)
+for index, player in pairs(GetPlayers()) do
+
+    LevelEngine:addEntity(player)
+
+end
+
 LevelEngine:addSystem(WallCollisionSystem())
 LevelEngine:addSystem(GroundCollisionSystem())
 
+
+function ReturnAllWallEntities()
+
+    if debugMode == true then
+        
+        local count = 0
+
+        for i, v in pairs(platformWallEntities) do
+            
+            count = count + 1    
+
+        end
+
+        print(count)
+
+    end
+
+    return platformWallEntities
+    
+end
 

@@ -22,7 +22,8 @@ local distanceFromOther = 50 -- La distancia mínima que tiene que estar el juga
 
 -- Variables que afectan el sistema de recibir el golpe --
 local jumpMultiplier = 1.8 -- Si usas más de 2 saldrá muy disparado, si usas menos de 1 será muy bajo
-local horizontalMultiplier = 1.5 -- No he mirado el máximo, pero seguro que con más de 2 lo mandas a la mierda, pls no
+local horizontalMultiplier = 1.6 -- No he mirado el máximo, pero seguro que con más de 2 lo mandas a la mierda, pls no
+local distanceFromWall = 35 -- Esto es sobre el putiaso contra la pared, mira la distancia entre el jugador y la pared más cercana
 
 -- Variables que afectan el sistema de pintar colores --
 local defaultColor = { r = 255, g = 255, b = 255 }
@@ -105,24 +106,26 @@ function MovementSystem:update(dt)
             local collider = entity:get("collider")
             local direction = entity:get("direction")
 
+            if entity:get("hitComponent").hit == false then
             -- Si no estamos tocando la pared ya...
-            if collider.isTouchingLeftWall == false and collider.isTouchingRightWall == false then
+                if collider.isTouchingLeftWall == false and collider.isTouchingRightWall == false then
 
-                -- ... y estamos tocando el suelo...
-                if collider.isColliding == true and entity:get("attackComponent").charging == false then
+                    -- ... y estamos tocando el suelo...
+                    if collider.isColliding == true and entity:get("attackComponent").charging == false then
 
-                    -- agarramos las variables de direction left y right y las
-                    -- sobrescribimos cada frame con esto
-                    direction.left = love.keyboard.isDown(movementKeys.left)
-                    direction.right = love.keyboard.isDown(movementKeys.right)
+                        -- agarramos las variables de direction left y right y las
+                        -- sobrescribimos cada frame con esto
+                        direction.left = love.keyboard.isDown(movementKeys.left)
+                        direction.right = love.keyboard.isDown(movementKeys.right)
 
-                    -- entonces hacemos dos ifs, porque si llegamos a pulsar las dos
-                    -- teclas de mover a la vez, haremos que se quede quieto, es como sumar 1 y -1, te da 0 bro
-                    if direction.left then transform.x = transform.x - velocity.x * dt  end
-                    if direction.right then transform.x = transform.x + velocity.x * dt end
+                        -- entonces hacemos dos ifs, porque si llegamos a pulsar las dos
+                        -- teclas de mover a la vez, haremos que se quede quieto, es como sumar 1 y -1, te da 0 bro
+                        if direction.left then transform.x = transform.x - velocity.x * dt  end
+                        if direction.right then transform.x = transform.x + velocity.x * dt end
+
+                    end
 
                 end
-
             end
         end
     end
@@ -208,17 +211,15 @@ function DrawingSystem:draw()
 
         if color == nil then
 
-            love.graphics.setColor(love.math.colorFromBytes(defaultColor.r, defaultColor.g, defaultColor.b))
+            love.graphics.setColor(color.r, color.g, color.b, color.a)
             love.graphics.rectangle("fill", entity:get("transform").x, entity:get("transform").y,
                 entity:get("transform").width, entity:get("transform").height)
             love.graphics.setColor(1, 1, 1, 1)
 
         else
             
-            love.graphics.setColor(love.math.colorFromBytes(color.r, color.g, color.b, color.a))
             love.graphics.rectangle("fill", entity:get("transform").x, entity:get("transform").y,
                 entity:get("transform").width, entity:get("transform").height)
-            love.graphics.setColor(1, 1, 1, 1)
 
         end
 
@@ -243,7 +244,7 @@ function GroundCollisionSystem:update(dt)
     -- comparamos que la entidad A sea un jugador mediante sus nombres, aunque se podría hacer de otra manera
     for _, entityA in pairs(self.targets) do
 
-        if entityA:get("transform").name == "PlayerA" or entityA:get("transform").name == "PlayerB" then
+        if entityA:get("hitComponent") ~= nil then
 
             local transformA = entityA:get("transform")
             local colliderA = entityA:get("collider")
@@ -321,9 +322,9 @@ function GroundCollisionSystem:update(dt)
                             if colliderA.isColliding == false then
 
                                 colliderA.isColliding = true
-                                entityA:get("hitComponent").hit = false
                                 transformA.y = (transformA.y - (transformA.y - transformB.y)) - transformA.height
                                 if entityA:get("velocity").y ~= 0 then entityA:get("velocity").y = 0 end
+                                entityA:get("hitComponent").hit = false
 
                             end
 
@@ -339,7 +340,7 @@ function GroundCollisionSystem:update(dt)
 
                     -- Estos rayos serán activos las 24 horas pues solo mira que si tocamos el techo bajamos el jugador un poquito
 
-                    if transformB.name ~= "PlayerA" and transformB.name ~= "PlayerB" then
+                    --if transformB.name ~= "PlayerA" and transformB.name ~= "PlayerB" then
 
                         local rayC = nil
                         local rayCCollision = false
@@ -364,13 +365,14 @@ function GroundCollisionSystem:update(dt)
 
                         if rayCCollision or rayDCollision then
 
-                            transformA.y = transformA.y + (transformB.y + transformB.height - transformA.y) + transformA.height
-                            entityA:get("jump").rayActive = true
+                            --transformA.y = transformA.y + (transformB.y + transformB.height - transformA.y) + transformA.height
+                            --entityA:get("jump").rayActive = true
                             entityA:get("velocity").y = 0
+                            entityA:get("hitComponent").hit = false
 
                         end
 
-                    end
+                    --end
 
 
                     -- código antiguo DO NOT ENABLE DO NOT TOUCH COMO LO TOQUES TE MATO (con cariño)
@@ -411,15 +413,14 @@ function WallCollisionSystem:update(dt)
 
     for _, entityA in pairs(self.targets) do
 
-        if entityA:get("transform").name == "PlayerA" or entityA:get("transform").name == "PlayerB" then
+        if entityA:get("hitComponent") ~= nil then
 
             local transformA = entityA:get("transform")
             local colliderA = entityA:get("collider")
 
             for _, entityB in pairs(self.targets) do
 
-                if entityA ~= entityB and entityB:get("transform").name == "Wall" or entityB:get("transform").name == "PlayerA"
-                or entityB:get("transform").name == "PlayerB" then
+                if entityA ~= entityB then
 
                     local transformB = entityB:get("transform")
                     local direction = entityA:get("direction")
@@ -451,8 +452,12 @@ function WallCollisionSystem:update(dt)
 
                         then
 
-                            transformA.x = transformA.x + (transformB.x + transformB.width) - (transformA.x + transformA.width) + transformA.width + 0.1
                             colliderA.isTouchingLeftWall = true
+                            transformA.x = transformA.x + (transformB.x + transformB.width) - (transformA.x + transformA.width) + transformA.width + 0.4
+                            entityA:get("hitComponent").hit = false
+                            --entityA:get("jump").rayActive = true
+
+                            if debugMode then print("TouchingLeftWall") end
                             -- Obviamente cuando pasa un frame el jugador sigue dentro un poquito, hay que corregir su posición
                             -- para que al dejar de mover esté contra la pared... AUNQUE hay un bug si ocurre por lo que lo movemos ligeramente a un lado
 
@@ -475,8 +480,10 @@ function WallCollisionSystem:update(dt)
 
                         then
 
-                            transformA.x = transformA.x - (transformA.x - transformB.x) - transformA.width - 0.1
                             colliderA.isTouchingRightWall = true
+                            transformA.x = transformA.x - (transformA.x - transformB.x) - transformA.width - 0.4
+                            entityA:get("jump").rayActive = true
+                            if debugMode then print("TouchingRightWall") end
 
                         else
 
@@ -505,6 +512,7 @@ function WallCollisionSystem:update(dt)
                             transformA.x = transformA.x + (transformB.x + transformB.width) -
                                 (transformA.x + transformA.width) + transformA.width + 0.1
                             colliderA.isTouchingLeftWall = true
+                            entityA:get("hitComponent").hit = false
                             -- Obviamente cuando pasa un frame el jugador sigue dentro un poquito, hay que corregir su posición
                             -- para que al dejar de mover esté contra la pared... AUNQUE hay un bug si ocurre por lo que lo movemos ligeramente a un lado
 
@@ -573,13 +581,16 @@ function AttackSystem:update(dt)
 
     for _, entity in pairs(self.targets) do
 
-        if entity:get("transform").name == "PlayerA" or entity:get("transform").name == "PlayerB" then
+        if entity:get("attackComponent") ~= nil then
 
             -- Primero agarramos componentes clave del atacante
 
             local transform = entity:get("transform")
             local collider = entity:get("collider")
             local attackComponent = entity:get("attackComponent")
+            local hitComponent = entity:get("hitComponent")
+            local jumpComponent = entity:get("jump")
+            local velocityComponent = entity:get("velocity")
 
             -- Miramos si podemos atacar
 
@@ -615,95 +626,99 @@ function AttackSystem:update(dt)
 
                 elseif attackComponent.charging == false and attackComponent.chargingTime > 0 then
 
-                    -- Si ya no estamos cargando y  el tiempo de carga es mayor que cero, entonces dejamos de
-                    -- cargar, pero hacemos lo siguiente: pillamos todos los jugadores en la partida
+                    if GetNumberOfPlayers() > 1 then
 
-                    local playerList = { }
+                        -- Si ya no estamos cargando y  el tiempo de carga es mayor que cero, entonces dejamos de
+                        -- cargar, pero hacemos lo siguiente: pillamos todos los jugadores en la partida
 
-                    -- Y por cada jugador aparte del jugador atacante, se mete en la lista playerList
+                        local playerList = { }
 
-                    for _, targetEntity in pairs(self.targets) do
+                        -- Y por cada jugador aparte del jugador atacante, se mete en la lista playerList
 
-                        if transform.name ~= targetEntity:get("transform").name and targetEntity:get("attackComponent") ~= nil then
-                            table.insert(playerList, targetEntity)
-                        end
+                        for _, targetEntity in pairs(self.targets) do
 
-                    end
-
-                    -- Entonces declaramos ciertas variables, empezando por el jugador más cercano, que se agarra el 1 por defecto,
-                    -- agarramos su transform también, y...
-
-                    local closestPlayer = playerList[1]
-                    local closestPlayerTransform = closestPlayer:get("transform")
-
-                    -- ... declaramos el vector del jugador y el target, usando el módulo de los dos vectores.
-
-                    local playerVector = { x = transform.x + transform.width / 2, y = transform.y + transform.height / 2}
-                    local targetVector = { x = closestPlayerTransform.x + closestPlayerTransform.width / 2, y = closestPlayerTransform.y + closestPlayerTransform.height / 2}
-                    
-                    -- Y lo calculamos con una pequeña función que he hecho abajo del todo.
-
-                    local closestDistance = CalculateModule(playerVector.x, playerVector.y, targetVector.x, targetVector.y)
-
-                    -- Ahora debemos pillar el jugador más cercano al jugador atacante. Si encuentra a uno más cercano substituye las variables
-                    -- closestPlayer y closestDistance, y al acabar mete al más cercano (así es escalable con más jugadores), pero no funcionará si dos
-                    -- jugadores están a la vez (como está hecho ahora)
-
-                    for index, player in pairs(playerList) do
-
-                        closestPlayer = player
-                        closestPlayerTransform = closestPlayer:get("transform")
-                        targetVector = { x = closestPlayerTransform.x + closestPlayerTransform.width / 2, y = closestPlayerTransform.y + closestPlayerTransform.height / 2}
-
-                        if CalculateModule(playerVector.x, playerVector.y, targetVector.x, targetVector.y) < closestDistance then
-                            
-                            closestPlayer = player
-                            closestDistance = CalculateModule(playerVector.x, playerVector.y, targetVector.x, targetVector.y)
+                            if transform.name ~= targetEntity:get("transform").name and targetEntity:get("attackComponent") ~= nil then
+                                table.insert(playerList, targetEntity)
+                            end
 
                         end
 
-                    end
+                        -- Entonces declaramos ciertas variables, empezando por el jugador más cercano, que se agarra el 1 por defecto,
+                        -- agarramos su transform también, y...
 
-                    -- Ahora, y antes de lanzarlo, nos aseguramos que está a un mínimo de distancia del jugador, si no podríamos golpearlo incluso si estuviera
-                    -- a 3 años luz del jugador atacante
+                        local closestPlayer = playerList[1]
+                        local closestPlayerTransform = closestPlayer:get("transform")
 
-                    if closestDistance < distanceFromOther then
+                        -- ... declaramos el vector del jugador y el target, usando el módulo de los dos vectores.
+
+                        local playerVector = { x = transform.x + transform.width / 2, y = transform.y + transform.height / 2}
+                        local targetVector = { x = closestPlayerTransform.x + closestPlayerTransform.width / 2, y = closestPlayerTransform.y + closestPlayerTransform.height / 2}
                         
-                        -- Agarramos el ocmponente jump del recibiente, pues tiene su valor de salto
+                        -- Y lo calculamos con una pequeña función que he hecho abajo del todo.
 
-                        local jump = closestPlayer:get("jump");
+                        local closestDistance = CalculateModule(playerVector.x, playerVector.y, targetVector.x, targetVector.y)
 
-                        -- Cambiamos el isColliding a false y desactivamos el rayo de salto para evitar que se quede pegado en el suelo
+                        -- Ahora debemos pillar el jugador más cercano al jugador atacante. Si encuentra a uno más cercano substituye las variables
+                        -- closestPlayer y closestDistance, y al acabar mete al más cercano (así es escalable con más jugadores), pero no funcionará si dos
+                        -- jugadores están a la vez (como está hecho ahora)
 
-                        closestPlayer:get("collider").isColliding = false
-                        jump.rayActive = false
+                        for index, player in pairs(playerList) do
 
-                        -- Hacemos un pequeño cálculo matemático sobre la fuerza vertical usando una fórmula que
-                        -- me he sacado del culo, pero funciona, no tiene bases científicas, lol
+                            closestPlayer = player
+                            closestPlayerTransform = closestPlayer:get("transform")
+                            targetVector = { x = closestPlayerTransform.x + closestPlayerTransform.width / 2, y = closestPlayerTransform.y + closestPlayerTransform.height / 2}
 
-                        local totalForce = jump.force * math.abs(math.sin(math.rad(attackComponent.angle))) * jumpMultiplier
+                            if CalculateModule(playerVector.x, playerVector.y, targetVector.x, targetVector.y) < closestDistance then
+                                
+                                closestPlayer = player
+                                closestDistance = CalculateModule(playerVector.x, playerVector.y, targetVector.x, targetVector.y)
 
-                        -- Si la fuerza es menor a un mínimo (este no se puede modificar, tiene que estar hardcodeado), hace el mínimo,
-                        -- pero si es mayor entonces usa esa, no hace falta usar un math.max porque el ángulo ya se capa por si mismo
+                            end
 
-                        if totalForce > -4 then closestPlayer:get("velocity").y = -4
-                        else closestPlayer:get("velocity").y = totalForce end
-                        closestPlayer:get("hitComponent").hit = true
+                        end
 
-                        -- Y ahora modificamos el ángulo dependiendo si está la derecha del
-                        -- recibidor del putiaso o a su izquierda
+                        -- Ahora, y antes de lanzarlo, nos aseguramos que está a un mínimo de distancia del jugador, si no podríamos golpearlo incluso si estuviera
+                        -- a 3 años luz del jugador atacante
 
-                        if transform.x >= closestPlayerTransform.x then
+                        if closestDistance < distanceFromOther then
+                            
+                            -- Agarramos el ocmponente jump del recibiente, pues tiene su valor de salto
 
-                            closestPlayer:get("hitComponent").angle = attackComponent.angle + 180
-                            if debugMode then print("He lanzado a " .. closestPlayerTransform.name .. " estando a "
-                                .. closestDistance .. " metros de distancia, a un angulo de " .. attackComponent.angle .. " grados a la IZQUIERDA") end
+                            local jump = closestPlayer:get("jump");
 
-                        else
+                            -- Cambiamos el isColliding a false y desactivamos el rayo de salto para evitar que se quede pegado en el suelo
 
-                            closestPlayer:get("hitComponent").angle = attackComponent.angle
-                            if debugMode then print("He lanzado a " .. closestPlayerTransform.name .. " estando a "
-                                .. closestDistance .. " metros de distancia, a un angulo de " .. attackComponent.angle .. " grados a la DERECHA") end
+                            closestPlayer:get("collider").isColliding = false
+                            jump.rayActive = false
+
+                            -- Hacemos un pequeño cálculo matemático sobre la fuerza vertical usando una fórmula que
+                            -- me he sacado del culo, pero funciona, no tiene bases científicas, lol
+
+                            local totalForce = jump.force * math.abs(math.sin(math.rad(attackComponent.angle))) * jumpMultiplier
+
+                            -- Si la fuerza es menor a un mínimo (este no se puede modificar, tiene que estar hardcodeado), hace el mínimo,
+                            -- pero si es mayor entonces usa esa, no hace falta usar un math.max porque el ángulo ya se capa por si mismo
+
+                            if totalForce > -4 then closestPlayer:get("velocity").y = -4
+                            else closestPlayer:get("velocity").y = totalForce end
+                            closestPlayer:get("hitComponent").hit = true
+
+                            -- Y ahora modificamos el ángulo dependiendo si está la derecha del
+                            -- recibidor del putiaso o a su izquierda
+
+                            if transform.x >= closestPlayerTransform.x then
+
+                                closestPlayer:get("hitComponent").angle = attackComponent.angle + 180
+                                if debugMode then print("He lanzado a " .. closestPlayerTransform.name .. " estando a "
+                                    .. closestDistance .. " metros de distancia, a un angulo de " .. attackComponent.angle .. " grados a la IZQUIERDA") end
+
+                            else
+
+                                closestPlayer:get("hitComponent").angle = attackComponent.angle
+                                if debugMode then print("He lanzado a " .. closestPlayerTransform.name .. " estando a "
+                                    .. closestDistance .. " metros de distancia, a un angulo de " .. attackComponent.angle .. " grados a la DERECHA") end
+
+                            end
 
                         end
 
@@ -712,9 +727,53 @@ function AttackSystem:update(dt)
                     -- Finalmente reseteamos variables, como el timer, el width y height del atacante y otros.
 
                     attackComponent.chargingTime = attackComponent.chargingMaxTime
+
+                    -- pero antes voy a mirar si he colisionado con una pared, eso se hará
+                    -- "expandiendo" en la X el jugador y ver si su x choca con la izquierda o derecha
+
                     transform.x = transform.x - attackComponent.minWidth / 2
                     transform.width, transform.height = attackComponent.maxWidth, attackComponent.maxHeight
                     transform.y = (transform.y - (transform.y - transform.y)) - transform.height
+
+                    if collider.isTouchingLeftWall then transform.x = transform.x + transform.width / 2  
+                    elseif collider.isTouchingRightWall then transform.x = transform.x - transform.width / 2 end
+
+                    -- Aquí miramos is estamos cerca de una pared, y si lo és nos empujamos en el lado opuesto
+                    
+                    local closestWall = nil
+                    local distance = 1000
+
+                    for index, wallEntity in pairs(ReturnAllWallEntities()) do
+                        
+                        local transformWall = wallEntity:get("transform")
+                        local newDistance = (transformWall.x + transformWall.width / 2 - (transform.x + transform.width / 2 ))
+ 
+                        if newDistance < distance then 
+
+                            distance = math.abs(newDistance)
+                            closestWall = wallEntity
+
+                        end
+
+                    end
+
+                    local closestWallTransform = closestWall:get("transform")
+
+                    if distance < distanceFromWall then
+                        
+                        local playerOrigin = transform.x + transform.width / 2
+                        local wallOrigin = closestWallTransform.x + closestWallTransform.width / 2
+                        local totalForce = jumpComponent.force * math.abs(math.sin(math.rad(attackComponent.angle))) * jumpMultiplier
+                        hitComponent.hit = true
+
+                        if totalForce > -4 then velocityComponent.y = -4
+                        else velocityComponent.y = totalForce end
+
+                        if playerOrigin >= wallOrigin then hitComponent.angle = attackComponent.angle
+                        else hitComponent.angle = attackComponent.angle + 180 end
+
+                    end
+
                     attackComponent.alreadyScaled = false
 
                     attackComponent.chargingTime = 0

@@ -1,7 +1,11 @@
 GameEngine = Engine()
 
-GameEngine:addEntity(player)
-GameEngine:addEntity(player2)
+for index, player in pairs(GetPlayers()) do
+
+    GameEngine:addEntity(player)
+
+end
+
 GameEngine:addSystem(GravitySystem())
 GameEngine:addSystem(MovementSystem())
 GameEngine:addSystem(AttackSystem())

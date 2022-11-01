@@ -1,46 +1,44 @@
-local w, h = love.graphics.getDimensions()
+local playerList = { }
 
-player = Entity()
-player:initialize()
+for index, player in pairs(require('maps/testmap').layers[1].objects) do
+    
+    local newPlayer = Entity()
+    local properties = player.properties
 
-player:add(Transform(w / 2 + 25 * 3 / 2, 0, 0, 1, 1, 25, 25, "PlayerA"))
-player:add(Velocity(300, 1))
-player:add(Acceleration(1, 30))
+    newPlayer:initialize()
 
-player:add(Collider())
+    newPlayer:add(Transform(player.x, player.y, 0, 0, 1, player.width, player.height, player.name))
+    newPlayer:add(Velocity(300, 1))
+    newPlayer:add(Acceleration(1, 30))
+    newPlayer:add(Collider())
+    newPlayer:add(Jump(properties.jumpKey, -6, false, 0, 0.13))
 
-player:add(Jump("w", -6))
-player:add(AttackComponent(12, 12, 25, 25, true, false, 0, 1, 0, 0, 0.4, "e", false))
+    newPlayer:add(AttackComponent(12, 12, 24, 24, true, false, 0, 1, 0, 0, 0.4, properties.attackKey, false))
+    newPlayer:add(HitComponent())
 
-player:add(HitComponent())
+    newPlayer:add(Direction())
+    newPlayer:add(MovementKeys(properties.leftMovementKey, properties.rightMovementKey))
 
-player:add(Direction())
-player:add(MovementKeys("a", "d"))
+    newPlayer:add(Color(properties.colorR, properties.colorG, properties.colorB, 1))
 
-player:add(Color(200, 0, 0, 255))
+    table.insert(playerList, newPlayer)
 
--------------------------------
+end
 
-player2 = Entity()
-player2:initialize()
+function GetNumberOfPlayers()
 
-player2:add(Transform(w / 2 + 25 * 3 / 2, 0, 0, 1, 1, 25, 25, "PlayerB"))
-player2:add(Velocity(300, 1))
-player2:add(Acceleration(1, 30))
+    local count = 0
 
-player2:add(Collider())
+    for i, v in pairs(playerList) do
+        
+        count = count + 1
 
-player2:add(Jump("up", -6))
-player2:add(AttackComponent(12, 12, 25, 25, true, false, 0, 1, 0, 0, 0.4, "p", false))
+    end
 
-player2:add(HitComponent())
+    return count
 
-player2:add(Direction())
-player2:add(MovementKeys("left", "right"))
+end
 
-player2:add(Color(0, 200, 0, 255))
-
--- COMENTA ESTO SI NO ES MODO DEBUG
-player2:add(DragableComponent())
-
--------------------------------
+function GetPlayers()
+    return playerList
+end
