@@ -1,5 +1,16 @@
 local playerList = { }
 
+--[[
+
+Ahora para crear players he quitado la versión hardcodeada, y he creado una versión
+que crea de manera dinámica la cantidad de jugadores que queramos, usando el testMap de *tiled*
+
+Como sé que los jugadores están en la layer[1] agarro las tablas de jugadores,
+agarro sus propiedades, y las paso acorde con las propiedades customizadas en los objetos
+de tiled.
+
+]]
+
 for index, player in pairs(require('maps/testmap').layers[1].objects) do
     
     local newPlayer = Entity()
@@ -25,6 +36,8 @@ for index, player in pairs(require('maps/testmap').layers[1].objects) do
 
 end
 
+-- Esta es una función global que te permite agarrar el número de jugadores
+
 function GetNumberOfPlayers()
 
     local count = 0
@@ -38,6 +51,8 @@ function GetNumberOfPlayers()
     return count
 
 end
+
+-- Esta función te permite agarrar la referencia de la tabla con todos los jugadores actuales.
 
 function GetPlayers()
     return playerList
