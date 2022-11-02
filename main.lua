@@ -12,14 +12,18 @@ function love.load()
 
     sli = require("lib/sti")
     gameMap = sli("maps/testmapGraphics.lua")
+    camera = require("lib/camera")
+    cam = camera()
 
     dofile("scripts/CreateComponents.lua")
     dofile("scripts/CreateSystem.lua")
     dofile("scripts/CreatePlayers.lua")
     dofile("scripts/CreateLevel.lua")
+    dofile("scripts/CreateCamera")
     dofile("scripts/CreateEngine.lua")
 
 end
+
 
 function love.update(dt)
     
@@ -32,8 +36,9 @@ function love.update(dt)
 end
 
 function love.draw()
-
-    GameEngine:draw()
-    gameMap:draw()
-
+    -- this is needed for the camera to be able to render everything
+    cam:attach()
+     GameEngine:draw()
+     gameMap:drawLayer(gameMap.layers[1])
+    cam:detach()
 end
