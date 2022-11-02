@@ -21,6 +21,12 @@ local cameraTThresholds = {} -- all the list of exit threshold values
 
 CameraSystem = class("CameraSystem", System) -- the system that makes the camera work
 
+
+-- Here i will go through all the camera positions ans saving them in cameraPositions
+for i, pos in pairs(require("maps/testmap")) do -- change the name of the map to the final map
+
+end
+
 function CameraSystem:update(dt)
 
 end
@@ -38,6 +44,8 @@ end
 function prevSection()
 
 end
+
+
 
 
 
