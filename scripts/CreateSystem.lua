@@ -17,13 +17,13 @@
 local offset = 15 -- Déjalo en 15, pero puedes intentar reducirlo si quieres
 
 -- Variables que afectan el sistema de dar golpes --
-local minAngle, maxAngle = 0, 80 -- El ángulo mínimo debe ser 0 si o sí, y el máximo 80, si no no funcionará
+local minAngle, maxAngle = 0, 70 -- El ángulo mínimo debe ser 0 si o sí, y el máximo 80, si no no funcionará
 local distanceFromOther = 50 -- La distancia mínima que tiene que estar el jugador del otro para golpearlo
 
 -- Variables que afectan el sistema de recibir el golpe --
 local jumpMultiplier = 1.8 -- Si usas más de 2 saldrá muy disparado, si usas menos de 1 será muy bajo
 local horizontalMultiplier = 1.6 -- No he mirado el máximo, pero seguro que con más de 2 lo mandas a la mierda, pls no
-local distanceFromWall = 35 -- Esto es sobre el putiaso contra la pared, mira la distancia entre el jugador y la pared más cercana
+local distanceFromWall = 38 -- Esto es sobre el putiaso contra la pared, mira la distancia entre el jugador y la pared más cercana
 
 -- Variables que afectan el sistema de pintar colores --
 local defaultColor = { r = 255, g = 255, b = 255 }
@@ -145,6 +145,12 @@ function JumpSystem:require()
 end
 
 function JumpSystem:update(dt)
+
+    for _, entity in pairs(GetPlayers()) do
+        
+        
+
+    end
 
     for _, entity in pairs(self.targets) do
 
@@ -481,7 +487,7 @@ function WallCollisionSystem:update(dt)
                         then
 
                             colliderA.isTouchingRightWall = true
-                            transformA.x = transformA.x - (transformA.x - transformB.x) - transformA.width - 0.4
+                            transformA.x = transformA.x - (transformA.x - transformB.x) - transformA.width - 0.6
                             entityA:get("jump").rayActive = true
                             if debugMode then print("TouchingRightWall") end
 
@@ -542,7 +548,7 @@ function WallCollisionSystem:update(dt)
 
                         then
 
-                            transformA.x = transformA.x - (transformA.x - transformB.x) - transformA.width - 0.1
+                            transformA.x = transformA.x - (transformA.x - transformB.x) - transformA.width - 0.2
                             colliderA.isTouchingRightWall = true
 
                         else
@@ -605,9 +611,11 @@ function AttackSystem:update(dt)
 
                 if attackComponent.charging == true and attackComponent.chargingTime < attackComponent.chargingMaxTime then
 
+                    
                     -- Esto solo se ejecutará una vez, esto encoje al jugador, y lo desplaza acorde con la diferencia de estatura que
                     -- el jugador atacante recibe.
 
+                    --[[
                     if attackComponent.alreadyScaled == false then
 
                         transform.x, transform.y = transform.x + attackComponent.minWidth / 2, transform.y + attackComponent.maxWidth - attackComponent.minWidth
@@ -615,12 +623,23 @@ function AttackSystem:update(dt)
                         attackComponent.alreadyScaled = true
 
                     end
+                    ]]
 
                     -- Aquí vamos sumando el tiempo que carga hasta su máximo, una vez llegues a tu máximo, si todavía no has dejado de atacar
                     -- se mantendrá en el máximo
 
                     attackComponent.chargingTime = attackComponent.chargingTime + dt
-                    attackComponent.angle = Lerp(minAngle, maxAngle, attackComponent.chargingTime / attackComponent.chargingMaxTime)
+
+                    local total = attackComponent.chargingTime / attackComponent.chargingMaxTime
+                    local frameScale = transform.width
+
+                    attackComponent.angle = Lerp(minAngle, maxAngle, total)
+
+                    transform.width = Lerp(attackComponent.maxWidth, attackComponent.minWidth, total)
+                    transform.x = transform.x + (frameScale - transform.width) / 2
+                    
+                    transform.height = Lerp(attackComponent.maxHeight, attackComponent.minHeight, total)
+
                     
                     if debugMode == true then print("ChargingTime: " .. attackComponent.chargingTime .. ". Angle: " .. attackComponent.angle) end
 

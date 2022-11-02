@@ -63,7 +63,7 @@ return {
           name = "PlayerB",
           class = "",
           shape = "rectangle",
-          x = 196,
+          x = 420,
           y = 756,
           width = 24,
           height = 24,
