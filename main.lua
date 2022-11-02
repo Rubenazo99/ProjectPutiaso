@@ -19,7 +19,7 @@ function love.load()
     dofile("scripts/CreateSystem.lua")
     dofile("scripts/CreatePlayers.lua")
     dofile("scripts/CreateLevel.lua")
-    dofile("scripts/CreateCamera")
+    dofile("scripts/CreateCamera.lua")
     dofile("scripts/CreateEngine.lua")
 
 end

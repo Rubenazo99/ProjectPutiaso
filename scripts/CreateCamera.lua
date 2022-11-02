@@ -1,31 +1,45 @@
--- Here you will find anything related to the camera
+-- CAMERA SYSTEM SCRIPT ECT................................
 
 --------------------------- REQUIREMENTS FROM TILED -----------------------------------------------------
 
+-- the order of the camera goes from bottom to top inside of tiled
+
 -- X position (is created when you place the camera in tiled)
 -- Y position (is created when you place the camera in tiled)
--- id (sets the order of the camera)
 -- changeThreshold (set the *percentage* of the camera you need to exit to go to the next camera)
 
 ---------------------------------------------------------------------------------------------------------
 
 -- change this to change the zoom of the camera
+local alternativeThreshold = 75 -- change this to change all non modified threshold values
+
 local cameraZoom
 
 local currentPosX, currentPosY -- current position of the camera
 
-local currentId -- current id of the camera
+local id -- current camera id
 
 local cameraPositions = {} -- all the list of camera positions
-local cameraTThresholds = {} -- all the list of exit threshold values
+local cameraThresholds = {} -- all the list of exit threshold values
 
 CameraSystem = class("CameraSystem", System) -- the system that makes the camera work
 
 
--- Here i will go through all the camera positions ans saving them in cameraPositions
-for i, pos in pairs(require("maps/testmap")) do -- change the name of the map to the final map
-
+-- Here i will go through all the camera positions and saving them in cameraPositions
+for i, pos in pairs(require("maps/testmap").layers["Camera"]) do -- change the name of the map to the final map
+    table.insert(cameraPositions, {pos.x,pos.y})
 end
+
+-- Go through all the camera positions and save their thresholds
+for i, thresh in pairs(require("maps/testmap").layers["Camera"]) do -- change the name of the map to the final map
+    table.insert(cameraThresholds, thresh.threshold or alternativeThreshold)
+end
+
+
+---------  TO-DO LIST --------------------------------
+-- [ ] the inserts inside each table should be tables instead of just values
+-- [ ] read exactly how the camera works
+-- [ ] implement camera functions
 
 function CameraSystem:update(dt)
 
@@ -40,7 +54,7 @@ function nextSection()
 
 end
 
--- fcuntion to change to the previous section
+-- function to change to the previous section
 function prevSection()
 
 end
