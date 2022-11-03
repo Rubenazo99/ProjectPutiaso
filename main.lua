@@ -1,6 +1,10 @@
 local lovetoys = require('lovetoys')
 lovetoys.initialize({ globals = true, debug = true })
 
+camera = camera or require("lib/camera")
+Cam = camera()
+
+
 local blockCreated = false
 
 -- Activa las funciones debug! --
@@ -12,8 +16,6 @@ function love.load()
 
     sli = require("lib/sti")
     gameMap = sli("maps/testmapGraphics.lua")
-    camera = require("lib/camera")
-    cam = camera()
 
     dofile("scripts/CreateComponents.lua")
     dofile("scripts/CreateSystem.lua")
@@ -37,8 +39,8 @@ end
 
 function love.draw()
     -- this is needed for the camera to be able to render everything
-    cam:attach()
+    Cam:attach()
      GameEngine:draw()
      gameMap:drawLayer(gameMap.layers[1])
-    cam:detach()
+    Cam:detach()
 end
