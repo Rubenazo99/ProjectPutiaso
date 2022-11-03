@@ -17,7 +17,9 @@ function love.load()
     dofile("scripts/CreateSystem.lua")
     dofile("scripts/CreatePlayers.lua")
     dofile("scripts/CreateLevel.lua")
+    dofile("scripts/CreateMenu.lua")
     dofile("scripts/CreateEngine.lua")
+    dofile("scripts/CreateMenuEngine.lua")
 
 end
 
@@ -25,6 +27,7 @@ function love.update(dt)
     
     GameEngine:update(dt)
     LevelEngine:update(dt)
+    MenuEngine:update(dt)
 
     if (love.keyboard.isDown("escape")) then love.event.quit() end
     
@@ -35,5 +38,6 @@ function love.draw()
 
     GameEngine:draw()
     gameMap:draw()
+    MenuEngine:draw()
 
 end
