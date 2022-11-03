@@ -1,6 +1,6 @@
 -- CAMERA SYSTEM SCRIPT ECT................................
 
---------------------------- REQUIREMENTS FROM TILED -----------------------------------------------------
+--------------------------- REQUIREMENTS FROM TILED (lo que tiene que leer sergio y teo) ----------------
 
 -- the order of the camera goes from bottom to top inside of tiled
 
@@ -8,7 +8,11 @@
 -- Y position (is created when you place the camera in tiled)
 -- changeThreshold (set the *percentage* of the camera you need to exit to go to the next camera)
 
----------------------------------------------------------------------------------------------------------
+--------------------------- Extra info about camera (para los gigaHead programadores)---------------------------------
+
+
+
+
 
 -- change this to change the zoom of the camera
 local alternativeThreshold = 75 -- change this to change all non modified threshold values
@@ -39,6 +43,8 @@ end
 ---------  TO-DO LIST --------------------------------
 -- [ ] the inserts inside each table should be tables instead of just values
 -- [ ] read exactly how the camera works
+    -- camera:lookAt
+    -- camera:position
 -- [ ] implement camera functions
 
 function CameraSystem:update(dt)
