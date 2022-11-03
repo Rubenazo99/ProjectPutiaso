@@ -7,6 +7,7 @@ local platformWallList = { }
 
 local platformWallEntities = { }
 
+
 for index, wallObject in pairs(require('maps/testmap').layers[2].objects) do
     
     table.insert(platformWallList, wallObject)

@@ -23,31 +23,19 @@ local currentPosX, currentPosY -- current position of the camera
 
 local id -- current camera id
 
-local cameraPositions = {} -- all the list of camera positions
-local cameraThresholds = {} -- all the list of exit threshold values
+local cameraStates = {} -- save all the information about the camera such as its position or its threshold
 
 CameraSystem = class("CameraSystem", System) -- the system that makes the camera work
 
-
--- Here i will go through all the camera positions and saving them in cameraPositions
-for i, pos in pairs(require("maps/testmap").layers["Camera"]) do -- change the name of the map to the final map
-    table.insert(cameraPositions, { X=pos.x, Y=pos.y })
+for i, camera in pairs(require('maps/testmap').layers[2].objects) do
+    table.insert(cameraStates, camera)
 end
 
--- Go through all the camera positions and save their thresholds
-for i, thresh in pairs(require("maps/testmap").layers["Camera"]) do -- change the name of the map to the final map
-    table.insert(cameraThresholds, thresh.threshold or alternativeThreshold)
-end
+for j, position in pairs(cameraStates) do
+    print(cameraStates[j].x)
+end    
 
-
----------  TO-DO LIST --------------------------------
--- [ ] the inserts inside each table should be tables instead of just values
--- [x] read exactly how the camera works
---   camera:lookAt
---   camera:position
--- [ ] implement camera functions
-
-function CameraSystem:update(dt)
+function CameraSystem:update(dst)
 
 end
 
@@ -62,7 +50,8 @@ end
 -- function to change to next section
 function nextSection()
     id = id + 1
-    currentPosX, currentPosY = cameraPositions[id]
+    currentPosX = cameraState[id].x
+    currentPosY = cameraState[id].y
 
     cam:lookAt(currentPosX, currentPosY)
 end
@@ -70,8 +59,8 @@ end
 -- function to change to the previous section
 function prevSection()
     id = id - 1
-    currentPosX, currentPosY = cameraPositions[id]
+    currentPosX = cameraState[id].x
+    currentPosY = cameraState[id].y
 
-    cam:lookAt(currentPosX,currentPosY)
+    cam:lookAt(currentPosX, currentPosY)
 end
-
