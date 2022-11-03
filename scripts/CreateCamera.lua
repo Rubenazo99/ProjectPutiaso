@@ -31,7 +31,7 @@ CameraSystem = class("CameraSystem", System) -- the system that makes the camera
 
 -- Here i will go through all the camera positions and saving them in cameraPositions
 for i, pos in pairs(require("maps/testmap").layers["Camera"]) do -- change the name of the map to the final map
-    table.insert(cameraPositions, {pos.x,pos.y})
+    table.insert(cameraPositions, { X=pos.x, Y=pos.y })
 end
 
 -- Go through all the camera positions and save their thresholds
@@ -42,9 +42,9 @@ end
 
 ---------  TO-DO LIST --------------------------------
 -- [ ] the inserts inside each table should be tables instead of just values
--- [ ] read exactly how the camera works
-    -- camera:lookAt
-    -- camera:position
+-- [x] read exactly how the camera works
+--   camera:lookAt
+--   camera:position
 -- [ ] implement camera functions
 
 function CameraSystem:update(dt)
@@ -52,24 +52,26 @@ function CameraSystem:update(dt)
 end
 
 function getCameraPosition()
-    return currentPosX, currentPosY 
+    return currentPosX, currentPosY
 end
 
--- function to change to next section 
-function nextSection()
+function getCameraId()
+    return id
+end
 
+-- function to change to next section
+function nextSection()
+    id = id + 1
+    currentPosX, currentPosY = cameraPositions[id]
+
+    cam:lookAt(currentPosX, currentPosY)
 end
 
 -- function to change to the previous section
 function prevSection()
+    id = id - 1
+    currentPosX, currentPosY = cameraPositions[id]
 
+    cam:lookAt(currentPosX,currentPosY)
 end
-
-
-
-
-
-
-
-
 
