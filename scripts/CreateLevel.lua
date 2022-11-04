@@ -77,20 +77,6 @@ LevelEngine:addSystem(GroundCollisionSystem())
 
 function ReturnAllWallEntities()
 
-    if debugMode == true then
-        
-        local count = 0
-
-        for i, v in pairs(platformWallEntities) do
-            
-            count = count + 1    
-
-        end
-
-        print(count)
-
-    end
-
     return platformWallEntities
     
 end

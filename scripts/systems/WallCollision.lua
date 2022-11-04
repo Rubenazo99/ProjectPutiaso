@@ -55,9 +55,7 @@ function WallCollisionSystem:update(dt)
                             colliderA.isTouchingLeftWall = true
                             transformA.x = transformA.x + (transformB.x + transformB.width) - (transformA.x + transformA.width) + transformA.width + 0.4
                             entityA:get("hitComponent").hit = false
-                            --entityA:get("jump").rayActive = true
-
-                            if debugMode then print("TouchingLeftWall") end
+                            entityA:get("jump").rayActive = true
                             -- Obviamente cuando pasa un frame el jugador sigue dentro un poquito, hay que corregir su posición
                             -- para que al dejar de mover esté contra la pared... AUNQUE hay un bug si ocurre por lo que lo movemos ligeramente a un lado
 
@@ -81,9 +79,8 @@ function WallCollisionSystem:update(dt)
                         then
 
                             colliderA.isTouchingRightWall = true
-                            transformA.x = transformA.x - (transformA.x - transformB.x) - transformA.width - 0.6
+                            transformA.x = transformA.x - (transformA.x - transformB.x) - transformA.width - 0.1
                             entityA:get("jump").rayActive = true
-                            if debugMode then print("TouchingRightWall") end
 
                         else
 
@@ -113,6 +110,7 @@ function WallCollisionSystem:update(dt)
                                 (transformA.x + transformA.width) + transformA.width + 0.1
                             colliderA.isTouchingLeftWall = true
                             entityA:get("hitComponent").hit = false
+                            entityA:get("jump").rayActive = true
                             -- Obviamente cuando pasa un frame el jugador sigue dentro un poquito, hay que corregir su posición
                             -- para que al dejar de mover esté contra la pared... AUNQUE hay un bug si ocurre por lo que lo movemos ligeramente a un lado
 
@@ -142,8 +140,10 @@ function WallCollisionSystem:update(dt)
 
                         then
 
-                            transformA.x = transformA.x - (transformA.x - transformB.x) - transformA.width - 0.2
+                            transformA.x = transformA.x - (transformA.x - transformB.x) - transformA.width - 0.1
                             colliderA.isTouchingRightWall = true
+                            entityA:get("hitComponent").hit = false
+                            entityA:get("jump").rayActive = true
 
                         else
 

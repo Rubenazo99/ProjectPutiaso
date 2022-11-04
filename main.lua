@@ -4,7 +4,7 @@ lovetoys.initialize({ globals = true, debug = true })
 local blockCreated = false
 
 -- Activa las funciones debug! --
-debugMode = false
+debugMode = true
 
 love.graphics.setDefaultFilter("nearest", "nearest")
 

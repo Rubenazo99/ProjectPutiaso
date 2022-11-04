@@ -140,7 +140,7 @@ minWidth, minHeight, maxWidth, maxHeight -> Almacenan el mínimo y el máximo de
 canAttack -> Permite al jugador si puede atacar o no (está desactivado en cooldown) [ NO MODIFICABLE ]
 charging -> Almacena si está cargando el ataque o no [ NO MODIFICABLE ]
 chargingTime -> Almacena el tiempo actual de carga del ataque [ NO MODIFICABLE ]
-chargingMaxTime -> Almacena el máximo tiempo que puede estar cargando el ataque [ MODIFICABLE, NO RECOMENDADO ]
+chargingMaxTime -> Almacena el máximo tiempo que puede estar cargando el ataque, no modifica su trayectoria [ MODIFICABLE, NO RECOMENDADO ]
 angle -> Almacena el ángulo final del ataque [ NO MODIFICABLE ]
 cooldownTimer -> Almacena el tiempo actual del cooldown [ NO MODIFICABLE ]
 cooldownMaxTimer -> Almacena el tiempo máximo que puede tener el cooldown [ MODIFICABLE ]

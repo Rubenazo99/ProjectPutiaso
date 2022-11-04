@@ -22,7 +22,7 @@ function MovementSystem:update(dt)
 
             --if entity:get("hitComponent").hit == false then
             -- Si no estamos tocando la pared ya...
-                if collider.isTouchingLeftWall == false and collider.isTouchingRightWall == false then
+                if collider.isTouchingLeftWall == false or collider.isTouchingRightWall == false then
 
                     -- ... y estamos tocando el suelo...
                     if collider.isColliding == true and entity:get("attackComponent").charging == false then

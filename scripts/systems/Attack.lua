@@ -45,8 +45,8 @@ function AttackSystem:update(dt)
                     
                     if attackComponent.alreadyScaled == false then
 
-                        transform.x, transform.y = transform.x + attackComponent.minWidth / 2, transform.y + attackComponent.maxWidth - attackComponent.minWidth
-                        transform.width, transform.height = attackComponent.minWidth, attackComponent.minHeight
+                        transform.y = transform.y + attackComponent.maxWidth - attackComponent.minWidth
+                        transform.height = attackComponent.minHeight
                         attackComponent.alreadyScaled = true
 
                     end
@@ -68,9 +68,6 @@ function AttackSystem:update(dt)
                     
                     transform.height = Lerp(attackComponent.maxHeight, attackComponent.minHeight, total)
                     ]]
-
-                    
-                    if debugMode == true then print("ChargingTime: " .. attackComponent.chargingTime .. ". Angle: " .. attackComponent.angle) end
 
                 elseif attackComponent.charging == false and attackComponent.chargingTime > 0 then
 
@@ -157,14 +154,10 @@ function AttackSystem:update(dt)
                             if transform.x >= closestPlayerTransform.x then
 
                                 closestPlayer:get("hitComponent").angle = attackComponent.angle + 180
-                                if debugMode then print("He lanzado a " .. closestPlayerTransform.name .. " estando a "
-                                    .. closestDistance .. " metros de distancia, a un angulo de " .. attackComponent.angle .. " grados a la IZQUIERDA") end
 
                             else
 
                                 closestPlayer:get("hitComponent").angle = attackComponent.angle
-                                if debugMode then print("He lanzado a " .. closestPlayerTransform.name .. " estando a "
-                                    .. closestDistance .. " metros de distancia, a un angulo de " .. attackComponent.angle .. " grados a la DERECHA") end
 
                             end
 
@@ -179,12 +172,8 @@ function AttackSystem:update(dt)
                     -- pero antes voy a mirar si he colisionado con una pared, eso se hará
                     -- "expandiendo" en la X el jugador y ver si su x choca con la izquierda o derecha
 
-                    transform.x = transform.x - attackComponent.minWidth / 2
-                    transform.width, transform.height = attackComponent.maxWidth, attackComponent.maxHeight
-                    transform.y = (transform.y - (transform.y - transform.y)) - transform.height
-
-                    if collider.isTouchingLeftWall then transform.x = transform.x + transform.width / 2  
-                    elseif collider.isTouchingRightWall then transform.x = transform.x - transform.width / 2 end
+                    transform.height = attackComponent.maxHeight
+                    transform.y = (transform.y - (transform.y - transform.y)) - attackComponent.maxHeight
 
                     -- Aquí miramos is estamos cerca de una pared, y si lo és nos empujamos en el lado opuesto
                     

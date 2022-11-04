@@ -1,4 +1,5 @@
 -- Este sistema permite usa herramientas debug ¿Quizás podriamos meter meta mecánicas como arrastrar cajas? A saber...
+local alreadyShownPrompt = false
 
 DebugMode = class("DebugMode", System)
 
@@ -10,54 +11,36 @@ function DebugMode:update(dt)
 
     for _, entity in pairs(self.targets) do
         
-        -- Esto maneja el poder agarrar las entidades con el mouse
-        -- cuidado de no ponerte por encima de otro objeto mientras agarras uno...
+        if love.keyboard.isDown("p") and alreadyShownPrompt == false then
 
-        if entity:get("dragableComponent") ~= nil then
+            os.execute("cls")
 
-            local mouseClicked, deleteClicked = love.mouse.isDown(1), love.mouse.isDown(2)
-            local dragable = entity:get("dragableComponent")
-            local transform = entity:get("transform")
+            for i, v in pairs (GetPlayers()) do
+                
+                local transform = v:get("transform")
+                local hitComponent = v:get("hitComponent")
+                local attackComponent = v:get("attackComponent")
+                local directionComponent = v:get("direction")
+                local colliderComponent = v:get("collider")
 
-            if mouseClicked == true then
-
-                if dragable.enabled == true then
-                    
-                    if mouseX > transform.x and mouseX < transform.x + transform.width
-                    and mouseY > transform.y and mouseY < transform.y + transform.height then
-                        
-                        dragable.isBeingDragged = true
-
-                    end
-
-                end
-
-                if dragable.isBeingDragged == true then
-                    
-                    transform.x = mouseX - transform.width / 2
-                    transform.y = mouseY - transform.height / 2
-
-                end
-
-            elseif mouseClicked == false and dragable.isBeingDragged == true then
-
-                dragable.isBeingDragged = false
+                print(transform.name.."...")
+                print("===================")
+                print("Is hit? "..tostring(hitComponent.hit))
+                print("Is touching ground? "..tostring(colliderComponent.isColliding)..". Is touching walls? Left: "..tostring(colliderComponent.isTouchingLeftWall).." Right: "..tostring(colliderComponent.isTouchingRightWall))
+                print("Actual directions: Left -> ".. tostring(directionComponent.left)..". Right -> "..tostring(directionComponent.right))
+                print("ChargingTime: " .. attackComponent.chargingTime .. ". Angle: " .. attackComponent.angle)
+                print(" ")
 
             end
+
+
+            alreadyShownPrompt = true
+
+        elseif love.keyboard.isDown("p") == false and alreadyShownPrompt == true then
             
-            if deleteClicked then
-
-                if mouseX > transform.x and mouseX < transform.x + transform.width
-                and mouseY > transform.y and mouseY < transform.y + transform.height then
-                    
-                    engine:removeEntity(entity)
-
-                end
-
-            end
+            alreadyShownPrompt = false
 
         end
-        
     end
 
 end
