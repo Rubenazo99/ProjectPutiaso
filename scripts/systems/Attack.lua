@@ -42,7 +42,7 @@ function AttackSystem:update(dt)
                     -- Esto solo se ejecutará una vez, esto encoje al jugador, y lo desplaza acorde con la diferencia de estatura que
                     -- el jugador atacante recibe.
 
-                    --[[
+                    
                     if attackComponent.alreadyScaled == false then
 
                         transform.x, transform.y = transform.x + attackComponent.minWidth / 2, transform.y + attackComponent.maxWidth - attackComponent.minWidth
@@ -50,7 +50,7 @@ function AttackSystem:update(dt)
                         attackComponent.alreadyScaled = true
 
                     end
-                    ]]
+                    
 
                     -- Aquí vamos sumando el tiempo que carga hasta su máximo, una vez llegues a tu máximo, si todavía no has dejado de atacar
                     -- se mantendrá en el máximo
@@ -62,10 +62,12 @@ function AttackSystem:update(dt)
 
                     attackComponent.angle = Lerp(minAngle, maxAngle, total)
 
+                    --[[
                     transform.width = Lerp(attackComponent.maxWidth, attackComponent.minWidth, total)
                     transform.x = transform.x + (frameScale - transform.width) / 2
                     
                     transform.height = Lerp(attackComponent.maxHeight, attackComponent.minHeight, total)
+                    ]]
 
                     
                     if debugMode == true then print("ChargingTime: " .. attackComponent.chargingTime .. ". Angle: " .. attackComponent.angle) end

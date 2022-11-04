@@ -20,7 +20,7 @@ function MovementSystem:update(dt)
             local collider = entity:get("collider")
             local direction = entity:get("direction")
 
-            if entity:get("hitComponent").hit == false then
+            --if entity:get("hitComponent").hit == false then
             -- Si no estamos tocando la pared ya...
                 if collider.isTouchingLeftWall == false and collider.isTouchingRightWall == false then
 
@@ -40,7 +40,7 @@ function MovementSystem:update(dt)
                     end
 
                 end
-            end
+           -- end
         end
     end
 
