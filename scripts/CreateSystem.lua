@@ -18,12 +18,12 @@ offset = 15 -- Déjalo en 15, pero puedes intentar reducirlo si quieres
 
 -- Variables que afectan el sistema de dar golpes --
 minAngle, maxAngle = 0, 70 -- El ángulo mínimo debe ser 0 si o sí, y el máximo 80, si no no funcionará
-distanceFromOther = 50 -- La distancia mínima que tiene que estar el jugador del otro para golpearlo
+distanceFromOther = 40 -- La distancia mínima que tiene que estar el jugador del otro para golpearlo
 
 -- Variables que afectan el sistema de recibir el golpe --
 jumpMultiplier = 1.8 -- Si usas más de 2 saldrá muy disparado, si usas menos de 1 será muy bajo
-horizontalMultiplier = 1.6 -- No he mirado el máximo, pero seguro que con más de 2 lo mandas a la mierda, pls no
-distanceFromWall = 38 -- Esto es sobre el putiaso contra la pared, mira la distancia entre el jugador y la pared más cercana
+horizontalMultiplier = 1.15 -- No he mirado el máximo, pero seguro que con más de 2 lo mandas a la mierda, pls no   --1.2 
+distanceFromWall = 39 -- Esto es sobre el putiaso contra la pared, mira la distancia entre el jugador y la pared más cercana
 
 -- Variables que afectan el sistema de pintar colores --
 defaultColor = { r = 255, g = 255, b = 255 }
