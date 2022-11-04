@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.5" orientation="orthogonal" renderorder="left-up" width="34" height="200" tilewidth="16" tileheight="16" infinite="0" nextlayerid="18" nextobjectid="120">
+<map version="1.8" tiledversion="1.8.5" orientation="orthogonal" renderorder="left-up" width="34" height="200" tilewidth="16" tileheight="16" infinite="0" nextlayerid="18" nextobjectid="125">
  <editorsettings>
   <export target="testmap.lua" format="lua"/>
  </editorsettings>
@@ -42,6 +42,15 @@
  </objectgroup>
  <objectgroup id="17" name="Camera">
   <object id="119" name="1" x="272" y="2900">
+   <point/>
+  </object>
+  <object id="120" name="2" x="268" y="2636">
+   <point/>
+  </object>
+  <object id="122" name="3" x="272" y="2780">
+   <point/>
+  </object>
+  <object id="123" name="4" x="276" y="2428">
    <point/>
   </object>
  </objectgroup>
