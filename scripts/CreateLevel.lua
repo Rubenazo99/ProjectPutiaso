@@ -2,17 +2,29 @@ LevelEngine = Engine()
 
 local w, h = love.graphics.getDimensions()
 
+-- Declaramos la lista de suelos y paredes que tendremos
+-- en nuestro juego
+
 local platformGroundList = { }
 local platformWallList = { }
 
+-- Y creamos, solo para las paredes
+-- la misma lista pero para entidades
+
 local platformWallEntities = { }
 
+-- Por cada valor en el index encontrado en testmap.lua (.layers[en el índice 2], objects)
+-- agarro el objeto y lo meto en la lista
 
 for index, wallObject in pairs(require('maps/testmap').layers[2].objects) do
     
     table.insert(platformWallList, wallObject)
 
 end
+
+-- Después por cada pared en esa lista creamos una entidad,
+-- agarramos sus valores, y los introducimos a los componentes necesarios
+-- creamos la plataforma, la isnsertamos en la lista.
 
 for index, wall in pairs(platformWallList) do
     
@@ -26,6 +38,8 @@ for index, wall in pairs(platformWallList) do
     LevelEngine:addEntity(wallPlatform)
 
 end
+
+-- Lo mismo para los suelos, localizado en el valor [3] de layers
 
 for index, object in pairs(require('maps/testmap').layers[3].objects) do
     
@@ -44,31 +58,24 @@ for index, ground in pairs(platformGroundList) do
 
 end
 
+-- Una vez tenemos todas añadimos las referencias a los jugadores
+
 for index, player in pairs(GetPlayers()) do
 
     LevelEngine:addEntity(player)
 
 end
 
+-- Y finalmente añadimos los sistemas
+
 LevelEngine:addSystem(WallCollisionSystem())
 LevelEngine:addSystem(GroundCollisionSystem())
 
+-- Si en algún momento de el código, necesito una referencia de las paredes,
+-- uso esta función que me dice en modo debug la cantidad de entidades que hay,
+-- y independientemente de debug o no me devuelve la tabla de las paredes (entidades)
 
 function ReturnAllWallEntities()
-
-    if debugMode == true then
-        
-        local count = 0
-
-        for i, v in pairs(platformWallEntities) do
-            
-            count = count + 1    
-
-        end
-
-        print(count)
-
-    end
 
     return platformWallEntities
     
