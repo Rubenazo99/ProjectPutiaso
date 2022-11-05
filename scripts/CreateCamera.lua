@@ -40,6 +40,14 @@ function CameraSystem:update(dt)
 
 end
 
+function playerPositionCamera(camera) -- return the position of the player inside the camera
+
+end
+
+function isPlayerInsideCamera(player) -- insert a player to know if he currently is inside the camera
+    return boolean
+end
+
 function love.keypressed(key)
     nextSection()
 end
@@ -66,7 +74,8 @@ end
 
 -- function to change to the previous section
 function prevSection()
-    if cameraStates[id - 1] then
+
+    if cameraStates[id - 1] then -- checks if the previous level is null or not
         id = id - 1
         currentPosX = cameraStates[id].x
         currentPosY = cameraStates[id].y
