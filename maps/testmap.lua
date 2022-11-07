@@ -230,45 +230,6 @@ return {
           rotation = 0,
           visible = true,
           properties = {}
-        },
-        {
-          id = 120,
-          name = "2",
-          type = "",
-          shape = "point",
-          x = 268,
-          y = 2636,
-          width = 0,
-          height = 0,
-          rotation = 0,
-          visible = true,
-          properties = {}
-        },
-        {
-          id = 122,
-          name = "3",
-          type = "",
-          shape = "point",
-          x = 272,
-          y = 2780,
-          width = 0,
-          height = 0,
-          rotation = 0,
-          visible = true,
-          properties = {}
-        },
-        {
-          id = 123,
-          name = "4",
-          type = "",
-          shape = "point",
-          x = 276,
-          y = 2428,
-          width = 0,
-          height = 0,
-          rotation = 0,
-          visible = true,
-          properties = {}
         }
       }
     }

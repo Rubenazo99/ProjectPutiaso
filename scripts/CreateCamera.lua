@@ -7,7 +7,7 @@
 -- X position (is created when you place the camera in tiled)
 -- Y position (is created when you place the camera in tiled)
 -- changeThreshold (set the *percentage* of the camera you need to exit to go to the next camera)
-    -- if you dont set a threshold then alternativeThreshold will be the default value
+-- if you dont set a threshold then alternativeThreshold will be the default value
 
 --------------------------- Extra info about camera (para los gigaHead programadores)---------------------------------
 
@@ -22,16 +22,17 @@ local id = 0 -- current camera id
 
 local cameraStates = {} -- save all the information about the camera such as its position or its threshold
 
+
 CameraSystem = class("CameraSystem", System) -- the system that makes the camera work
 
 for i, camera in pairs(require('maps/testmap').layers[4].objects) do
     table.insert(cameraStates, camera)
 end
 
+
 for j, position in pairs(cameraStates) do
     print(cameraStates[j].x)
 end
-
 Cam:lookAt(cameraStates[1].x, cameraStates[1].y)
 
 print(Cam:position())
@@ -45,11 +46,18 @@ function playerPositionCamera(camera) -- return the position of the player insid
 end
 
 function isPlayerInsideCamera(player) -- insert a player to know if he currently is inside the camera
+
+
     return boolean
 end
 
 function love.keypressed(key)
     nextSection()
+    for i, v in pairs(playerList) do
+        if playerList[i] then
+            print(playerList[i].X)
+        end
+    end
 end
 
 function getCameraPosition()
