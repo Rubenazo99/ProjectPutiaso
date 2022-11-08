@@ -52,7 +52,7 @@ function isPlayerInsideCamera(player) -- insert a player to know if he currently
 end
 
 function love.keypressed(key)
-    if key == "p" then
+    if key == "ñ" then
         nextSection()
     end
     for i, v in pairs(playerList) do
