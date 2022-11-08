@@ -1,7 +1,8 @@
 return {
-  version = "1.5",
+  version = "1.9",
   luaversion = "5.1",
-  tiledversion = "1.8.5",
+  tiledversion = "1.9.2",
+  class = "",
   orientation = "orthogonal",
   renderorder = "left-up",
   width = 34,
@@ -15,6 +16,7 @@ return {
     {
       name = "testTileset",
       firstgid = 1,
+      class = "",
       tilewidth = 16,
       tileheight = 16,
       spacing = 0,
@@ -24,6 +26,8 @@ return {
       imagewidth = 256,
       imageheight = 352,
       objectalignment = "unspecified",
+      tilerendersize = "tile",
+      fillmode = "stretch",
       tileoffset = {
         x = 0,
         y = 0
@@ -48,6 +52,7 @@ return {
       height = 200,
       id = 12,
       name = "Graphics",
+      class = "",
       visible = true,
       opacity = 1,
       offsetx = 0,
