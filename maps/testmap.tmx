@@ -37,8 +37,8 @@
   <object id="209" name="4" x="177" y="2827.16" width="36" height="83.67"/>
   <object id="210" name="5" x="347" y="2523.16" width="36" height="83.67"/>
   <object id="211" name="6" x="165" y="2522.16" width="36" height="83.67"/>
-  <object id="220" name="6" x="400" y="1880.16" width="30" height="83.67"/>
-  <object id="221" name="6" x="111.5" y="1883.16" width="35" height="83.67"/>
+  <object id="220" name="7" x="400" y="1880.16" width="30" height="83.67"/>
+  <object id="221" name="8" x="111.5" y="1883.16" width="35" height="83.67"/>
  </objectgroup>
  <objectgroup id="9" name="Ground">
   <object id="101" name="2" x="111.667" y="2880" width="92" height="32"/>
@@ -91,7 +91,7 @@
   <object id="195" name="2" x="270" y="2194">
    <point/>
   </object>
-  <object id="203" name="3" x="294" y="1705">
+  <object id="203" name="3" x="278" y="1698">
    <point/>
   </object>
   <object id="204" name="4" x="286" y="1279">
