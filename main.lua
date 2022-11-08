@@ -4,6 +4,9 @@ lovetoys.initialize({ globals = true, debug = true })
 camera = camera or require("lib/camera")
 Cam = camera()
 
+
+local blockCreated = false
+
 -- Activa las funciones debug! --
 debugMode = true
 
