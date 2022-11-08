@@ -97,7 +97,7 @@ a -> cantidda de transparencia del color [ MODIFICABLE ]
 
 Jump = Component.create("jump",
 { "jumpKey", "force", "rayActive", "timer", "maxTimer" },
-{ jumpKey = "w", force = -8, rayActive = true, timer = 0, maxTimer = 0.3 })
+{ jumpKey = "w", force = -4000, rayActive = true, timer = 0, maxTimer = 0.3 })
 --[[
 
 jumpKey -> La tecla que usa para saltar [ MODIFICABLE ]
