@@ -179,19 +179,21 @@ function AttackSystem:update(dt)
                     
                     local closestWall = nil
                     local distance = 1000
+                    local transformWall = nil
 
                     for index, wallEntity in pairs(ReturnAllWallEntities()) do
                         
-                        local transformWall = wallEntity:get("transform")
-                        local newDistance = (transformWall.x + transformWall.width / 2 - (transform.x + transform.width / 2 ))
+                        transformWall = wallEntity:get("transform")
+                        local newDistance = math.abs(transformWall.x + transformWall.width / 2 - (transform.x + transform.width / 2 ))
  
                         if newDistance < distance then 
 
-                            distance = math.abs(newDistance)
-                            closestWall = wallEntity
+                            if transform.y > transformWall.y and transform.y < transformWall.y + transformWall.height then
+                                distance = math.abs(newDistance)
+                                closestWall = wallEntity
+                            end
 
                         end
-
                     end
 
                     local closestWallTransform = closestWall:get("transform")
