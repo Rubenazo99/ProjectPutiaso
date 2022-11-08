@@ -183,12 +183,13 @@ function AttackSystem:update(dt)
                     for index, wallEntity in pairs(ReturnAllWallEntities()) do
                         
                         local transformWall = wallEntity:get("transform")
-                        local newDistance = (transformWall.x + transformWall.width / 2 - (transform.x + transform.width / 2 ))
+                        local newDistance = math.abs(transformWall.x + transformWall.width / 2 - (transform.x + transform.width / 2 ))
  
                         if newDistance < distance then 
 
                             distance = math.abs(newDistance)
                             closestWall = wallEntity
+                            print("The closest wall was at position "..closestWall:get("transform").x.." "..closestWall:get("transform").y)
 
                         end
 
@@ -198,6 +199,7 @@ function AttackSystem:update(dt)
 
                     if distance < distanceFromWall then
                         
+                        if debugMode == true then print("This distnace from wall on "..entity:get("transform").name.." is..."..distance) end
                         local playerOrigin = transform.x + transform.width / 2
                         local wallOrigin = closestWallTransform.x + closestWallTransform.width / 2
                         local totalForce = jumpComponent.force * math.abs(math.sin(math.rad(attackComponent.angle))) * jumpMultiplier
