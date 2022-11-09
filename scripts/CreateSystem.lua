@@ -18,7 +18,7 @@ offset = 15 -- Déjalo en 15, pero puedes intentar reducirlo si quieres
 
 -- Variables que afectan el sistema de dar golpes --
 minAngle, maxAngle = 0, 70 -- El ángulo mínimo debe ser 0 si o sí, y el máximo 80, si no no funcionará
-distanceFromOther = 40 -- La distancia mínima que tiene que estar el jugador del otro para golpearlo
+distanceFromOther = 500 -- La distancia mínima que tiene que estar el jugador del otro para golpearlo
 
 -- Variables que afectan el sistema de recibir el golpe --
 jumpMultiplier = 1.8 -- Si usas más de 2 saldrá muy disparado, si usas menos de 1 será muy bajo
