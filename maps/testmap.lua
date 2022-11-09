@@ -70,7 +70,7 @@ return {
           rotation = 0,
           visible = true,
           properties = {
-            ["attackKey"] = "kp7",
+            ["attackKey"] = "down",
             ["colorB"] = 0,
             ["colorG"] = 1,
             ["colorR"] = 0,
@@ -91,7 +91,7 @@ return {
           rotation = 0,
           visible = true,
           properties = {
-            ["attackKey"] = "e",
+            ["attackKey"] = "s",
             ["colorB"] = 1,
             ["colorG"] = 0,
             ["colorR"] = 0,
