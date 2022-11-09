@@ -10,7 +10,7 @@ return {
   tilewidth = 16,
   tileheight = 16,
   nextlayerid = 18,
-  nextobjectid = 311,
+  nextobjectid = 309,
   properties = {},
   tilesets = {
     {
@@ -70,7 +70,7 @@ return {
           rotation = 0,
           visible = true,
           properties = {
-            ["attackKey"] = "kp7",
+            ["attackKey"] = "m",
             ["colorB"] = 0,
             ["colorG"] = 1,
             ["colorR"] = 0,
@@ -278,9 +278,9 @@ return {
           class = "",
           shape = "rectangle",
           x = 111.333,
-          y = 2877.91,
+          y = 2880,
           width = 16.6667,
-          height = 34.0909,
+          height = 32,
           rotation = 0,
           visible = true,
           properties = {}
@@ -787,8 +787,8 @@ return {
           name = "15",
           class = "",
           shape = "rectangle",
-          x = 35.3333,
-          y = 2191.33,
+          x = 34,
+          y = 2190,
           width = 93.3333,
           height = 32,
           rotation = 0,
