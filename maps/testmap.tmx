@@ -7,7 +7,7 @@
   <image source="testTileset.png" width="256" height="352"/>
  </tileset>
  <objectgroup id="14" name="Players">
-  <object id="111" name="PlayerB" x="308" y="2996" width="24" height="24">
+  <object id="111" name="PlayerB" x="212" y="2993.33" width="24" height="24">
    <properties>
     <property name="attackKey" value="kp7"/>
     <property name="colorB" type="int" value="0"/>
@@ -18,7 +18,7 @@
     <property name="rightMovementKey" value="right"/>
    </properties>
   </object>
-  <object id="109" name="PlayerA" x="142" y="2847.33" width="24" height="24">
+  <object id="109" name="PlayerA" x="292.667" y="3001.33" width="24" height="24">
    <properties>
     <property name="attackKey" value="e"/>
     <property name="colorB" type="int" value="1"/>
@@ -75,7 +75,7 @@
   <object id="302" x="399" y="2303.33" width="17.3333" height="32"/>
   <object id="303" x="96" y="2576.33" width="15.6667" height="32.3333"/>
   <object id="304" x="431" y="2576" width="16.6667" height="31.6667"/>
-  <object id="305" x="112" y="2870" width="16" height="49"/>
+  <object id="305" x="112" y="2879.67" width="16" height="32.6667"/>
   <object id="306" x="415.667" y="2880" width="16.3333" height="31.3333"/>
  </objectgroup>
  <objectgroup id="9" name="Ground">
@@ -120,7 +120,7 @@
   <object id="227" x="176" y="2832" width="32" height="16"/>
   <object id="228" x="336" y="2832" width="32" height="16"/>
   <object id="229" x="336" y="2880" width="96" height="32"/>
-  <object id="230" x="112" y="2881.67" width="96" height="32"/>
+  <object id="230" x="112" y="2880" width="96" height="32"/>
   <object id="237" x="96" y="2576" width="96" height="32"/>
   <object id="239" x="160" y="2528" width="32" height="16"/>
   <object id="248" x="352" y="2576" width="96" height="32"/>
