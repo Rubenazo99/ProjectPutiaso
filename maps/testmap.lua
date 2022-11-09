@@ -10,7 +10,11 @@ return {
   tilewidth = 16,
   tileheight = 16,
   nextlayerid = 18,
+<<<<<<< HEAD
   nextobjectid = 317,
+=======
+  nextobjectid = 311,
+>>>>>>> parent of 81e8bb8 (Revert "Update testmap.lua")
   properties = {},
   tilesets = {
     {
@@ -277,10 +281,17 @@ return {
           name = "",
           class = "",
           shape = "rectangle",
+<<<<<<< HEAD
           x = 108.278,
           y = 2192.13,
           width = 17.8605,
           height = 32,
+=======
+          x = 111.333,
+          y = 2877.91,
+          width = 16.6667,
+          height = 34.0909,
+>>>>>>> parent of 81e8bb8 (Revert "Update testmap.lua")
           rotation = 0,
           visible = true,
           properties = {}
@@ -696,8 +707,13 @@ return {
           name = "15",
           class = "",
           shape = "rectangle",
+<<<<<<< HEAD
           x = 32.7083,
           y = 2192.08,
+=======
+          x = 35.3333,
+          y = 2191.33,
+>>>>>>> parent of 81e8bb8 (Revert "Update testmap.lua")
           width = 93.3333,
           height = 32,
           rotation = 0,
