@@ -10,11 +10,7 @@ return {
   tilewidth = 16,
   tileheight = 16,
   nextlayerid = 18,
-<<<<<<< HEAD
   nextobjectid = 317,
-=======
-  nextobjectid = 309,
->>>>>>> parent of 02ef9a3 (Update testmap.lua)
   properties = {},
   tilesets = {
     {
@@ -74,7 +70,7 @@ return {
           rotation = 0,
           visible = true,
           properties = {
-            ["attackKey"] = "m",
+            ["attackKey"] = "kp7",
             ["colorB"] = 0,
             ["colorG"] = 1,
             ["colorR"] = 0,
@@ -281,15 +277,9 @@ return {
           name = "",
           class = "",
           shape = "rectangle",
-<<<<<<< HEAD
           x = 108.278,
           y = 2192.13,
           width = 17.8605,
-=======
-          x = 111.333,
-          y = 2880,
-          width = 16.6667,
->>>>>>> parent of 02ef9a3 (Update testmap.lua)
           height = 32,
           rotation = 0,
           visible = true,
@@ -706,13 +696,8 @@ return {
           name = "15",
           class = "",
           shape = "rectangle",
-<<<<<<< HEAD
           x = 32.7083,
           y = 2192.08,
-=======
-          x = 34,
-          y = 2190,
->>>>>>> parent of 02ef9a3 (Update testmap.lua)
           width = 93.3333,
           height = 32,
           rotation = 0,
