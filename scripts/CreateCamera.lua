@@ -75,7 +75,18 @@ function CameraSystem:update(dt)
             end
         end
     end
+
+
     -- Checks if you are meeting the conditions to go down a level
+    local playerFallen = {}
+    for j,i in pairs(playerList) do -- both players are not inside the camera
+        if isPlayerInsideCamera(i) == false then 
+            playerFallen[j] = true
+        end
+    end
+    if playerFallen[1] == true and playerFallen[2] == true then
+        prevSection() 
+    end
 end
 
 function love.keypressed(key)
