@@ -9,7 +9,7 @@
  <objectgroup id="14" name="Players">
   <object id="111" name="PlayerB" x="86.0003" y="2934.66" width="24" height="24">
    <properties>
-    <property name="attackKey" value="kp7"/>
+    <property name="attackKey" value="m"/>
     <property name="colorB" type="int" value="0"/>
     <property name="colorG" type="int" value="1"/>
     <property name="colorR" type="int" value="0"/>
@@ -18,7 +18,7 @@
     <property name="rightMovementKey" value="right"/>
    </properties>
   </object>
-  <object id="109" name="PlayerA" x="113.334" y="2233.33" width="24" height="24">
+  <object id="109" name="PlayerA" x="335.334" y="2930" width="24" height="24">
    <properties>
     <property name="attackKey" value="e"/>
     <property name="colorB" type="int" value="1"/>
@@ -64,7 +64,7 @@
   <object id="305" x="112.667" y="2837.67" width="30" height="32.6667"/>
   <object id="306" x="416.334" y="2838" width="16.3333" height="31.3333"/>
   <object id="328" x="139.333" y="2224" width="30.6666" height="64.6667"/>
-  <object id="329" x="377.333" y="2226" width="27.3333" height="62"/>
+  <object id="329" x="382.666" y="2221.33" width="27.3333" height="66.6667"/>
   <object id="333" x="448.666" y="2096.34" width="16" height="30.6666"/>
   <object id="335" x="478.666" y="2000" width="32" height="33.3333"/>
   <object id="336" x="32" y="1998.67" width="38" height="34"/>
@@ -135,8 +135,8 @@
   <object id="317" x="391.333" y="2261.34" width="56" height="27.3333"/>
   <object id="324" x="95.3333" y="2260.34" width="15.6667" height="28.9999"/>
   <object id="325" x="95.3333" y="2261.34" width="63.3333" height="27.3333"/>
-  <object id="357" x="140.667" y="2215.34" width="30" height="8.66667"/>
-  <object id="358" x="377.334" y="2208.67" width="27.3333" height="17.3333"/>
+  <object id="357" x="140" y="2224.01" width="30" height="8.66667"/>
+  <object id="358" x="382.667" y="2222" width="27.3333" height="8.66663"/>
  </objectgroup>
  <objectgroup id="17" name="Camera">
   <object id="119" name="1" x="272.667" y="2614">
