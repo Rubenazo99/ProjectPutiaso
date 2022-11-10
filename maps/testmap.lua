@@ -65,7 +65,7 @@ return {
           rotation = 0,
           visible = true,
           properties = {
-            ["attackKey"] = "'",
+            ["attackKey"] = "down",
             ["colorB"] = 0,
             ["colorG"] = 1,
             ["colorR"] = 0,

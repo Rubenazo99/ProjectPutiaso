@@ -15,17 +15,20 @@ CameraEngine = Engine()
 
 local alternativeThreshold = 75 -- change this to change all non modified threshold values
 
-local cameraZoom -- change this to change the zoom of the camera
-
 local currentPosX, currentPosY -- current position of the camera
 
-local id = 0 -- current camera id
+local currentThreshold -- current threshold value of the cameraState
+
+local id = 1 -- current camera id
 
 local cameraStates = {} -- save all the information about the camera such as its position or its threshold
 
 local camWidth, camHeight = love.graphics.getWidth(), love.graphics.getHeight()
 
 CameraSystem = class("CameraSystem", System) -- the system that makes the camera work
+
+
+-- here we load all the requirements
 
 for i, camera in pairs(require('maps/testmap').layers[4].objects) do
     table.insert(cameraStates, camera)
@@ -44,9 +47,53 @@ Cam:lookAt(currentPosX, currentPosY)
 local cameraTop = currentPosY - (camHeight / 2) -- The top position of the camera
 local cameraBottom = currentPosY + (camHeight / 2) -- Then bottom position of the camera
 
+if cameraStates[id].threshold then
+    currentThreshold = cameraStates[id].threshold
+else
+    currentThreshold = alternativeThreshold
+end
+
+currentThreshold = (100 - currentThreshold)
+
+--- requirements finished
+
 
 function CameraSystem:update(dt)
-    print(playerThresholdInCamera(playerList[1]))
+    -- Checks if you are meeting the conditions to go up a level
+    local playerPassed = {}
+    for j, i in pairs(playerList) do -- makes sure both players are inside the camera
+        if isPlayerInsideCamera(i) then
+            for k, v in pairs(playerList) do -- checks if both players are above the threshold
+                if playerThresholdInCamera(v) < currentThreshold then
+                    playerPassed[k] = true
+                else
+                    playerPassed[k] = false
+                end
+            end
+            if playerPassed[1] == true and playerPassed[2] == true then
+                nextSection() -- if both playZers are above the threshold then go up a level
+            end
+        end
+    end
+    -- Checks if you are meeting the conditions to go down a level
+end
+
+function love.keypressed(key)
+    -- Enable for debug purposes
+
+    -- if key == 'i' then
+    --     nextSection()
+    -- end
+
+    -- if key == 'c' then
+    --     for i, v in pairs(playerList) do
+    --         print(isPlayerInsideCamera(v))
+    --     end
+    -- end
+
+    -- if key == 'o' then
+    --     prevSection()
+    -- end
 end
 
 function playerThresholdInCamera(player) -- return the position of the player inside the camera as a percentage
@@ -55,10 +102,10 @@ function playerThresholdInCamera(player) -- return the position of the player in
         local percentageInCam = (playerPositionInCamera * 100) / camHeight
         return percentageInCam
     else
-        if player:get("transform").y < cameraTop then 
+        if player:get("transform").y < cameraTop then
             return 101 -- this means the player is above the camer
         else
-            return -1 -- this means the player is below the camera 
+            return -1 -- this means the player is below the camera
         end
     end
 end
@@ -69,23 +116,6 @@ function isPlayerInsideCamera(player) -- insert a player to know if he currently
         return true
     else
         return false
-    end
-end
-
-function love.keypressed(key)
-
-    if key == 'i' then
-        nextSection()
-    end
-
-    if key == 'c' then
-        for i, v in pairs(playerList) do
-            print(isPlayerInsideCamera(v))
-        end
-    end
-
-    if key == 'o' then
-        prevSection()
     end
 end
 
@@ -104,6 +134,13 @@ function nextSection()
         id = id + 1
         currentPosX = cameraStates[id].x
         currentPosY = cameraStates[id].y
+
+        if cameraStates[id].threshold then
+            currentThreshold = cameraStates[id].threshold
+        else
+            currentThreshold = alternativeThreshold
+        end
+        currentThreshold = (100 - currentThreshold)
     end
 
     Cam:lookAt(currentPosX, currentPosY)
@@ -120,6 +157,13 @@ function prevSection()
         id = id - 1
         currentPosX = cameraStates[id].x
         currentPosY = cameraStates[id].y
+
+        if cameraStates[id].threshold then
+            currentThreshold = cameraStates[id].threshold
+        else
+            currentThreshold = alternativeThreshold
+        end
+        currentThreshold = (100 - currentThreshold)
     end
 
     Cam:lookAt(currentPosX, currentPosY)
