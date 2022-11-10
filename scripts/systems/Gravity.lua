@@ -1,3 +1,5 @@
+local fixedTime = 0.003
+local ammount = 0
 
 -- Este sistema hace que haya gravedad
 
@@ -28,10 +30,15 @@ function GravitySystem:update(dt)
             -- Miramos si estamos colisionando previamente
             if collider.isColliding == false then
 
+                ammount = ammount + dt
+                if ammount > fixedTime then
+                    velocity.y = velocity.y + acceleration.y
+                    transform.y = transform.y + velocity.y * fixedTime
+                    ammount = 0
+                end
                 -- Si no hacemos la fórmula de MRUA con la velocidad y sumamos eso a la posición del jugador
                 -- si no se hace así no funcionará
-                velocity.y = velocity.y + acceleration.y
-                transform.y = transform.y + velocity.y * dt
+
 
             end
 
