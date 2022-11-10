@@ -26,21 +26,18 @@ function love.load()
 
 end
 
-
 function love.update(dt)
-    
+
     GameEngine:update(dt)
     LevelEngine:update(dt)
 
     if (love.keyboard.isDown("escape")) then love.event.quit() end
-    
-
 end
 
 function love.draw()
     -- this is needed for the camera to be able to render everything
     Cam:attach()
-     GameEngine:draw()
-     gameMap:drawLayer(gameMap.layers[1])
+    GameEngine:draw()
+    gameMap:drawLayer(gameMap.layers[1])
     Cam:detach()
 end
