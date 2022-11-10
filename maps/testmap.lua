@@ -122,9 +122,9 @@ return {
           class = "",
           shape = "rectangle",
           x = -16,
-          y = -0.666667,
+          y = 32,
           width = 48,
-          height = 3200.67,
+          height = 3168,
           rotation = 0,
           visible = true,
           properties = {}

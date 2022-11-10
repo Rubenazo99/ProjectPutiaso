@@ -42,12 +42,12 @@ defaultColor = { r = 255, g = 255, b = 255 }
 
 ]]
 
-dofile("scripts/systems/Attack.lua") -- Sistema de atacar
-dofile("scripts/systems/RecieveHit.lua") -- Sistema de recibir golpes
-dofile("scripts/systems/Gravity.lua") -- Sistema para dar gravedad
-dofile("scripts/systems/Jump.lua") -- Sistema para saltar
 dofile("scripts/systems/WallCollision.lua") -- Sistema para chequear colisiones
 dofile("scripts/systems/GroundCollision.lua") -- Sistema de colisiones de suelo
+dofile("scripts/systems/Gravity.lua") -- Sistema para dar gravedad
+dofile("scripts/systems/Attack.lua") -- Sistema de atacar
+dofile("scripts/systems/RecieveHit.lua") -- Sistema de recibir golpes
+dofile("scripts/systems/Jump.lua") -- Sistema para saltar
 dofile("scripts/systems/Movement.lua") -- Sistema del movimiento
 dofile("scripts/systems/Drawing.lua") -- Sistema que dibuja
 dofile("scripts/systems/DebugMode.lua") -- Sistema modo debug
