@@ -1,12 +1,16 @@
 local w, h = love.graphics.getDimensions()
 
---for index, player in pairs(require("maps/testmap").layers[4].objects) do
-    BackGround = Entity() --Si es local peta i no se perque
+BackGround = Entity() --Si es local peta i no se perque
 
-    BackGround:initialize()
+BackGround:initialize()
 
-    BackGround:add(Transform(-800, 100, 0, 0, 1, w - 200, h - 200, "hi"))
-    BackGround:add(Color(255, 255, 255, 1))
-    BackGround:add(Collider())
-    --BackGround:add(Velocity(300, 1))
---end
+BackGround:add(Transform(-800, 100, 0, 0, 1, w - 200, h - 200, "backGround"))
+BackGround:add(Color(255, 255, 255, 1))
+
+ExitButton = Entity()
+
+ExitButton:initialize()
+
+ExitButton:add(Transform(-700, 600, 0, 0, 1, w-200, h - 900, "exitButton")) -- "x", "y", "rotation", "scaleX", "scaleY", "width", "height", "name"
+ExitButton:add(Color(255, 1, 1, 1))
+
