@@ -1693,7 +1693,7 @@ return {
       id = 12,
       name = "Graphics",
       class = "",
-      visible = false,
+      visible = true,
       opacity = 1,
       offsetx = -1,
       offsety = -78,
