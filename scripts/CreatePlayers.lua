@@ -11,7 +11,7 @@ de tiled.
 
 ]]
 
-for index, player in pairs(require('maps/testmap').layers[1].objects) do
+for index, player in pairs(require('maps/testmapGraphics').layers[1].objects) do
     
     local newPlayer = Entity()
     local properties = player.properties
@@ -34,7 +34,6 @@ for index, player in pairs(require('maps/testmap').layers[1].objects) do
 
 
     table.insert(playerList, newPlayer)
-
 end
 
 -- Esta es una función global que te permite agarrar el número de jugadores
