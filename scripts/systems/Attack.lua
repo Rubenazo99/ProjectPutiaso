@@ -140,7 +140,7 @@ function AttackSystem:update(dt)
                             -- Hacemos un pequeño cálculo matemático sobre la fuerza vertical usando una fórmula que
                             -- me he sacado del culo, pero funciona, no tiene bases científicas, lol
 
-                            local totalForce = jump.force * math.abs(math.sin(math.rad(attackComponent.angle))) * jumpMultiplier
+                            local totalForce = jump.force * math.abs(math.sin(math.rad(attackComponent.angle))) * jumpMultiplier / 1
 
                             -- Si la fuerza es menor a un mínimo (este no se puede modificar, tiene que estar hardcodeado), hace el mínimo,
                             -- pero si es mayor entonces usa esa, no hace falta usar un math.max porque el ángulo ya se capa por si mismo
@@ -203,7 +203,7 @@ function AttackSystem:update(dt)
                         
                         local playerOrigin = transform.x + transform.width / 2
                         local wallOrigin = closestWallTransform.x + closestWallTransform.width / 2
-                        local totalForce = jumpComponent.force * math.abs(math.sin(math.rad(attackComponent.angle))) * jumpMultiplier
+                        local totalForce = jumpComponent.force * math.abs(math.sin(math.rad(attackComponent.angle))) * jumpMultiplier / 1
                         hitComponent.hit = true
 
                         if totalForce > -4 then velocityComponent.y = -4
