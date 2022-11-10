@@ -16,7 +16,7 @@ local platformWallEntities = { }
 -- Por cada valor en el index encontrado en testmap.lua (.layers[en el índice 2], objects)
 -- agarro el objeto y lo meto en la lista
 
-for index, wallObject in pairs(require('maps/testmap').layers[2].objects) do
+for index, wallObject in pairs(require('maps/testmapGraphics').layers[2].objects) do
     
     table.insert(platformWallList, wallObject)
 
@@ -41,7 +41,7 @@ end
 
 -- Lo mismo para los suelos, localizado en el valor [3] de layers
 
-for index, object in pairs(require('maps/testmap').layers[3].objects) do
+for index, object in pairs(require('maps/testmapGraphics').layers[3].objects) do
     
     table.insert(platformGroundList, object)
 
@@ -80,4 +80,3 @@ function ReturnAllWallEntities()
     return platformWallEntities
     
 end
-

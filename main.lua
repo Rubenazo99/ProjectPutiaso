@@ -38,6 +38,6 @@ function love.draw()
     -- this is needed for the camera to be able to render everything
     Cam:attach()
     GameEngine:draw()
-    gameMap:drawLayer(gameMap.layers[1])
+    gameMap:drawLayer(gameMap.layers[5])
     Cam:detach()
 end
