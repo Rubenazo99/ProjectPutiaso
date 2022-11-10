@@ -126,7 +126,7 @@ function AttackSystem:update(dt)
                         -- a 3 años luz del jugador atacante
 
                         if closestDistance < distanceFromOther or
-                        hitComponent.hit and closestDistance < distanceFromOther * 2 then
+                        hitComponent.hit and closestDistance < distanceFromOther * 4 then
                             
                             -- Agarramos el ocmponente jump del recibiente, pues tiene su valor de salto
 
