@@ -1,4 +1,4 @@
-playerList = { } -- ruben perdoon la he puesto en global porque no se como funciona la funcion get players ya que me dice que no es global (porfi no me mates)
+    playerList = { } -- ruben perdoon la he puesto en global porque no se como funciona la funcion get players ya que me dice que no es global (porfi no me mates)
 
 --[[
 
