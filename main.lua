@@ -27,24 +27,21 @@ function love.load()
     dofile("scripts/CreateMenuEngine.lua")
 end
 
-
 function love.update(dt)
-    
+
     GameEngine:update(dt)
     LevelEngine:update(dt)
     MenuEngine:update(dt)
 
     if (love.keyboard.isDown("escape")) then love.event.quit() end
-    
-
 end
 
 function love.draw()
     -- this is needed for the camera to be able to render everything
     love.graphics.setFont(mainFont)
     Cam:attach()
-     GameEngine:draw()
-     gameMap:drawLayer(gameMap.layers[1])
+    GameEngine:draw()
+    gameMap:drawLayer(gameMap.layers[5])
     Cam:detach()
     MenuEngine:draw()
 end

@@ -30,7 +30,7 @@ CameraSystem = class("CameraSystem", System) -- the system that makes the camera
 
 -- here we load all the requirements
 
-for i, camera in pairs(require('maps/testmap').layers[4].objects) do
+for i, camera in pairs(require('maps/testmapGraphics').layers[4].objects) do
     table.insert(cameraStates, camera)
 end
 
@@ -75,7 +75,18 @@ function CameraSystem:update(dt)
             end
         end
     end
+
+
     -- Checks if you are meeting the conditions to go down a level
+    local playerFallen = {}
+    for j,i in pairs(playerList) do -- both players are not inside the camera
+        if not isPlayerInsideCamera(i) then 
+            playerFallen[j] = true
+        end
+    end
+    if playerFallen[1] == true and playerFallen[2] == true then
+        prevSection() 
+    end
 end
 
 function love.keypressed(key)

@@ -112,7 +112,7 @@ function GroundCollisionSystem:update(dt)
 
                     -- Estos rayos serán activos las 24 horas pues solo mira que si tocamos el techo bajamos el jugador un poquito
 
-                    --if transformB.name ~= "PlayerA" and transformB.name ~= "PlayerB" then
+                    if transformB.name ~= "PlayerA" and transformB.name ~= "PlayerB" then
 
                         local rayC = nil
                         local rayCCollision = false
@@ -144,7 +144,7 @@ function GroundCollisionSystem:update(dt)
 
                         end
 
-                    --end
+                    end
 
 
                     -- código antiguo DO NOT ENABLE DO NOT TOUCH COMO LO TOQUES TE MATO (con cariño)
