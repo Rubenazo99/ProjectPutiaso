@@ -42,11 +42,13 @@ function WallCollisionSystem:update(dt)
 
                     if (direction.left and not direction.right) then
 
-                        local rayL1Collision, rayL2ollision = WallRayCast(transformA, transformB, -3, 0.1)
-                        if rayL1Collision or rayL2ollision then
+                        if (transformA.x - transformA.width / 2 > transformB.x and transformA.x - transformA.width / 2 < transformB.x + transformB.width )
+                        and (transformA.y + 0.2 > transformB.y and transformA.y + 0.2 < transformB.y + transformB.height) 
+                        and (transformA.x > transformB.x and transformA.x < transformB.x + transformB.width)
+                        and (transformA.y + transformA.height - 0.2 > transformB.y and transformA.y + transformA.height - 0.2 < transformB.y + transformB.height ) then
 
                             colliderA.isTouchingLeftWall = true
-                            transformA.x = transformA.x + (transformB.x + transformB.width) - (transformA.x + transformA.width) + transformA.width + 0.6
+                            transformA.x = transformA.x + (transformB.x + transformB.width) - (transformA.x + transformA.width) + transformA.width + 0.2
                             entityA:get("hitComponent").hit = false
                             entityA:get("jump").rayActive = true
                             -- Obviamente cuando pasa un frame el jugador sigue dentro un poquito, hay que corregir su posición
@@ -56,12 +58,13 @@ function WallCollisionSystem:update(dt)
                     
                     elseif (direction.right and not direction.left) then
                         
-                        local rayR1Collision, rayR2Collision = WallRayCast(transformA, transformB, 3, 0.1, transformA.width)
-                        if rayR1Collision or rayR2Collision then
+                        if (transformA.x + transformA.width * 1.5 > transformB.x and transformA.x + transformA.width * 1.5 < transformB.x + transformB.width) 
+                        and (transformA.y + 0.2 > transformB.y and transformA.y + 0.2 < transformB.y + transformB.height) 
+                        and (transformA.x + transformA.width > transformB.x and transformA.x + transformA.width < transformB.x + transformB.width) 
+                        and (transformA.y + transformA.height - 0.2 > transformB.y and transformA.y + transformA.height - 0.2 < transformB.y + transformB.height) then
 
-                            print("pac")
                             colliderA.isTouchingRightWall = true
-                            transformA.x = transformA.x - (transformA.x - transformB.x) - transformA.width - 0.6
+                            transformA.x = transformA.x - (transformA.x - transformB.x) - transformA.width - 0.1
                             entityA:get("hitComponent").hit = false
                             entityA:get("jump").rayActive = true
 
@@ -69,8 +72,10 @@ function WallCollisionSystem:update(dt)
 
                     elseif entityA:get("hitComponent").hit == true and entityB:get("velocity") == nil then
                         
-                        local rayL1Collision, rayL2ollision = WallRayCast(transformA, transformB, -3, 0.1)
-                        if rayL1Collision or rayL2ollision then
+                        if (transformA.x - transformA.width / 2 > transformB.x and transformA.x - transformA.width / 2 < transformB.x + transformB.width )
+                        and (transformA.y + 0.2 > transformB.y and transformA.y + 0.2 < transformB.y + transformB.height) 
+                        and (transformA.x > transformB.x and transformA.x < transformB.x + transformB.width)
+                        and (transformA.y + transformA.height - 0.2 > transformB.y and transformA.y + transformA.height - 0.2 < transformB.y + transformB.height ) then
 
                             transformA.x = transformA.x + (transformB.x + transformB.width) - (transformA.x + transformA.width) + transformA.width + 0.1
                             colliderA.isTouchingLeftWall = true
@@ -81,8 +86,10 @@ function WallCollisionSystem:update(dt)
 
                         else colliderA.isTouchingLeftWall = false end
 
-                        local rayR1Collision, rayR2Collision = WallRayCast(transformA, transformB, 3, 0.1, transformA.width)
-                        if rayR1Collision or rayR2Collision then
+                        if (transformA.x + transformA.width * 1.5 > transformB.x and transformA.x + transformA.width * 1.5 < transformB.x + transformB.width) 
+                        and (transformA.y + 0.2 > transformB.y and transformA.y + 0.2 < transformB.y + transformB.height) 
+                        and (transformA.x + transformA.width > transformB.x and transformA.x + transformA.width < transformB.x + transformB.width) 
+                        and (transformA.y + transformA.height - 0.2 > transformB.y and transformA.y + transformA.height - 0.2 < transformB.y + transformB.height) then
 
                             transformA.x = transformA.x - (transformA.x - transformB.x) - transformA.width - 0.1
                             colliderA.isTouchingRightWall = true
