@@ -125,7 +125,8 @@ function AttackSystem:update(dt)
                         -- Ahora, y antes de lanzarlo, nos aseguramos que está a un mínimo de distancia del jugador, si no podríamos golpearlo incluso si estuviera
                         -- a 3 años luz del jugador atacante
 
-                        if closestDistance < distanceFromOther then
+                        if closestDistance < distanceFromOther or
+                        hitComponent.hit and closestDistance < distanceFromOther * 2 then
                             
                             -- Agarramos el ocmponente jump del recibiente, pues tiene su valor de salto
 
