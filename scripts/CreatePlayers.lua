@@ -19,7 +19,7 @@ for index, player in pairs(require('maps/testmap').layers[1].objects) do
     newPlayer:initialize()
 
     newPlayer:add(Transform(player.x, player.y, 0, 0, 1, player.width, player.height, player.name))
-    newPlayer:add(Velocity(300, 1))
+    newPlayer:add(Velocity(300, 0))
     newPlayer:add(Acceleration(1, 30))
     newPlayer:add(Collider())
     newPlayer:add(Jump(properties.jumpKey, -700, false, 0, 0.13))
