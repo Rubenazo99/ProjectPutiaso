@@ -9,8 +9,8 @@ return {
   height = 60,
   tilewidth = 16,
   tileheight = 16,
-  nextlayerid = 16,
-  nextobjectid = 112,
+  nextlayerid = 17,
+  nextobjectid = 116,
   properties = {},
   tilesets = {
     {
@@ -70,7 +70,7 @@ return {
           rotation = 0,
           visible = true,
           properties = {
-            ["attackKey"] = "down",
+            ["attackKey"] = "kp7",
             ["colorB"] = 0,
             ["colorG"] = 1,
             ["colorR"] = 0,
@@ -91,7 +91,7 @@ return {
           rotation = 0,
           visible = true,
           properties = {
-            ["attackKey"] = "s",
+            ["attackKey"] = "e",
             ["colorB"] = 1,
             ["colorG"] = 0,
             ["colorR"] = 0,
@@ -206,6 +206,35 @@ return {
           y = 800,
           width = 544,
           height = 48,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        }
+      }
+    },
+    {
+      type = "objectgroup",
+      draworder = "topdown",
+      id = 16,
+      name = "Menu",
+      class = "",
+      visible = true,
+      opacity = 1,
+      offsetx = 0,
+      offsety = 0,
+      parallaxx = 1,
+      parallaxy = 1,
+      properties = {},
+      objects = {
+        {
+          id = 113,
+          name = "MenuBackGround",
+          class = "",
+          shape = "rectangle",
+          x = 151.579,
+          y = 215.761,
+          width = 236.245,
+          height = 341.394,
           rotation = 0,
           visible = true,
           properties = {}

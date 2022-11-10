@@ -32,7 +32,7 @@ for index, player in pairs(require('maps/testmap').layers[1].objects) do
 
     newPlayer:add(Color(properties.colorR, properties.colorG, properties.colorB, 1))
 
-    -- table.insert(playerList, newPlayer)
+    table.insert(playerList, newPlayer)
 
 end
 
