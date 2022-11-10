@@ -20,9 +20,9 @@ for index, player in pairs(require('maps/testmap').layers[1].objects) do
 
     newPlayer:add(Transform(player.x, player.y, 0, 0, 1, player.width, player.height, player.name))
     newPlayer:add(Velocity(300, 0))
-    newPlayer:add(Acceleration(1, 30))
+    newPlayer:add(Acceleration(1, 3100))
     newPlayer:add(Collider())
-    newPlayer:add(Jump(properties.jumpKey, -700, false, 0, 0.13))
+    newPlayer:add(Jump(properties.jumpKey, -600, false, 0, 0.13))
 
     newPlayer:add(AttackComponent(12, 12, 24, 24, true, false, 0, 1, 0, 0, 0.4, properties.attackKey, false))
     newPlayer:add(HitComponent())

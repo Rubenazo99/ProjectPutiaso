@@ -42,125 +42,86 @@ function WallCollisionSystem:update(dt)
 
                     if (direction.left and not direction.right) then
 
-                        if (transformA.x - transformA.width > transformB.x and transformA.x - transformA.width < transformB.x + transformB.width)
-                            and
-                            (transformA.y > transformB.y and transformA.y + transformA.height < transformB.y + transformB.height)
-                            and
-                            (transformA.x > transformB.x and transformA.x < transformB.x + transformB.width)
-                            and
-                            (transformA.y > transformB.y and transformA.y + transformA.height < transformB.y + transformB.height)
-
-                        then
+                        local rayL1Collision, rayL2ollision = WallRayCast(transformA, transformB, -3, 0.1)
+                        if rayL1Collision or rayL2ollision then
 
                             colliderA.isTouchingLeftWall = true
-                            transformA.x = transformA.x + (transformB.x + transformB.width) - (transformA.x + transformA.width) + transformA.width + 0.4
+                            transformA.x = transformA.x + (transformB.x + transformB.width) - (transformA.x + transformA.width) + transformA.width + 0.6
                             entityA:get("hitComponent").hit = false
                             entityA:get("jump").rayActive = true
                             -- Obviamente cuando pasa un frame el jugador sigue dentro un poquito, hay que corregir su posición
                             -- para que al dejar de mover esté contra la pared... AUNQUE hay un bug si ocurre por lo que lo movemos ligeramente a un lado
 
-
-                        else
-
-                            colliderA.isTouchingLeftWall = false
-
-                        end
+                        else colliderA.isTouchingLeftWall = false end
                     
                     elseif (direction.right and not direction.left) then
                         
-                        if (transformA.x + transformA.width * 2 > transformB.x and transformA.x + transformA.width * 2 < transformB.x + transformB.width)
-                            and
-                            (transformA.y > transformB.y and transformA.y + transformA.height < transformB.y + transformB.height)
-                            and
-                            (transformA.x + transformA.width > transformB.x and transformA.x + transformA.width < transformB.x + transformB.width)
-                            and
-                            (transformA.y > transformB.y and transformA.y + transformA.height < transformB.y + transformB.height)
+                        local rayR1Collision, rayR2Collision = WallRayCast(transformA, transformB, 3, 0.1, transformA.width)
+                        if rayR1Collision or rayR2Collision then
 
-                        then
-
+                            print("pac")
                             colliderA.isTouchingRightWall = true
-                            transformA.x = transformA.x - (transformA.x - transformB.x) - transformA.width - 0.1
+                            transformA.x = transformA.x - (transformA.x - transformB.x) - transformA.width - 0.6
+                            entityA:get("hitComponent").hit = false
                             entityA:get("jump").rayActive = true
 
-                        else
+                        else colliderA.isTouchingRightWall = false end
 
-                            colliderA.isTouchingRightWall = false
-
-                        end
-
-                    elseif entityA:get("hitComponent").hit == true then
+                    elseif entityA:get("hitComponent").hit == true and entityB:get("velocity") == nil then
                         
-                        if (
-                            transformA.x - transformA.width > transformB.x and
-                                transformA.x - transformA.width < transformB.x + transformB.width)
-                            and
-                            (
-                            transformA.y > transformB.y and
-                                transformA.y + transformA.height < transformB.y + transformB.height)
-                            and
-                            (transformA.x > transformB.x and transformA.x < transformB.x + transformB.width)
-                            and
-                            (
-                            transformA.y > transformB.y and
-                                transformA.y + transformA.height < transformB.y + transformB.height)
+                        local rayL1Collision, rayL2ollision = WallRayCast(transformA, transformB, -3, 0.1)
+                        if rayL1Collision or rayL2ollision then
 
-                        then
-
-                            transformA.x = transformA.x + (transformB.x + transformB.width) -
-                                (transformA.x + transformA.width) + transformA.width + 0.1
+                            transformA.x = transformA.x + (transformB.x + transformB.width) - (transformA.x + transformA.width) + transformA.width + 0.1
                             colliderA.isTouchingLeftWall = true
                             entityA:get("hitComponent").hit = false
                             entityA:get("jump").rayActive = true
                             -- Obviamente cuando pasa un frame el jugador sigue dentro un poquito, hay que corregir su posición
                             -- para que al dejar de mover esté contra la pared... AUNQUE hay un bug si ocurre por lo que lo movemos ligeramente a un lado
 
+                        else colliderA.isTouchingLeftWall = false end
 
-                        else
-
-                            colliderA.isTouchingLeftWall = false
-
-                        end
-
-
-                        if (
-                            transformA.x + transformA.width * 2 > transformB.x and
-                                transformA.x + transformA.width * 2 < transformB.x + transformB.width)
-                            and
-                            (
-                            transformA.y > transformB.y and
-                                transformA.y + transformA.height < transformB.y + transformB.height)
-                            and
-                            (
-                            transformA.x + transformA.width > transformB.x and
-                                transformA.x + transformA.width < transformB.x + transformB.width)
-                            and
-                            (
-                            transformA.y > transformB.y and
-                                transformA.y + transformA.height < transformB.y + transformB.height)
-
-                        then
+                        local rayR1Collision, rayR2Collision = WallRayCast(transformA, transformB, 3, 0.1, transformA.width)
+                        if rayR1Collision or rayR2Collision then
 
                             transformA.x = transformA.x - (transformA.x - transformB.x) - transformA.width - 0.1
                             colliderA.isTouchingRightWall = true
                             entityA:get("hitComponent").hit = false
                             entityA:get("jump").rayActive = true
 
-                        else
-
-                            colliderA.isTouchingRightWall = false
-
-                        end
-
-
-
+                        else colliderA.isTouchingRightWall = false end
                     end
-
                 end
-
             end
-
         end
-
     end
+end
+
+function WallRayCast(playerTransform, entityTransform, horizontalOffset, verticalOffset, playerTransformWidth)
+
+    playerTransformWidth = playerTransformWidth or 0
+
+    local rayA = nil
+    local rayACollision = false
+    local rayB = nil
+    local rayBCollision = false
+
+    rayA = { origin = { x = playerTransform.x + playerTransformWidth, y = playerTransform.y + verticalOffset },
+        final = { x = playerTransform.x + playerTransformWidth, y = playerTransform.y + verticalOffset } }
+
+    rayACollision = (rayA.origin.x > entityTransform.x and rayA.origin.x < entityTransform.x + entityTransform.width)
+        and (rayA.origin.y > entityTransform.y and rayA.origin.y < entityTransform.y + entityTransform.height)
+        and (rayA.final.x > entityTransform.x and rayA.final.x < entityTransform.x + entityTransform.width)
+        and (rayA.final.y > entityTransform.y and rayA.final.y < entityTransform.y + entityTransform.height)
+
+    rayB = { origin = { x = playerTransform.x + playerTransformWidth + horizontalOffset, y = playerTransform.y + playerTransform.height - verticalOffset },
+        final = { x = playerTransform.x + playerTransformWidth + horizontalOffset, y = playerTransform.y + playerTransform.height - verticalOffset } }
+
+    rayBCollision = (rayB.origin.x > entityTransform.x and rayB.origin.x < entityTransform.x + entityTransform.width)
+        and (rayB.origin.y > entityTransform.y and rayB.origin.y < entityTransform.y + entityTransform.height)
+        and (rayB.final.x > entityTransform.x and rayB.final.x < entityTransform.x + entityTransform.width)
+        and (rayB.final.y > entityTransform.y and rayB.final.y < entityTransform.y + entityTransform.height)
+
+    return rayACollision, rayBCollision
 
 end

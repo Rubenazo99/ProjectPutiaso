@@ -30,7 +30,7 @@ function GravitySystem:update(dt)
 
                 -- Si no hacemos la fórmula de MRUA con la velocidad y sumamos eso a la posición del jugador
                 -- si no se hace así no funcionará
-                velocity.y = velocity.y + acceleration.y * dt * 100
+                velocity.y = velocity.y + acceleration.y * dt
                 transform.y = transform.y + velocity.y * dt
 
             end
