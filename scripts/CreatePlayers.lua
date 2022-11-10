@@ -1,4 +1,4 @@
-local playerList = { }
+playerList = { } -- ruben perdoon la he puesto en global porque no se como funciona la funcion get players ya que me dice que no es global (porfi no me mates)
 
 --[[
 
@@ -31,6 +31,7 @@ for index, player in pairs(require('maps/testmap').layers[1].objects) do
     newPlayer:add(MovementKeys(properties.leftMovementKey, properties.rightMovementKey))
 
     newPlayer:add(Color(properties.colorR, properties.colorG, properties.colorB, 1))
+
 
     table.insert(playerList, newPlayer)
 

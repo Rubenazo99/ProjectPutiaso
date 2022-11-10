@@ -11,6 +11,7 @@ GameEngine:addSystem(MovementSystem())
 GameEngine:addSystem(AttackSystem())
 GameEngine:addSystem(JumpSystem())
 GameEngine:addSystem(RecieveHitSystem())
+GameEngine:addSystem(CameraSystem())
 
 if debugMode == true then GameEngine:addSystem(DebugMode()) end
 
