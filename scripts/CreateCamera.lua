@@ -87,7 +87,7 @@ function CameraSystem:update(dt)
     
     if playerFallen[1] ~= playerFallen[2] then
         showArrow("true")
-    else if playerFallen[1] == true and playerFallen[2] == true then
+    elseif playerFallen[1] == true and playerFallen[2] == true then
         prevSection()
         showArrow("false")
     end
@@ -126,7 +126,7 @@ function playerThresholdInCamera(player) -- return the position of the player in
 end
 
 function showArrow(condition) 
-    if condition 
+
 end
 
 function isPlayerInsideCamera(player) -- insert a player to know if he currently is inside the camera
