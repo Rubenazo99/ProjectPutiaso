@@ -11,7 +11,7 @@ function MenuSystem:update()
         if entity:get("transform") ~= nil then
             local transform = entity:get("transform")
             function love.keypressed(key)
-                if key == "o" then
+                if key == "escape" then
                     GameEngine:toggleSystem("GravitySystem")
                     GameEngine:toggleSystem("MovementSystem")
                     GameEngine:toggleSystem("AttackSystem")
