@@ -30,9 +30,8 @@ function GravitySystem:update(dt)
             if collider.isColliding == false then
 
                 velocity.y = velocity.y + acceleration.y * dt
-                print(velocity.y)
-                --transform.y = transform.y + velocity.y
-
+                transform.y = transform.y + math.floor(velocity.y)
+                print(math.floor(velocity.y))
                 -- Si no hacemos la fórmula de MRUA con la velocidad y sumamos eso a la posición del jugador
                 -- si no se hace así no funcionará
 
