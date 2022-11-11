@@ -29,9 +29,9 @@ function GravitySystem:update(dt)
             -- Miramos si estamos colisionando previamente
             if collider.isColliding == false then
 
-                local vel = velocity.y + acceleration.y * dt
-                velocity.y = vel
-                transform.y = transform.y + vel
+                velocity.y = velocity.y + acceleration.y * dt
+                print(velocity.y)
+                --transform.y = transform.y + velocity.y
 
                 -- Si no hacemos la fórmula de MRUA con la velocidad y sumamos eso a la posición del jugador
                 -- si no se hace así no funcionará
