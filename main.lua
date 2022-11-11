@@ -17,12 +17,12 @@ function love.load()
     sli = require("lib/sti")
     gameMap = sli("maps/testmapGraphics.lua")
 
-    dofile("/scripts/CreateComponents.lua")
-    dofile("/scripts/CreateSystem.lua")
-    dofile("/scripts/CreatePlayers.lua")
-    dofile("/scripts/CreateLevel.lua")
-    dofile("/scripts/CreateCamera.lua")
-    dofile("/scripts/CreateEngine.lua")
+    dofile("scripts/CreateComponents.lua")
+    dofile("scripts/CreateSystem.lua")
+    dofile("scripts/CreatePlayers.lua")
+    dofile("scripts/CreateLevel.lua")
+    dofile("scripts/CreateCamera.lua")
+    dofile("scripts/CreateEngine.lua")
 
 end
 
