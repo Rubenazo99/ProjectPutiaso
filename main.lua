@@ -5,6 +5,7 @@ camera = camera or require("lib/camera")
 Cam = camera()
 
 local blockCreated = false
+local timepassed = 0
 
 -- Activa las funciones debug! --
 debugMode = true
