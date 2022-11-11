@@ -1,4 +1,7 @@
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 -- Este sistema hace que haya gravedad
 
 -- Creamos el sistema de gravedad, este, mientras no estés moviendote y estes en el aire
@@ -28,6 +31,12 @@ function GravitySystem:update(dt)
             -- Miramos si estamos colisionando previamente
             if collider.isColliding == false then
 
+<<<<<<< Updated upstream
+=======
+                velocity.y = velocity.y + acceleration.y * dt
+                transform.y = transform.y + velocity.y
+
+>>>>>>> Stashed changes
                 -- Si no hacemos la fórmula de MRUA con la velocidad y sumamos eso a la posición del jugador
                 -- si no se hace así no funcionará
                 velocity.y = velocity.y + acceleration.y * dt
