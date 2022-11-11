@@ -172,3 +172,7 @@ enabled -> En modod debug, dice si se puede agarrar o no [ MODIFICABLE ]
 isBeingDragged -> Dice si está siendo agarrado o no [ NO MODIFICABLE ]
 
 ]]
+TextMenu = Component.create("textMenu",
+{"textMenu"},
+{text = string}
+)

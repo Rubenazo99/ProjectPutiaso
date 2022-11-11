@@ -2,6 +2,7 @@
 
 RecieveHitSystem = class("RecieveHitSystem", System)
 
+
 function RecieveHitSystem:require()
     return { "transform", "velocity", "hitComponent"}
 end
@@ -23,7 +24,7 @@ function RecieveHitSystem:update(dt)
             if hitComponent.hit == true then
 
                 transformComponent.x = transformComponent.x + math.cos(math.rad(hitComponent.angle)) * velocityComponent.x * horizontalMultiplier * dt
-
+                
             end
 
         end

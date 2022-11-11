@@ -51,7 +51,7 @@ dofile("scripts/systems/WallCollision.lua") -- Sistema para chequear colisiones
 dofile("scripts/systems/GroundCollision.lua") -- Sistema de colisiones de suelo
 dofile("scripts/systems/Drawing.lua") -- Sistema que dibuja
 dofile("scripts/systems/DebugMode.lua") -- Sistema modo debug
-
+dofile("scripts/systems/MenuSystem.lua") -- Sistema de menu
 -- Funciones random
 
 function Lerp(a, b, t)
@@ -61,3 +61,4 @@ end
 function CalculateModule(ax, ay, bx, by)
     return math.sqrt((bx - ax)^2 + (by - ay)^2)
 end
+
