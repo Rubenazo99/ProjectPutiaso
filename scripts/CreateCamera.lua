@@ -92,9 +92,9 @@ end
 function love.keypressed(key)
     -- Enable for debug purposes
 
-    -- if key == 'i' then
-    --     nextSection()
-    -- end
+    if key == 'i' then
+        nextSection()
+    end
 
     -- if key == 'c' then
     --     for i, v in pairs(playerList) do
