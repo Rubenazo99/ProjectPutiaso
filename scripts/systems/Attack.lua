@@ -10,6 +10,10 @@ function AttackSystem:require()
     return { "transform", "collider", "attackComponent", "movementKeys"}
 end
 
+--Tabla de sonidos
+SoundTable = {hit1,hit2}
+
+
 function AttackSystem:update(dt)
 
     for _, entity in pairs(self.targets) do
@@ -49,19 +53,20 @@ function AttackSystem:update(dt)
                         transform.height = attackComponent.minHeight
                         attackComponent.alreadyScaled = true
 
+                        
                     end
                     
-
+                    
                     -- Aquí vamos sumando el tiempo que carga hasta su máximo, una vez llegues a tu máximo, si todavía no has dejado de atacar
                     -- se mantendrá en el máximo
-
+                    
                     attackComponent.chargingTime = attackComponent.chargingTime + dt
-
+                    
                     local total = attackComponent.chargingTime / attackComponent.chargingMaxTime
                     local frameScale = transform.width
 
                     attackComponent.angle = Lerp(minAngle, maxAngle, total)
-
+                    
                     --[[
                     transform.width = Lerp(attackComponent.maxWidth, attackComponent.minWidth, total)
                     transform.x = transform.x + (frameScale - transform.width) / 2
@@ -70,12 +75,13 @@ function AttackSystem:update(dt)
                     ]]
 
                 elseif attackComponent.charging == false and attackComponent.chargingTime > 0 then
+                    SoundTable[love.math.random(1, 2)]:play()
 
                     if GetNumberOfPlayers() > 1 then
-
+                        
                         -- Si ya no estamos cargando y  el tiempo de carga es mayor que cero, entonces dejamos de
                         -- cargar, pero hacemos lo siguiente: pillamos todos los jugadores en la partida
-
+                        
                         local playerList = { }
 
                         -- Y por cada jugador aparte del jugador atacante, se mete en la lista playerList

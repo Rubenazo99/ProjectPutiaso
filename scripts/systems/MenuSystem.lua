@@ -1,4 +1,4 @@
-local menuTancat = true
+menuTancat = true
 
 MenuSystem = class("MenuSystem", System)
 
@@ -12,7 +12,6 @@ function MenuSystem:update()
             local transform = entity:get("transform")
             function love.keypressed(key)
                 if key == "o" then
-                    --transform.x = -800
                     GameEngine:toggleSystem("GravitySystem")
                     GameEngine:toggleSystem("MovementSystem")
                     GameEngine:toggleSystem("AttackSystem")
@@ -38,5 +37,9 @@ function MenuSystem:update()
                 end
             end
         end
+        -- if entity:get("textMenu") ~= nil then
+        --     local transform = entity:get("transform")
+
+        -- end    
     end
 end
