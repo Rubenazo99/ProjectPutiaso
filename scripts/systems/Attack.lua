@@ -7,7 +7,7 @@
 AttackSystem = class("AttackSystem", System)
 
 function AttackSystem:require()
-    return { "transform", "collider", "attackComponent", "movementKeys"}
+    return { "transform", "collider", "attackComponent", "movementKeys" }
 end
 
 --Tabla de sonidos
@@ -42,11 +42,11 @@ function AttackSystem:update(dt)
 
                 if attackComponent.charging == true and attackComponent.chargingTime < attackComponent.chargingMaxTime then
 
-                    
+
                     -- Esto solo se ejecutará una vez, esto encoje al jugador, y lo desplaza acorde con la diferencia de estatura que
                     -- el jugador atacante recibe.
 
-                    
+
                     if attackComponent.alreadyScaled == false then
 
                         transform.y = transform.y + attackComponent.maxWidth - attackComponent.minWidth
@@ -55,8 +55,8 @@ function AttackSystem:update(dt)
 
                         
                     end
-                    
-                    
+
+
                     -- Aquí vamos sumando el tiempo que carga hasta su máximo, una vez llegues a tu máximo, si todavía no has dejado de atacar
                     -- se mantendrá en el máximo
                     
@@ -87,14 +87,15 @@ function AttackSystem:update(dt)
                         
                         -- Si ya no estamos cargando y  el tiempo de carga es mayor que cero, entonces dejamos de
                         -- cargar, pero hacemos lo siguiente: pillamos todos los jugadores en la partida
-                        
-                        local playerList = { }
+
+                        local playerList = {}
 
                         -- Y por cada jugador aparte del jugador atacante, se mete en la lista playerList
 
                         for _, targetEntity in pairs(self.targets) do
 
-                            if transform.name ~= targetEntity:get("transform").name and targetEntity:get("attackComponent") ~= nil then
+                            if transform.name ~= targetEntity:get("transform").name and
+                                targetEntity:get("attackComponent") ~= nil then
                                 table.insert(playerList, targetEntity)
                             end
 
@@ -108,12 +109,15 @@ function AttackSystem:update(dt)
 
                         -- ... declaramos el vector del jugador y el target, usando el módulo de los dos vectores.
 
-                        local playerVector = { x = transform.x + transform.width / 2, y = transform.y + transform.height / 2}
-                        local targetVector = { x = closestPlayerTransform.x + closestPlayerTransform.width / 2, y = closestPlayerTransform.y + closestPlayerTransform.height / 2}
-                        
+                        local playerVector = { x = transform.x + transform.width / 2,
+                            y = transform.y + transform.height / 2 *dt}
+                        local targetVector = { x = closestPlayerTransform.x + closestPlayerTransform.width / 2,
+                            y = closestPlayerTransform.y + closestPlayerTransform.height / 2 }
+
                         -- Y lo calculamos con una pequeña función que he hecho abajo del todo.
 
-                        local closestDistance = CalculateModule(playerVector.x, playerVector.y, targetVector.x, targetVector.y)
+                        local closestDistance = CalculateModule(playerVector.x, playerVector.y, targetVector.x,
+                            targetVector.y)
 
                         -- Ahora debemos pillar el jugador más cercano al jugador atacante. Si encuentra a uno más cercano substituye las variables
                         -- closestPlayer y closestDistance, y al acabar mete al más cercano (así es escalable con más jugadores), pero no funcionará si dos
@@ -123,12 +127,15 @@ function AttackSystem:update(dt)
 
                             closestPlayer = player
                             closestPlayerTransform = closestPlayer:get("transform")
-                            targetVector = { x = closestPlayerTransform.x + closestPlayerTransform.width / 2, y = closestPlayerTransform.y + closestPlayerTransform.height / 2}
+                            targetVector = { x = closestPlayerTransform.x + closestPlayerTransform.width / 2,
+                                y = closestPlayerTransform.y + closestPlayerTransform.height / 2 }
 
-                            if CalculateModule(playerVector.x, playerVector.y, targetVector.x, targetVector.y) < closestDistance then
-                                
+                            if CalculateModule(playerVector.x, playerVector.y, targetVector.x, targetVector.y) <
+                                closestDistance then
+
                                 closestPlayer = player
-                                closestDistance = CalculateModule(playerVector.x, playerVector.y, targetVector.x, targetVector.y)
+                                closestDistance = CalculateModule(playerVector.x, playerVector.y, targetVector.x,
+                                    targetVector.y)
 
                             end
 
@@ -138,8 +145,8 @@ function AttackSystem:update(dt)
                         -- a 3 años luz del jugador atacante
 
                         if closestDistance < distanceFromOther or
-                        hitComponent.hit and closestDistance < distanceFromOther * 4 then
-                            
+                            hitComponent.hit and closestDistance < distanceFromOther * 4 then
+
                             -- Agarramos el ocmponente jump del recibiente, pues tiene su valor de salto
 
                             local jump = closestPlayer:get("jump");
@@ -152,7 +159,8 @@ function AttackSystem:update(dt)
                             -- Hacemos un pequeño cálculo matemático sobre la fuerza vertical usando una fórmula que
                             -- me he sacado del culo, pero funciona, no tiene bases científicas, lol
 
-                            local totalForce = jump.force * math.abs(math.sin(math.rad(attackComponent.angle))) * jumpMultiplier
+                            local totalForce = jump.force * math.abs(math.sin(math.rad(attackComponent.angle))) *
+                                jumpMultiplier
 
                             -- Si la fuerza es menor a un mínimo (este no se puede modificar, tiene que estar hardcodeado), hace el mínimo,
                             -- pero si es mayor entonces usa esa, no hace falta usar un math.max porque el ángulo ya se capa por si mismo
@@ -189,17 +197,18 @@ function AttackSystem:update(dt)
                     transform.y = (transform.y - (transform.y - transform.y)) - attackComponent.maxHeight
 
                     -- Aquí miramos is estamos cerca de una pared, y si lo és nos empujamos en el lado opuesto
-                    
+
                     local closestWall = nil
                     local distance = 1000
                     local transformWall = nil
 
                     for index, wallEntity in pairs(ReturnAllWallEntities()) do
-                        
+
                         transformWall = wallEntity:get("transform")
-                        local newDistance = math.abs(transformWall.x + transformWall.width / 2 - (transform.x + transform.width / 2 ))
- 
-                        if newDistance < distance then 
+                        local newDistance = math.abs(transformWall.x + transformWall.width / 2 -
+                            (transform.x + transform.width / 2))
+
+                        if newDistance < distance then
 
                             if transform.y > transformWall.y and transform.y < transformWall.y + transformWall.height then
                                 distance = math.abs(newDistance)
@@ -212,10 +221,11 @@ function AttackSystem:update(dt)
                     local closestWallTransform = closestWall:get("transform")
 
                     if distance < distanceFromWall then
-                        
+
                         local playerOrigin = transform.x + transform.width / 2
                         local wallOrigin = closestWallTransform.x + closestWallTransform.width / 2
-                        local totalForce = jumpComponent.force * math.abs(math.sin(math.rad(attackComponent.angle))) * jumpMultiplier
+                        local totalForce = jumpComponent.force * math.abs(math.sin(math.rad(attackComponent.angle))) *
+                            jumpMultiplier
                         hitComponent.hit = true
 
                         if totalForce > -4 then velocityComponent.y = -4
