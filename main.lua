@@ -16,10 +16,13 @@ love.graphics.setDefaultFilter("nearest", "nearest")
 function love.load()
     --Cargamos los sonidos
     music = love.audio.newSource("music.wav", "stream")
-    music:setVolume(0.5)
+    --music:setVolume(0.5)
+    --Sonidos de hit
     hit1 = love.audio.newSource("hit1.wav", "static")
     hit2 = love.audio.newSource("hit2.wav", "static")
-
+    --Sonidos voz
+    FraseRuben1 = love.audio.newSource("Audios/FraseRuben1.mp3", "static")
+    
     mainFont = love.graphics.newFont("Minecraft.ttf", 35)
     sli = require("lib/sti")
     gameMap = sli("maps/testmapGraphics.lua")
@@ -55,7 +58,10 @@ function love.draw()
     if not menuTancat then
         --printem el text per a sortir
         love.graphics.setColor(0, 0, 0, 1)
-        love.graphics.print("Space to EXIT", 110, h/2) 
+        love.graphics.print("Space to EXIT", 110, h / 2)
         love.graphics.setColor(255, 255, 255, 1)
+        if not music:isPlaying() then
+            love.audio.play(music)
+        end
     end
 end

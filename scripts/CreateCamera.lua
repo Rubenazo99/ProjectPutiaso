@@ -178,8 +178,9 @@ function prevSection()
     end
 
     Cam:lookAt(currentPosX, currentPosY)
+    --Si te caes al principio suena el audio de tirar parriba
     if id == 1 then
-        hit1:play()
+        FraseRuben1:play()
     end
 
     cameraBottom = currentPosY + (camHeight / 2) -- Then bottom position of the camera

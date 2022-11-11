@@ -1,5 +1,4 @@
 local menuTancat = true
-love.audio.play(music)
 MenuSystem = class("MenuSystem", System)
 
 function MenuSystem:require()
