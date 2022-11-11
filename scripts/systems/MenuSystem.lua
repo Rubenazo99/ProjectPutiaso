@@ -1,5 +1,5 @@
-menuTancat = true
-
+local menuTancat = true
+love.audio.play(music)
 MenuSystem = class("MenuSystem", System)
 
 function MenuSystem:require()
@@ -18,18 +18,14 @@ function MenuSystem:update()
                     GameEngine:toggleSystem("JumpSystem")
                     GameEngine:toggleSystem("RecieveHitSystem")
                     if not menuTancat then --obert
-                        --print("dalt")
                         transform.x = -800
+                        love.audio.play(music)
                         menuTancat = true
-                        print(menuTancat) -- true
                     elseif menuTancat then --tancat
                         transform.x = 100
+                        --parem la musica
+                        love.audio.pause(music)
                         menuTancat = not menuTancat
-                        print(menuTancat) --false
-
-                        -- Draws "Hello world!" at position x: 100, y: 200 with the custom font applied.
-                        love.graphics.print("Space to exit", 100, 600)
-                    --print("baix")
                     end
                 end
                 if (key == "space") and not menuTancat then
@@ -40,6 +36,6 @@ function MenuSystem:update()
         -- if entity:get("textMenu") ~= nil then
         --     local transform = entity:get("transform")
 
-        -- end    
+        -- end
     end
 end

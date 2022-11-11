@@ -1,3 +1,4 @@
+local w, h = love.graphics.getDimensions()
 local lovetoys = require("lovetoys")
 lovetoys.initialize({globals = true, debug = true})
 
@@ -41,11 +42,6 @@ function love.update(dt)
     -- if (love.keyboard.isDown("escape")) then
     --     love.event.quit()
     -- end
-
-    if menuTancat then
-        love.audio.play(music)
-        
-    end
 end
 
 function love.draw()
@@ -57,12 +53,9 @@ function love.draw()
     Cam:detach()
     MenuEngine:draw()
     if not menuTancat then
-        --parem la musica 
-        love.audio.pause(music)
-
         --printem el text per a sortir
         love.graphics.setColor(0, 0, 0, 1)
-        love.graphics.print("Space to EXIT", 110, 600) 
+        love.graphics.print("Space to EXIT", 110, h/2) 
         love.graphics.setColor(255, 255, 255, 1)
     end
 end
