@@ -14,6 +14,7 @@ love.graphics.setDefaultFilter("nearest", "nearest")
 function love.load()
     --Cargamos los sonidos
     music = love.audio.newSource("music.wav", "stream")
+    music:setVolume(0.5)
     hit1 = love.audio.newSource("hit1.wav", "static")
     hit2 = love.audio.newSource("hit2.wav", "static")
 
@@ -42,6 +43,7 @@ function love.update(dt)
 
     if menuTancat then
         love.audio.play(music)
+        
     end
 end
 

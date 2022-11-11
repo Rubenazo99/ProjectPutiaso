@@ -178,6 +178,9 @@ function prevSection()
     end
 
     Cam:lookAt(currentPosX, currentPosY)
+    if id == 1 then
+        hit1:play()
+    end
 
     cameraBottom = currentPosY + (camHeight / 2) -- Then bottom position of the camera
     cameraTop = currentPosY - (camHeight / 2) -- The top position of the camera
