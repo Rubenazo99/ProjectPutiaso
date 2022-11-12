@@ -79,9 +79,11 @@ function AttackSystem:update(dt)
                     --suena el sonido
                     SoundTable[love.math.random(1, 2)]:play()
                     
-                    --ponemos un pitch random, se puede ajusta los maximos y minimos
-                    hit1:setPitch(love.math.random(0.8, 1.5))
-                    hit2:setPitch(love.math.random(0.8, 1.5))
+                    --ponemos un pitch random, se puede ajusta los maximos y minimos, primero reseteamos
+                    hit1:setPitch(1)
+                    hit2:setPitch(1)
+                    hit1:setPitch(love.math.random(0.9, 1.3))
+                    hit2:setPitch(love.math.random(0.9, 1.3))
                     
                     if GetNumberOfPlayers() > 1 then
                         
