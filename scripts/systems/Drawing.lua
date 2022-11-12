@@ -19,15 +19,17 @@ function DrawingSystem:draw()
 
         if color == nil then
 
-            love.graphics.setColor(color.r, color.g, color.b, color.a)
+            love.graphics.setColor(1, 1, 1, 1)
             love.graphics.rectangle("fill", entity:get("transform").x, entity:get("transform").y,
                 entity:get("transform").width, entity:get("transform").height)
             love.graphics.setColor(1, 1, 1, 1)
 
         else
             
+            love.graphics.setColor(love.math.colorFromBytes(color.r, color.b, color.g))
             love.graphics.rectangle("fill", entity:get("transform").x, entity:get("transform").y,
                 entity:get("transform").width, entity:get("transform").height)
+            love.graphics.setColor(1, 1, 1, 1)
 
         end
 

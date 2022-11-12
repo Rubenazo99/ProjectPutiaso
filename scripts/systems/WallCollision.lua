@@ -42,117 +42,61 @@ function WallCollisionSystem:update(dt)
 
                     if (direction.left and not direction.right) then
 
-                        if (transformA.x - transformA.width > transformB.x and transformA.x - transformA.width < transformB.x + transformB.width)
-                            and
-                            (transformA.y > transformB.y and transformA.y + transformA.height < transformB.y + transformB.height)
-                            and
-                            (transformA.x > transformB.x and transformA.x < transformB.x + transformB.width)
-                            and
-                            (transformA.y > transformB.y and transformA.y + transformA.height < transformB.y + transformB.height)
-
-                        then
+                        if (transformA.x - transformA.width / 2 > transformB.x and transformA.x - transformA.width / 2 < transformB.x + transformB.width )
+                        and (transformA.y + 0.2 > transformB.y and transformA.y + 0.2 < transformB.y + transformB.height) 
+                        and (transformA.x > transformB.x and transformA.x < transformB.x + transformB.width)
+                        and (transformA.y + transformA.height - 0.2 > transformB.y and transformA.y + transformA.height - 0.2 < transformB.y + transformB.height ) then
 
                             colliderA.isTouchingLeftWall = true
-                            transformA.x = transformA.x + (transformB.x + transformB.width) - (transformA.x + transformA.width) + transformA.width + 0.4
+                            transformA.x = transformA.x + (transformB.x + transformB.width) - (transformA.x + transformA.width) + transformA.width + 0.2
                             entityA:get("hitComponent").hit = false
                             entityA:get("jump").rayActive = true
                             -- Obviamente cuando pasa un frame el jugador sigue dentro un poquito, hay que corregir su posición
                             -- para que al dejar de mover esté contra la pared... AUNQUE hay un bug si ocurre por lo que lo movemos ligeramente a un lado
 
-
-                        else
-
-                            colliderA.isTouchingLeftWall = false
-
-                        end
+                        else colliderA.isTouchingLeftWall = false end
                     
                     elseif (direction.right and not direction.left) then
                         
-                        if (transformA.x + transformA.width * 2 > transformB.x and transformA.x + transformA.width * 2 < transformB.x + transformB.width)
-                            and
-                            (transformA.y > transformB.y and transformA.y + transformA.height < transformB.y + transformB.height)
-                            and
-                            (transformA.x + transformA.width > transformB.x and transformA.x + transformA.width < transformB.x + transformB.width)
-                            and
-                            (transformA.y > transformB.y and transformA.y + transformA.height < transformB.y + transformB.height)
-
-                        then
+                        if (transformA.x + transformA.width * 1.5 > transformB.x and transformA.x + transformA.width * 1.5 < transformB.x + transformB.width) 
+                        and (transformA.y + 0.2 > transformB.y and transformA.y + 0.2 < transformB.y + transformB.height) 
+                        and (transformA.x + transformA.width > transformB.x and transformA.x + transformA.width < transformB.x + transformB.width) 
+                        and (transformA.y + transformA.height - 0.2 > transformB.y and transformA.y + transformA.height - 0.2 < transformB.y + transformB.height) then
 
                             colliderA.isTouchingRightWall = true
                             transformA.x = transformA.x - (transformA.x - transformB.x) - transformA.width - 0.1
+                            entityA:get("hitComponent").hit = false
                             entityA:get("jump").rayActive = true
 
-                        else
+                        else colliderA.isTouchingRightWall = false end
 
-                            colliderA.isTouchingRightWall = false
-
-                        end
-
-                    elseif entityA:get("hitComponent").hit == true then
+                    elseif entityA:get("hitComponent").hit == true and entityB:get("velocity") == nil then
                         
-                        if (
-                            transformA.x - transformA.width > transformB.x and
-                                transformA.x - transformA.width < transformB.x + transformB.width)
-                            and
-                            (
-                            transformA.y > transformB.y and
-                                transformA.y + transformA.height < transformB.y + transformB.height)
-                            and
-                            (transformA.x > transformB.x and transformA.x < transformB.x + transformB.width)
-                            and
-                            (
-                            transformA.y > transformB.y and
-                                transformA.y + transformA.height < transformB.y + transformB.height)
+                        if (transformA.x - transformA.width / 2 > transformB.x and transformA.x - transformA.width / 2 < transformB.x + transformB.width )
+                        and (transformA.y + 0.2 > transformB.y and transformA.y + 0.2 < transformB.y + transformB.height) 
+                        and (transformA.x > transformB.x and transformA.x < transformB.x + transformB.width)
+                        and (transformA.y + transformA.height - 0.2 > transformB.y and transformA.y + transformA.height - 0.2 < transformB.y + transformB.height ) then
 
-                        then
-
-                            transformA.x = transformA.x + (transformB.x + transformB.width) -
-                                (transformA.x + transformA.width) + transformA.width + 0.1
+                            transformA.x = transformA.x + (transformB.x + transformB.width) - (transformA.x + transformA.width) + transformA.width + 0.1
                             colliderA.isTouchingLeftWall = true
                             entityA:get("hitComponent").hit = false
                             entityA:get("jump").rayActive = true
                             -- Obviamente cuando pasa un frame el jugador sigue dentro un poquito, hay que corregir su posición
                             -- para que al dejar de mover esté contra la pared... AUNQUE hay un bug si ocurre por lo que lo movemos ligeramente a un lado
 
+                        else colliderA.isTouchingLeftWall = false end
 
-                        else
-
-                            colliderA.isTouchingLeftWall = false
-
-                        end
-
-
-                        if (
-                            transformA.x + transformA.width * 2 > transformB.x and
-                                transformA.x + transformA.width * 2 < transformB.x + transformB.width)
-                            and
-                            (
-                            transformA.y > transformB.y and
-                                transformA.y + transformA.height < transformB.y + transformB.height)
-                            and
-                            (
-                            transformA.x + transformA.width > transformB.x and
-                                transformA.x + transformA.width < transformB.x + transformB.width)
-                            and
-                            (
-                            transformA.y > transformB.y and
-                                transformA.y + transformA.height < transformB.y + transformB.height)
-
-                        then
+                        if (transformA.x + transformA.width * 1.5 > transformB.x and transformA.x + transformA.width * 1.5 < transformB.x + transformB.width) 
+                        and (transformA.y + 0.2 > transformB.y and transformA.y + 0.2 < transformB.y + transformB.height) 
+                        and (transformA.x + transformA.width > transformB.x and transformA.x + transformA.width < transformB.x + transformB.width) 
+                        and (transformA.y + transformA.height - 0.2 > transformB.y and transformA.y + transformA.height - 0.2 < transformB.y + transformB.height) then
 
                             transformA.x = transformA.x - (transformA.x - transformB.x) - transformA.width - 0.1
                             colliderA.isTouchingRightWall = true
                             entityA:get("hitComponent").hit = false
                             entityA:get("jump").rayActive = true
 
-                        else
-
-                            colliderA.isTouchingRightWall = false
-
-                        end
-
-
-
+                        else colliderA.isTouchingRightWall = false end
                     end
 
                 end
