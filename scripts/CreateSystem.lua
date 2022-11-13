@@ -51,6 +51,7 @@ dofile("scripts/systems/WallCollision.lua") -- Sistema para chequear colisiones
 dofile("scripts/systems/GroundCollision.lua") -- Sistema de colisiones de suelo
 dofile("scripts/systems/Drawing.lua") -- Sistema que dibuja
 dofile("scripts/systems/DebugMode.lua") -- Sistema modo debug
+dofile("scripts/systems/PlayerArrow.lua") -- Para la flecha
 
 -- Funciones random
 

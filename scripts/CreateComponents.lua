@@ -172,3 +172,7 @@ enabled -> En modod debug, dice si se puede agarrar o no [ MODIFICABLE ]
 isBeingDragged -> Dice si está siendo agarrado o no [ NO MODIFICABLE ]
 
 ]]
+
+ImageComponent = Component.create("ImageComponent",{"image"},{nil})
+
+ShowComponent = Component.create("ShowComponent",{"show"},{false})

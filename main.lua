@@ -14,6 +14,9 @@ love.graphics.setDefaultFilter("nearest", "nearest")
 
 function love.load()
 
+    arrowImagea = love.graphics.newImage("images/arrow.png")
+
+
     sli = require("lib/sti")
     gameMap = sli("maps/testmapGraphics.lua")
 
@@ -30,6 +33,7 @@ function love.update(dt)
 
     GameEngine:update(dt)
     LevelEngine:update(dt)
+    CameraEngine:update(dt)
 
     if (love.keyboard.isDown("escape")) then love.event.quit() end
 end

@@ -47,6 +47,10 @@ Cam:lookAt(currentPosX, currentPosY)
 local cameraTop = currentPosY - (camHeight / 2) -- The top position of the camera
 local cameraBottom = currentPosY + (camHeight / 2) -- Then bottom position of the camera
 
+function getCameraBottom()
+    return cameraBottom
+end
+
 if cameraStates[id].threshold then
     currentThreshold = cameraStates[id].threshold
 else
@@ -71,7 +75,7 @@ function CameraSystem:update(dt)
                 end
             end
             if playerPassed[1] == true and playerPassed[2] == true then
-                nextSection() -- if both playZers are above the threshold then go up a level
+                nextSection() -- if both players are above the threshold then go up a level
             end
         end
     end
@@ -184,3 +188,56 @@ function prevSection()
 end
 
 CameraEngine:addSystem(CameraSystem())
+
+
+
+
+
+
+------------------ PROBANDO UNA COSA
+
+PlayerArrowSystem = class("PlayerArrowSystem", System)
+
+function PlayerArrowSystem:initialize()
+end
+
+local w, h = love.graphics.getWidth(), love.graphics.getHeight()
+
+playerArrow = Entity()
+
+playerArrow:initialize()
+
+local transform = playerArrow:add(Transform())
+local showComponent = playerArrow:add(ShowComponent())
+
+local offset = 10
+local travelDistance = 20
+
+local currentDistance = 0
+local travelSpeed = 10
+
+function PlayerArrowSystem:requires()
+    return {"transform", "ImageComponent", "ShowComponent"}
+end
+
+function showArrow(show)
+    if show ~= nil then
+        showComponent = show
+    end
+end
+
+function PlayerArrowSystem:update(dt)
+    if showComponent then
+        bottom = getCameraBottom()
+
+        if currentDistance < 1 then
+            currentDistance = currentDistance + travelSpeed * dt
+        else
+            if currentDistance > travelDistance then
+                currentDistance = currentDistance - travelSpeed * dt
+            end
+            transform.y = bottom - offset - currentDistance
+        end
+    end
+end
+
