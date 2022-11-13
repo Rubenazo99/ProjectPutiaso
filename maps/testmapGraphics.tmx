@@ -7,7 +7,7 @@
   <image source="testTileset.png" width="256" height="352"/>
  </tileset>
  <objectgroup id="16" name="Players">
-  <object id="230" name="PlayerB" x="292.166" y="6127.17" width="22" height="24">
+  <object id="230" name="PlayerB" x="292" y="6128" width="24" height="24">
    <properties>
     <property name="attackKey" value="down"/>
     <property name="colorB" type="int" value="0"/>
@@ -18,7 +18,7 @@
     <property name="rightMovementKey" value="right"/>
    </properties>
   </object>
-  <object id="231" name="PlayerA" x="235.833" y="6127.17" width="24" height="24">
+  <object id="231" name="PlayerA" x="228" y="6128" width="24" height="24">
    <properties>
     <property name="attackKey" value="e"/>
     <property name="colorB" type="int" value="233"/>
