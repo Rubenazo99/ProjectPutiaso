@@ -25,6 +25,8 @@ local cameraStates = {} -- save all the information about the camera such as its
 
 local camWidth, camHeight = love.graphics.getWidth(), love.graphics.getHeight()
 
+TablaFrasesCaerse = {FraseRuben1}
+
 CameraSystem = class("CameraSystem", System) -- the system that makes the camera work
 
 -- here we load all the requirements
@@ -96,6 +98,15 @@ function CameraSystem:update(dt)
     end
 end
 
+function drawTuto() --dibujar el tuto solo si esta en el 1 nivel
+    if id == 1 then
+        --love.graphics.print("  W", 55, 750)
+        --love.graphics.print("A S D", 51, 800) --hardcoded no digo que no, pero el 2n valor de este debe ser 4 menos que el de arriba
+        love.graphics.draw(wasdKeys, 40, 750, 0, 0.2, 0.2)
+        love.graphics.draw(arrowKeys, 40+ 540 -200, 750, 0, 0.2, 0.2) --40 es random pero 540(width) -200 es para que este en el lado opuesto symetrico
+    end
+end
+
 function love.keypressed(key)
     -- Enable for debug purposes
     -- if key == 'i' then
@@ -129,7 +140,7 @@ function showArrow(condition)
 end
 
 function isPlayerInsideCamera(player) -- insert a player to know if he currently is inside the camera
-    if player:get("transform").y >= cameraTop and player:get("transform").y <= cameraBottom - 20 then --  checks if the player is between those two positions
+    if player:get("transform").y >= cameraTop and player:get("transform").y <= cameraBottom then --  checks if the player is between those two positions
         return true
     else
         return false
@@ -167,17 +178,27 @@ end
 
 -- function to change to the previous section
 function prevSection()
-    id = id - 1
+    if cameraStates[id - 1] then -- checks if the previous level is null or not
+        id = id - 1
+        currentPosX = cameraStates[id].x
+        currentPosY = cameraStates[id].y
 
-    if cameraStates[id].threshold then
-        currentThreshold = cameraStates[id].threshold
-    else
-        currentThreshold = alternativeThreshold
+        if cameraStates[id].threshold then
+            currentThreshold = cameraStates[id].threshold
+        else
+            currentThreshold = alternativeThreshold
+        end
+        currentThreshold = (100 - currentThreshold)
     end
     currentThreshold = (100 - currentThreshold)
     currentPosY = cameraStates[id].y
 
     Cam:lookAt(currentPosX, currentPosY)
+    --Si te caes al principio suena el audio de tirar parriba
+    if id == 1 then
+        TablaFrasesCaerse[love.math.random(1,1)]:play()
+        --FraseRuben1:play()
+    end
 
     cameraBottom = currentPosY + (camHeight / 2) -- Then bottom position of the camera
     cameraTop = currentPosY - (camHeight / 2) -- The top position of the camera

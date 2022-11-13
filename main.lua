@@ -1,3 +1,4 @@
+local w, h = love.graphics.getDimensions()
 local lovetoys = require("lovetoys")
 lovetoys.initialize({globals = true, debug = true})
 local w, h = love.graphics.getWidth(), love.graphics.getHeight()
@@ -10,6 +11,8 @@ Cam = camera()
 local blockCreated = false
 local timepassed = 0
 
+w, h = love.graphics.getDimensions()
+
 -- Activa las funciones debug! --
 debugMode = true
 show = false
@@ -18,12 +21,17 @@ love.graphics.setDefaultFilter("nearest", "nearest")
 
 function love.load()
     tick.framerate = 30
+    --cargamos las imagenes del tuto
+    arrowKeys = love.graphics.newImage("ArrowKeys.png")
+    wasdKeys = love.graphics.newImage("WASDKeys.png")
     --Cargamos los sonidos
     music = love.audio.newSource("music.wav", "stream")
+    --Sonidos de hit
     hit1 = love.audio.newSource("hit1.wav", "static")
     hit2 = love.audio.newSource("hit2.wav", "static")
-
-    arrow = love.graphics.newImage("flecha.png")
+    --Sonidos voz
+    FraseRuben1 = love.audio.newSource("Audios/FraseRuben1.mp3", "static")
+    
     mainFont = love.graphics.newFont("Minecraft.ttf", 35)
     sli = require("lib/sti")
     gameMap = sli("maps/testmapGraphics.lua")
@@ -36,12 +44,15 @@ function love.load()
     dofile("scripts/CreateEngine.lua")
     dofile("scripts/CreateMenu.lua")
     dofile("scripts/CreateMenuEngine.lua")
+    dofile("scripts/CreateVolume.lua")
+    dofile("scripts/CreateVolumeEngine.lua")
 end
 
 function love.update(dt)
     GameEngine:update(dt)
     LevelEngine:update(dt)
     MenuEngine:update(dt)
+    VolumeEngine:update(dt)
 
     if menuTancat then
         love.audio.play(music)
@@ -57,13 +68,17 @@ function love.draw()
     love.graphics.draw(arrow,w/2,getCameraBottom()-10)
     Cam:detach()
     MenuEngine:draw()
+    VolumeEngine:draw()
     if not menuTancat then
-        --parem la musica 
-        love.audio.pause(music)
-
         --printem el text per a sortir
         love.graphics.setColor(0, 0, 0, 1)
-        love.graphics.print("Space to EXIT", 110, 600) 
+        love.graphics.print("Space to EXIT", 110, h / 2)
         love.graphics.setColor(255, 255, 255, 1)
     end
+    drawTuto()
 end
+
+-- function drawTuto() 
+--     love.graphics.print("  W", 55, 750) 
+--     love.graphics.print("A S D", 51, 800) --hardcoded no digo que no, pero el 2n valor de este debe ser 4 menos que el de arriba
+-- end

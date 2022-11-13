@@ -24,14 +24,14 @@ for index, player in pairs(require('maps/testmapGraphics').layers[1].objects) do
     newPlayer:add(Collider())
     newPlayer:add(Jump(properties.jumpKey, -9.5, false, 0, 0.13))
 
-    newPlayer:add(AttackComponent(12, 12, 24, 24, true, false, 0, 1, 0, 0, 0.4, properties.attackKey, false))
+    newPlayer:add(AttackComponent(12, 12, 24, 24, true, false, 0, 1, 0, 0, 0.13, properties.attackKey, false))
     newPlayer:add(HitComponent())
 
     newPlayer:add(Direction())
     newPlayer:add(MovementKeys(properties.leftMovementKey, properties.rightMovementKey))
 
     newPlayer:add(Color(properties.colorR, properties.colorG, properties.colorB, 1))
-
+    newPlayer:add(ResetComponent(player.x, player.y))
 
     table.insert(playerList, newPlayer)
 end
