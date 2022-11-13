@@ -18,6 +18,7 @@ function love.load()
     hit1 = love.audio.newSource("hit1.wav", "static")
     hit2 = love.audio.newSource("hit2.wav", "static")
 
+    arrow = love.graphics.newImage("flecha.png")
     mainFont = love.graphics.newFont("Minecraft.ttf", 35)
     sli = require("lib/sti")
     gameMap = sli("maps/testmapGraphics.lua")
@@ -36,10 +37,6 @@ function love.update(dt)
     GameEngine:update(dt)
     LevelEngine:update(dt)
     MenuEngine:update(dt)
-
-    -- if (love.keyboard.isDown("escape")) then
-    --     love.event.quit()
-    -- end
 
     if menuTancat then
         love.audio.play(music)
@@ -63,4 +60,5 @@ function love.draw()
         love.graphics.print("Space to EXIT", 110, 600) 
         love.graphics.setColor(255, 255, 255, 1)
     end
+    
 end

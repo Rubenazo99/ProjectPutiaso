@@ -59,6 +59,5 @@ function Lerp(a, b, t)
 end
 
 function CalculateModule(ax, ay, bx, by)
-    return math.sqrt((bx - ax)^2 + (by - ay)^2)
+ return math.sqrt((bx - ax)^2 + (by - ay)^2)
 end
-

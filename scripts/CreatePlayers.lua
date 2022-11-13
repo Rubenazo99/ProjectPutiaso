@@ -22,7 +22,7 @@ for index, player in pairs(require('maps/testmapGraphics').layers[1].objects) do
     newPlayer:add(Velocity(300, 1))
     newPlayer:add(Acceleration(1, 30))
     newPlayer:add(Collider())
-    newPlayer:add(Jump(properties.jumpKey, -6, false, 0, 0.13))
+    newPlayer:add(Jump(properties.jumpKey, -9.5, false, 0, 0.13))
 
     newPlayer:add(AttackComponent(12, 12, 24, 24, true, false, 0, 1, 0, 0, 0.4, properties.attackKey, false))
     newPlayer:add(HitComponent())
@@ -43,9 +43,7 @@ function GetNumberOfPlayers()
     local count = 0
 
     for i, v in pairs(playerList) do
-        
         count = count + 1
-
     end
 
     return count
