@@ -28,9 +28,6 @@ function VolumeSystem:update(dt)
             if actual < 0.16 then
                 music:setVolume(0) -- si el volumen esta molt baix pero no es zero exacte, ho hardcodeem
             end
-            
-            print(actual)
-            --print (volumen)
         end
     end
 end
