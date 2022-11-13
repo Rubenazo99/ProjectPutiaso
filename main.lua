@@ -8,6 +8,8 @@ Cam = camera()
 local blockCreated = false
 local timepassed = 0
 
+w, h = love.graphics.getDimensions()
+
 -- Activa las funciones debug! --
 debugMode = true
 

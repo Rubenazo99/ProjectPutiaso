@@ -29,6 +29,7 @@ function DebugMode:update(dt)
                 print("Is touching ground? "..tostring(colliderComponent.isColliding)..". Is touching walls? Left: "..tostring(colliderComponent.isTouchingLeftWall).." Right: "..tostring(colliderComponent.isTouchingRightWall))
                 print("Actual directions: Left -> ".. tostring(directionComponent.left)..". Right -> "..tostring(directionComponent.right))
                 print("ChargingTime: " .. attackComponent.chargingTime .. ". Angle: " .. attackComponent.angle)
+                print("Current Y Position: "..transform.y)
                 print(" ")
 
             end

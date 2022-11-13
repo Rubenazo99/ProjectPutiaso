@@ -54,6 +54,7 @@ dofile("scripts/systems/DebugMode.lua") -- Sistema modo debug
 dofile("scripts/systems/MenuSystem.lua") -- Sistema de menu
 dofile("scripts/systems/VolumeSystem.lua") -- Sistema de menu
 
+dofile("scripts/systems/Reset.lua")
 -- Funciones random
 
 function Lerp(a, b, t)
