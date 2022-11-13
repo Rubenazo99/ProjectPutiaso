@@ -13,6 +13,7 @@ end
 local highestPoint = 100000000000000000000
 local currentDt = 0
 local currentVel = 0
+local fps = 0
 
 function GravitySystem:update(dt)
 
@@ -42,6 +43,7 @@ function GravitySystem:update(dt)
                 highestPoint = transform.y
                 currentDt = dt
                 currentVel = velocity.y
+                fps = love.timer.getFPS( )
             end
             
             
@@ -50,6 +52,7 @@ function GravitySystem:update(dt)
                 print("the highest point is "..highestPoint)
                 print("delta time in this point is ".. currentDt)
                 print("current velocity "..currentVel)
+                print("Current FPS: "..tostring(love.timer.getFPS( )))          
             end
 
 
