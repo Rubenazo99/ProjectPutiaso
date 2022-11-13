@@ -25,7 +25,7 @@ local cameraStates = {} -- save all the information about the camera such as its
 
 local camWidth, camHeight = love.graphics.getWidth(), love.graphics.getHeight()
 
-TablaFrasesCaerse = {FraseRuben1}
+TablaFrasesCaerse = {FraseRuben1, FraseRuben2, FraseRuben3, FrasePau1}
 
 CameraSystem = class("CameraSystem", System) -- the system that makes the camera work
 
@@ -189,8 +189,8 @@ function prevSection()
 
     Cam:lookAt(currentPosX, currentPosY)
     --Si te caes al principio suena el audio de tirar parriba
-    if id == 1 then
-        TablaFrasesCaerse[love.math.random(1,1)]:play()
+    if id == 2 then
+        TablaFrasesCaerse[love.math.random(1,4)]:play()
         --FraseRuben1:play()
     end
 

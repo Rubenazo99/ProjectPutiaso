@@ -26,6 +26,9 @@ function love.load()
     hit2 = love.audio.newSource("hit2.wav", "static")
     --Sonidos voz
     FraseRuben1 = love.audio.newSource("Audios/FraseRuben1.mp3", "static")
+    FraseRuben2 = love.audio.newSource("Audios/AudioRuben3.wav", "static")
+    FraseRuben3 = love.audio.newSource("Audios/AudioRuben2.wav", "static")
+    FrasePau1 = love.audio.newSource("Audios/AudioPau.wav", "static")
     
     mainFont = love.graphics.newFont("Minecraft.ttf", 35)
     sli = require("lib/sti")
