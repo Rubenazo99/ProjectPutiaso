@@ -142,7 +142,7 @@
   <object id="178" name="15" x="32" y="2496.33" width="65.3333" height="32.6667"/>
   <object id="179" name="16" x="449.167" y="2496.16" width="64.3332" height="30.6667"/>
   <object id="181" name="23" x="177.667" y="4784.75" width="190.833" height="31.9091"/>
-  <object id="183" name="26" x="448.838" y="4928.82" width="31.7496" height="47.704" rotation="270.177"/>
+  <object id="183" name="26" x="448.838" y="4930.82" width="31.7496" height="47.704" rotation="270.177"/>
   <object id="188" name="32" x="226.5" y="4497.41" width="92.2497" height="30.75"/>
   <object id="192" name="37" x="146.583" y="4624.62" width="78.75" height="32.05"/>
   <object id="193" name="38" x="223.833" y="4208.26" width="96.9091" height="32.9091"/>
@@ -255,7 +255,7 @@
    <point/>
   </object>
  </objectgroup>
- <layer id="12" name="Graphics" width="34" height="400" offsetx="-1" offsety="-78">
+ <layer id="12" name="Graphics" width="34" height="400" visible="0" offsetx="-1" offsety="-78">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,

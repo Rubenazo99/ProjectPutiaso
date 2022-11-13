@@ -1,5 +1,8 @@
 local lovetoys = require("lovetoys")
 lovetoys.initialize({globals = true, debug = true})
+local w, h = love.graphics.getWidth(), love.graphics.getHeight()
+local tick = require("lib/tick")
+
 
 camera = camera or require("lib/camera")
 Cam = camera()
@@ -9,10 +12,12 @@ local timepassed = 0
 
 -- Activa las funciones debug! --
 debugMode = true
+show = false
 
 love.graphics.setDefaultFilter("nearest", "nearest")
 
 function love.load()
+    tick.framerate = 30
     --Cargamos los sonidos
     music = love.audio.newSource("music.wav", "stream")
     hit1 = love.audio.newSource("hit1.wav", "static")
@@ -49,6 +54,7 @@ function love.draw()
     Cam:attach()
     GameEngine:draw()
     gameMap:drawLayer(gameMap.layers[5])
+    love.graphics.draw(arrow,w/2,getCameraBottom()-10)
     Cam:detach()
     MenuEngine:draw()
     if not menuTancat then
@@ -60,5 +66,4 @@ function love.draw()
         love.graphics.print("Space to EXIT", 110, 600) 
         love.graphics.setColor(255, 255, 255, 1)
     end
-    
 end
