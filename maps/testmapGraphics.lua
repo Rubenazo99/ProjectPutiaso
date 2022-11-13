@@ -10,7 +10,7 @@ return {
   tilewidth = 16,
   tileheight = 16,
   nextlayerid = 17,
-  nextobjectid = 561,
+  nextobjectid = 564,
   properties = {},
   tilesets = {
     {
@@ -832,19 +832,6 @@ return {
           properties = {}
         },
         {
-          id = 509,
-          name = "",
-          class = "",
-          shape = "rectangle",
-          x = 304,
-          y = 3104.22,
-          width = 63.7046,
-          height = 31.1515,
-          rotation = 0,
-          visible = true,
-          properties = {}
-        },
-        {
           id = 510,
           name = "14",
           class = "",
@@ -852,7 +839,7 @@ return {
           x = 304.368,
           y = 3104.27,
           width = 15.439,
-          height = 30.9091,
+          height = 31.4091,
           rotation = 0,
           visible = true,
           properties = {}
@@ -1009,6 +996,19 @@ return {
           y = 2752.14,
           width = 32.0455,
           height = 79.9091,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 562,
+          name = "",
+          class = "",
+          shape = "rectangle",
+          x = 320,
+          y = 3503.64,
+          width = 16,
+          height = 31.8182,
           rotation = 0,
           visible = true,
           properties = {}
@@ -1886,6 +1886,19 @@ return {
           rotation = 0,
           visible = true,
           properties = {}
+        },
+        {
+          id = 563,
+          name = "",
+          class = "",
+          shape = "rectangle",
+          x = 304.375,
+          y = 3103.88,
+          width = 79.75,
+          height = 31.75,
+          rotation = 0,
+          visible = true,
+          properties = {}
         }
       }
     },
@@ -2018,7 +2031,7 @@ return {
       id = 12,
       name = "Graphics",
       class = "",
-      visible = false,
+      visible = true,
       opacity = 1,
       offsetx = -1,
       offsety = -78,
