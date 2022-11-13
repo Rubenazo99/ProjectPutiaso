@@ -53,6 +53,19 @@ love.filesystem.load("scripts/systems/Drawing.lua")()
 love.filesystem.load("scripts/systems/MenuSystem.lua")()
 love.filesystem.load("scripts/systems/Reset.lua")()
 love.filesystem.load("scripts/systems/DebugMode.lua")()
+dofile("scripts/systems/Attack.lua") -- Sistema de atacar
+dofile("scripts/systems/RecieveHit.lua") -- Sistema de recibir golpes
+dofile("scripts/systems/Gravity.lua") -- Sistema para dar gravedad
+dofile("scripts/systems/Movement.lua") -- Sistema del movimiento
+dofile("scripts/systems/Jump.lua") -- Sistema para saltar
+dofile("scripts/systems/WallCollision.lua") -- Sistema para chequear colisiones
+dofile("scripts/systems/GroundCollision.lua") -- Sistema de colisiones de suelo
+dofile("scripts/systems/Drawing.lua") -- Sistema que dibuja
+dofile("scripts/systems/DebugMode.lua") -- Sistema modo debug
+dofile("scripts/systems/MenuSystem.lua") -- Sistema de menu
+dofile("scripts/systems/VolumeSystem.lua") -- Sistema de menu
+
+dofile("scripts/systems/Reset.lua")
 -- Funciones random
 
 function Lerp(a, b, t)
