@@ -66,4 +66,10 @@ function love.draw()
         love.graphics.print("Space to EXIT", 110, h / 2)
         love.graphics.setColor(255, 255, 255, 1)
     end
+    drawTuto()
+end
+
+function drawTuto() 
+    love.graphics.print("  W", 55, 750) 
+    love.graphics.print("A S D", 51, 800) --hardcoded no digo que no, pero el 2n valor de este debe ser 4 menos que el de arriba
 end
