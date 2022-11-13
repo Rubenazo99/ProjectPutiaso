@@ -25,6 +25,8 @@ local cameraStates = {} -- save all the information about the camera such as its
 
 local camWidth, camHeight = love.graphics.getWidth(), love.graphics.getHeight()
 
+TablaFrasesCaerse = {FraseRuben1}
+
 CameraSystem = class("CameraSystem", System) -- the system that makes the camera work
 
 -- here we load all the requirements
@@ -188,7 +190,8 @@ function prevSection()
     Cam:lookAt(currentPosX, currentPosY)
     --Si te caes al principio suena el audio de tirar parriba
     if id == 1 then
-        FraseRuben1:play()
+        TablaFrasesCaerse[love.math.random(1,1)]:play()
+        --FraseRuben1:play()
     end
 
     cameraBottom = currentPosY + (camHeight / 2) -- Then bottom position of the camera

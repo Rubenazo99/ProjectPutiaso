@@ -15,11 +15,11 @@ function VolumeSystem:update(dt)
             end
             if not menuTancat then
                 transform.x = 100
-                if love.keyboard.isDown("a") or love.keyboard.isDown("left") and transform.width > 0 then
+                if (love.keyboard.isDown("a") or love.keyboard.isDown("left")) and transform.width > 0 then
                     transform.width = transform.width - 10
                     actual = actual - modVolumen --lower music
                 end
-                if love.keyboard.isDown("d") or love.keyboard.isDown("right") and transform.width < w - 200 then
+                if (love.keyboard.isDown("d") or love.keyboard.isDown("right")) and transform.width < w - 200 then
                     transform.width = transform.width + 10
                     actual = actual + modVolumen --subele a la radio
                 end
