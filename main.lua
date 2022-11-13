@@ -16,6 +16,9 @@ debugMode = true
 love.graphics.setDefaultFilter("nearest", "nearest")
 
 function love.load()
+    --cargamos las imagenes del tuto
+    arrowKeys = love.graphics.newImage("ArrowKeys.png")
+    wasdKeys = love.graphics.newImage("WASDKeys.png")
     --Cargamos los sonidos
     music = love.audio.newSource("music.wav", "stream")
     --Sonidos de hit
@@ -69,7 +72,7 @@ function love.draw()
     drawTuto()
 end
 
-function drawTuto() 
-    love.graphics.print("  W", 55, 750) 
-    love.graphics.print("A S D", 51, 800) --hardcoded no digo que no, pero el 2n valor de este debe ser 4 menos que el de arriba
-end
+-- function drawTuto() 
+--     love.graphics.print("  W", 55, 750) 
+--     love.graphics.print("A S D", 51, 800) --hardcoded no digo que no, pero el 2n valor de este debe ser 4 menos que el de arriba
+-- end

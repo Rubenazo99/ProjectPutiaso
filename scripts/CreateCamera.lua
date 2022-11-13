@@ -91,8 +91,10 @@ end
 
 function drawTuto() --dibujar el tuto solo si esta en el 1 nivel
     if id == 1 then
-        love.graphics.print("  W", 55, 750)
-        love.graphics.print("A S D", 51, 800) --hardcoded no digo que no, pero el 2n valor de este debe ser 4 menos que el de arriba
+        --love.graphics.print("  W", 55, 750)
+        --love.graphics.print("A S D", 51, 800) --hardcoded no digo que no, pero el 2n valor de este debe ser 4 menos que el de arriba
+        love.graphics.draw(wasdKeys, 40, 750, 0, 0.2, 0.2)
+        love.graphics.draw(arrowKeys, 40+ 540 -200, 750, 0, 0.2, 0.2) --40 es random pero 540(width) -200 es para que este en el lado opuesto symetrico
     end
 end
 
