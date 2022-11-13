@@ -64,7 +64,7 @@ function WallCollisionSystem:update(dt)
                         and (transformA.y + transformA.height - 0.2 > transformB.y and transformA.y + transformA.height - 0.2 < transformB.y + transformB.height) then
 
                             colliderA.isTouchingRightWall = true
-                            transformA.x = transformA.x - (transformA.x - transformB.x) - transformA.width - 0.1
+                            transformA.x = transformA.x - (transformA.x - transformB.x) - transformA.width - 0.2
                             entityA:get("hitComponent").hit = false
                             entityA:get("jump").rayActive = true
 
@@ -77,7 +77,7 @@ function WallCollisionSystem:update(dt)
                         and (transformA.x > transformB.x and transformA.x < transformB.x + transformB.width)
                         and (transformA.y + transformA.height - 0.2 > transformB.y and transformA.y + transformA.height - 0.2 < transformB.y + transformB.height ) then
 
-                            transformA.x = transformA.x + (transformB.x + transformB.width) - (transformA.x + transformA.width) + transformA.width + 0.1
+                            transformA.x = transformA.x + (transformB.x + transformB.width) - (transformA.x + transformA.width) + transformA.width + 0.2
                             colliderA.isTouchingLeftWall = true
                             entityA:get("hitComponent").hit = false
                             entityA:get("jump").rayActive = true
@@ -91,7 +91,7 @@ function WallCollisionSystem:update(dt)
                         and (transformA.x + transformA.width > transformB.x and transformA.x + transformA.width < transformB.x + transformB.width) 
                         and (transformA.y + transformA.height - 0.2 > transformB.y and transformA.y + transformA.height - 0.2 < transformB.y + transformB.height) then
 
-                            transformA.x = transformA.x - (transformA.x - transformB.x) - transformA.width - 0.1
+                            transformA.x = transformA.x - (transformA.x - transformB.x) - transformA.width - 0.2
                             colliderA.isTouchingRightWall = true
                             entityA:get("hitComponent").hit = false
                             entityA:get("jump").rayActive = true

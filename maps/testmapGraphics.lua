@@ -10,7 +10,7 @@ return {
   tilewidth = 16,
   tileheight = 16,
   nextlayerid = 17,
-  nextobjectid = 468,
+  nextobjectid = 472,
   properties = {},
   tilesets = {
     {
@@ -1261,32 +1261,6 @@ return {
           properties = {}
         },
         {
-          id = 402,
-          name = "",
-          class = "",
-          shape = "rectangle",
-          x = 336.333,
-          y = 5920.67,
-          width = 31.7045,
-          height = 239.848,
-          rotation = 0,
-          visible = true,
-          properties = {}
-        },
-        {
-          id = 403,
-          name = "",
-          class = "",
-          shape = "rectangle",
-          x = 176.023,
-          y = 5920.24,
-          width = 31.8333,
-          height = 240.151,
-          rotation = 0,
-          visible = true,
-          properties = {}
-        },
-        {
           id = 405,
           name = "",
           class = "",
@@ -1399,6 +1373,32 @@ return {
           y = 4896.91,
           width = 16.3636,
           height = 31.6364,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 468,
+          name = "",
+          class = "",
+          shape = "rectangle",
+          x = 176,
+          y = 5920,
+          width = 32,
+          height = 288,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 469,
+          name = "",
+          class = "",
+          shape = "rectangle",
+          x = 336,
+          y = 5920,
+          width = 32,
+          height = 288,
           rotation = 0,
           visible = true,
           properties = {}
@@ -2317,32 +2317,6 @@ return {
           properties = {}
         },
         {
-          id = 404,
-          name = "",
-          class = "",
-          shape = "rectangle",
-          x = 336.667,
-          y = 5920,
-          width = 159,
-          height = 16.1212,
-          rotation = 0,
-          visible = true,
-          properties = {}
-        },
-        {
-          id = 408,
-          name = "",
-          class = "",
-          shape = "rectangle",
-          x = 48.1665,
-          y = 5920.17,
-          width = 159.834,
-          height = 16.1667,
-          rotation = 0,
-          visible = true,
-          properties = {}
-        },
-        {
           id = 436,
           name = "",
           class = "",
@@ -2351,32 +2325,6 @@ return {
           y = 5600.13,
           width = 31.6364,
           height = 15.8182,
-          rotation = 0,
-          visible = true,
-          properties = {}
-        },
-        {
-          id = 437,
-          name = "",
-          class = "",
-          shape = "rectangle",
-          x = 48.1818,
-          y = 5936.55,
-          width = 127.818,
-          height = 15.4545,
-          rotation = 0,
-          visible = true,
-          properties = {}
-        },
-        {
-          id = 438,
-          name = "",
-          class = "",
-          shape = "rectangle",
-          x = 368.091,
-          y = 5936.45,
-          width = 127.636,
-          height = 15.4545,
           rotation = 0,
           visible = true,
           properties = {}
@@ -2481,6 +2429,32 @@ return {
           y = 4784.73,
           width = 22,
           height = 31.9091,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 470,
+          name = "",
+          class = "",
+          shape = "rectangle",
+          x = 32,
+          y = 5920,
+          width = 176,
+          height = 32,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 471,
+          name = "",
+          class = "",
+          shape = "rectangle",
+          x = 336,
+          y = 5920,
+          width = 176,
+          height = 32,
           rotation = 0,
           visible = true,
           properties = {}

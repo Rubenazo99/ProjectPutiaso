@@ -42,17 +42,17 @@ defaultColor = { r = 255, g = 255, b = 255 }
 
 ]]
 
-dofile("scripts/systems/Attack.lua") -- Sistema de atacar
-dofile("scripts/systems/RecieveHit.lua") -- Sistema de recibir golpes
-dofile("scripts/systems/Gravity.lua") -- Sistema para dar gravedad
-dofile("scripts/systems/Movement.lua") -- Sistema del movimiento
-dofile("scripts/systems/Jump.lua") -- Sistema para saltar
-dofile("scripts/systems/WallCollision.lua") -- Sistema para chequear colisiones
-dofile("scripts/systems/GroundCollision.lua") -- Sistema de colisiones de suelo
-dofile("scripts/systems/Drawing.lua") -- Sistema que dibuja
-dofile("scripts/systems/DebugMode.lua") -- Sistema modo debug
-dofile("scripts/systems/MenuSystem.lua") -- Sistema de menu
-dofile("scripts/systems/Reset.lua")
+love.filesystem.load("scripts/systems/Attack.lua")()
+love.filesystem.load("scripts/systems/RecieveHit.lua")()
+love.filesystem.load("scripts/systems/Gravity.lua")()
+love.filesystem.load("scripts/systems/Movement.lua")()
+love.filesystem.load("scripts/systems/Jump.lua")()
+love.filesystem.load("scripts/systems/WallCollision.lua")()
+love.filesystem.load("scripts/systems/GroundCollision.lua")()
+love.filesystem.load("scripts/systems/Drawing.lua")()
+love.filesystem.load("scripts/systems/MenuSystem.lua")()
+love.filesystem.load("scripts/systems/Reset.lua")()
+love.filesystem.load("scripts/systems/DebugMode.lua")()
 -- Funciones random
 
 function Lerp(a, b, t)
