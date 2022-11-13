@@ -31,6 +31,7 @@ function love.load()
     FrasePau1 = love.audio.newSource("Audios/AudioPau.wav", "static")
     
     mainFont = love.graphics.newFont("Minecraft.ttf", 35)
+    secundaryFont = love.graphics.newFont("Minecraft.ttf", 20)
     sli = require("lib/sti")
     gameMap = sli("maps/testmapGraphics.lua")
 
