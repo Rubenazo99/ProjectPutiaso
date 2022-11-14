@@ -84,10 +84,8 @@ function CameraSystem:update(dt)
     end
 
     if playerFallen[1] ~= playerFallen[2] then
-        showArrow("true")
     elseif playerFallen[1] == true and playerFallen[2] == true then
         prevSection()
-        showArrow("false")
     end
 end
 
