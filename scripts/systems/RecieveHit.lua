@@ -23,7 +23,7 @@ function RecieveHitSystem:update(dt)
 
             if hitComponent.hit == true then
 
-                transformComponent.x = transformComponent.x + math.cos(math.rad(hitComponent.angle)) * velocityComponent.x * horizontalMultiplier * dt
+                transformComponent.x = transformComponent.x + math.cos(math.rad(hitComponent.angle)) * velocityComponent.x * horizontalMultiplier * dt * 1.5
                 
             end
 

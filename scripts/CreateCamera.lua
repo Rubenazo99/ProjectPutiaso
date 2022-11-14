@@ -15,9 +15,9 @@ CameraEngine = Engine()
 
 local alternativeThreshold = 75 -- change this to change all non modified threshold values
 
-local currentPosX, currentPosY -- current position of the camera
+local currentPosX, currentPosY  -- current position of the camera
 
-local currentThreshold -- current threshold value of the cameraState
+local currentThreshold  -- current threshold value of the cameraState
 
 local id = 1 -- current camera id
 
@@ -25,15 +25,15 @@ local cameraStates = {} -- save all the information about the camera such as its
 
 local camWidth, camHeight = love.graphics.getWidth(), love.graphics.getHeight()
 
-CameraSystem = class("CameraSystem", System) -- the system that makes the camera work
+TablaFrasesCaerse = {FraseRuben1, FraseRuben2, FraseRuben3, FrasePau1}
 
+CameraSystem = class("CameraSystem", System) -- the system that makes the camera work
 
 -- here we load all the requirements
 
-for i, camera in pairs(require('maps/testmapGraphics').layers[4].objects) do
+for i, camera in pairs(require("maps/testmapGraphics").layers[4].objects) do
     table.insert(cameraStates, camera)
 end
-
 
 for j, position in pairs(cameraStates) do
     print(cameraStates[j].x)
@@ -57,7 +57,6 @@ currentThreshold = (100 - currentThreshold)
 
 --- requirements finished
 
-
 function CameraSystem:update(dt)
     -- Checks if you are meeting the conditions to go up a level
     local playerPassed = {}
@@ -76,16 +75,33 @@ function CameraSystem:update(dt)
         end
     end
 
-
     -- Checks if you are meeting the conditions to go down a level
     local playerFallen = {}
-    for j,i in pairs(playerList) do -- both players are not inside the camera
-        if not isPlayerInsideCamera(i) then 
+    for j, i in pairs(playerList) do -- both players are not inside the camera
+        if not isPlayerInsideCamera(i) then
             playerFallen[j] = true
         end
     end
-    if playerFallen[1] == true and playerFallen[2] == true then
-        prevSection() 
+
+    if playerFallen[1] ~= playerFallen[2] then
+        showArrow("true")
+    elseif playerFallen[1] == true and playerFallen[2] == true then
+        prevSection()
+        showArrow("false")
+    end
+end
+
+function drawTuto() --dibujar el tuto solo si esta en el 1 nivel
+    if id == 1 then
+        --love.graphics.print("  W", 55, 750)
+        --love.graphics.print("A S D", 51, 800) --hardcoded no digo que no, pero el 2n valor de este debe ser 4 menos que el de arriba
+        love.graphics.draw(wasdKeys, 40, 750, 0, 0.2, 0.2)
+        love.graphics.draw(arrowKeys, 40+ 540 -200, 750, 0, 0.2, 0.2) --40 es random pero 540(width) -200 es para que este en el lado opuesto symetrico
+        love.graphics.setFont(secundaryFont)
+        love.graphics.print("ESC to open the Menu", 40, 600)
+        love.graphics.print("Hold S or Down arrow to hit harder", 40, 650)
+        love.graphics.print("You can hit walls and eachother, HF!", 40, 700)
+        love.graphics.setFont(mainFont)
     end
 end
 
@@ -122,7 +138,6 @@ function playerThresholdInCamera(player) -- return the position of the player in
 end
 
 function isPlayerInsideCamera(player) -- insert a player to know if he currently is inside the camera
-
     if player:get("transform").y >= cameraTop and player:get("transform").y <= cameraBottom then --  checks if the player is between those two positions
         return true
     else
@@ -140,7 +155,6 @@ end
 
 -- function to change to next section
 function nextSection()
-
     if cameraStates[id + 1] then -- checks if the next level is null or not
         id = id + 1
         currentPosX = cameraStates[id].x
@@ -162,8 +176,6 @@ end
 
 -- function to change to the previous section
 function prevSection()
-
-
     if cameraStates[id - 1] then -- checks if the previous level is null or not
         id = id - 1
         currentPosX = cameraStates[id].x
@@ -178,6 +190,11 @@ function prevSection()
     end
 
     Cam:lookAt(currentPosX, currentPosY)
+    --Si te caes al principio suena el audio de tirar parriba
+    if id == 2 then
+        TablaFrasesCaerse[love.math.random(1,4)]:play()
+        --FraseRuben1:play()
+    end
 
     cameraBottom = currentPosY + (camHeight / 2) -- Then bottom position of the camera
     cameraTop = currentPosY - (camHeight / 2) -- The top position of the camera

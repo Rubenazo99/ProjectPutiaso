@@ -75,8 +75,16 @@ function AttackSystem:update(dt)
                     ]]
 
                 elseif attackComponent.charging == false and attackComponent.chargingTime > 0 then
+                
+                    --suena el sonido
                     SoundTable[love.math.random(1, 2)]:play()
-
+                    
+                    --ponemos un pitch random, se puede ajusta los maximos y minimos, primero reseteamos
+                    hit1:setPitch(1)
+                    hit2:setPitch(1)
+                    hit1:setPitch(love.math.random(0.9, 1.3))
+                    hit2:setPitch(love.math.random(0.9, 1.3))
+                    
                     if GetNumberOfPlayers() > 1 then
                         
                         -- Si ya no estamos cargando y  el tiempo de carga es mayor que cero, entonces dejamos de

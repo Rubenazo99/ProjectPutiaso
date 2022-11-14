@@ -6,12 +6,13 @@ for index, player in pairs(GetPlayers()) do
 
 end
 
+GameEngine:addSystem(CameraSystem())
+GameEngine:addSystem(JumpSystem())
 GameEngine:addSystem(GravitySystem())
 GameEngine:addSystem(MovementSystem())
-GameEngine:addSystem(AttackSystem())
-GameEngine:addSystem(JumpSystem())
 GameEngine:addSystem(RecieveHitSystem())
-GameEngine:addSystem(CameraSystem())
+GameEngine:addSystem(AttackSystem())
+GameEngine:addSystem(ResetSytem())
 
 if debugMode == true then GameEngine:addSystem(DebugMode()) end
 

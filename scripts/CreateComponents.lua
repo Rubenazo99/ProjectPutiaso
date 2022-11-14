@@ -176,3 +176,7 @@ TextMenu = Component.create("textMenu",
 {"textMenu"},
 {text = string}
 )
+
+ResetComponent = Component.create("resetComponent",
+{"x", "y"},
+{x = 0, y = 0})
