@@ -84,21 +84,17 @@ function CameraSystem:update(dt)
             playerFallen[j] = true
         end
     end
-    
-    if playerFallen[1] ~= playerFallen[2] then
-        showArrow("true")
-    else if playerFallen[1] == true and playerFallen[2] == true then
-        prevSection()
-        showArrow("false")
+    if playerFallen[1] == true and playerFallen[2] == true then
+        prevSection() 
     end
 end
 
 function love.keypressed(key)
     -- Enable for debug purposes
 
-    if key == 'i' then
-        nextSection()
-    end
+    -- if key == 'i' then
+    --     nextSection()
+    -- end
 
     -- if key == 'c' then
     --     for i, v in pairs(playerList) do
@@ -123,10 +119,6 @@ function playerThresholdInCamera(player) -- return the position of the player in
             return -1 -- this means the player is below the camera
         end
     end
-end
-
-function showArrow(condition) 
-    if condition 
 end
 
 function isPlayerInsideCamera(player) -- insert a player to know if he currently is inside the camera

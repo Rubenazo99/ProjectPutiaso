@@ -3,6 +3,7 @@ lovetoys.initialize({globals = true, debug = true})
 
 camera = camera or require("lib/camera")
 Cam = camera()
+local tick = require ('lib/tick')
 
 local blockCreated = false
 local timepassed = 0
@@ -13,6 +14,8 @@ debugMode = true
 love.graphics.setDefaultFilter("nearest", "nearest")
 
 function love.load()
+    tick.framerate = 30
+    
     --Cargamos los sonidos
     music = love.audio.newSource("music.wav", "stream")
     hit1 = love.audio.newSource("hit1.wav", "static")
