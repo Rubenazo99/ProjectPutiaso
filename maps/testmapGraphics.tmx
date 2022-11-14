@@ -171,13 +171,13 @@
   <object id="563" x="320.007" y="3087.88" width="79.75" height="31.75"/>
  </objectgroup>
  <objectgroup id="13" name="Camera">
-  <object id="467" x="272" y="6256">
+  <object id="467" x="272" y="6240">
    <point/>
   </object>
-  <object id="475" x="272" y="5680">
+  <object id="475" x="272" y="5712">
    <point/>
   </object>
-  <object id="476" x="271.818" y="5295.99">
+  <object id="476" x="272" y="5328">
    <point/>
   </object>
   <object id="478" x="271.818" y="4847.99">
