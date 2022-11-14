@@ -73,6 +73,8 @@ function love.draw()
         --printem el text per a sortir
         love.graphics.setColor(0, 0, 0, 1)
         love.graphics.print("Space to EXIT", 110, h / 2)
+        love.graphics.print("  <          >", 100, 300) --2 y 10 ESPACIOS
+
         love.graphics.setColor(255, 255, 255, 1)
     end
     drawTuto()
