@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="left-up" width="34" height="400" tilewidth="16" tileheight="16" infinite="0" nextlayerid="17" nextobjectid="566">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="left-up" width="34" height="400" tilewidth="16" tileheight="16" infinite="0" nextlayerid="17" nextobjectid="576">
  <editorsettings>
   <export target="testmapGraphics.lua" format="lua"/>
  </editorsettings>
  <tileset firstgid="1" name="testTileset" tilewidth="16" tileheight="16" tilecount="352" columns="16">
   <image source="testTileset.png" width="256" height="352"/>
  </tileset>
- <objectgroup id="16" name="Players">
+ <objectgroup id="16" name="Players" locked="1">
   <object id="230" name="PlayerB" x="292" y="6128" width="24" height="24">
    <properties>
     <property name="attackKey" value="down"/>
@@ -30,7 +30,7 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="15" name="Wall">
+ <objectgroup id="15" name="Wall" locked="1">
   <object id="117" name="2" x="-16" y="208" width="48" height="6433.67"/>
   <object id="118" name="1" x="512" y="-36" width="48" height="6436.67"/>
   <object id="119" x="208.651" y="5776.15" width="31.4545" height="79.75"/>
@@ -101,7 +101,7 @@
   <object id="556" x="384.182" y="2736.14" width="32.0455" height="79.9091"/>
   <object id="562" x="320" y="3503.64" width="16" height="31.8182"/>
  </objectgroup>
- <objectgroup id="14" name="Ground">
+ <objectgroup id="14" name="Ground" locked="1">
   <object id="172" name="1" x="-1" y="6160.34" width="544" height="48"/>
   <object id="173" name="4" x="32.6515" y="5663.9" width="80.1667" height="32.1818"/>
   <object id="175" name="10" x="432.818" y="5663.99" width="78.75" height="32"/>
@@ -177,25 +177,19 @@
   <object id="475" x="272" y="5600">
    <point/>
   </object>
-  <object id="476" x="272" y="5200">
-   <point/>
-  </object>
-  <object id="478" x="272" y="4688">
-   <point/>
-  </object>
-  <object id="480" x="271.818" y="4239.99">
-   <point/>
-  </object>
-  <object id="482" x="239.818" y="3727.99">
-   <point/>
-  </object>
-  <object id="483" x="239.818" y="3359.99">
-   <point/>
-  </object>
-  <object id="485" x="274.833" y="2566.5">
-   <point/>
-  </object>
   <object id="564" x="705" y="2853"/>
+  <object id="569" x="272" y="4848">
+   <point/>
+  </object>
+  <object id="571" x="269" y="4098">
+   <point/>
+  </object>
+  <object id="573" x="240" y="3344">
+   <point/>
+  </object>
+  <object id="575" x="240" y="2592">
+   <point/>
+  </object>
  </objectgroup>
  <layer id="12" name="Graphics" width="34" height="400" visible="0" offsetx="-1" offsety="-78">
   <data encoding="csv">
