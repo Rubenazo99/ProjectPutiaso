@@ -1922,7 +1922,7 @@ return {
           class = "",
           shape = "point",
           x = 272,
-          y = 6384,
+          y = 6320,
           width = 0,
           height = 0,
           rotation = 0,
