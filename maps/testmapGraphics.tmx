@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="left-up" width="34" height="400" tilewidth="16" tileheight="16" infinite="0" nextlayerid="17" nextobjectid="576">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="left-up" width="34" height="400" tilewidth="16" tileheight="16" infinite="0" nextlayerid="17" nextobjectid="584">
  <editorsettings>
   <export target="testmapGraphics.lua" format="lua"/>
  </editorsettings>
@@ -174,20 +174,19 @@
   <object id="467" x="272" y="6352">
    <point/>
   </object>
-  <object id="475" x="272" y="5600">
+  <object id="579" x="272" y="5584">
    <point/>
   </object>
-  <object id="564" x="705" y="2853"/>
-  <object id="569" x="272" y="4848">
+  <object id="580" x="273.333" y="4982.67">
    <point/>
   </object>
-  <object id="571" x="269" y="4098">
+  <object id="581" x="256" y="4208">
    <point/>
   </object>
-  <object id="573" x="240" y="3344">
+  <object id="582" x="236" y="3453.33">
    <point/>
   </object>
-  <object id="575" x="240" y="2592">
+  <object id="583" x="268" y="2702.67">
    <point/>
   </object>
  </objectgroup>

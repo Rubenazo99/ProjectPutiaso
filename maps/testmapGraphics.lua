@@ -10,7 +10,7 @@ return {
   tilewidth = 16,
   tileheight = 16,
   nextlayerid = 17,
-  nextobjectid = 576,
+  nextobjectid = 584,
   properties = {},
   tilesets = {
     {
@@ -1930,12 +1930,12 @@ return {
           properties = {}
         },
         {
-          id = 475,
+          id = 579,
           name = "",
           class = "",
           shape = "point",
           x = 272,
-          y = 5600,
+          y = 5584,
           width = 0,
           height = 0,
           rotation = 0,
@@ -1943,25 +1943,12 @@ return {
           properties = {}
         },
         {
-          id = 564,
-          name = "",
-          class = "",
-          shape = "rectangle",
-          x = 705,
-          y = 2853,
-          width = 0,
-          height = 0,
-          rotation = 0,
-          visible = true,
-          properties = {}
-        },
-        {
-          id = 569,
+          id = 580,
           name = "",
           class = "",
           shape = "point",
-          x = 272,
-          y = 4848,
+          x = 273.333,
+          y = 4982.67,
           width = 0,
           height = 0,
           rotation = 0,
@@ -1969,12 +1956,12 @@ return {
           properties = {}
         },
         {
-          id = 571,
+          id = 581,
           name = "",
           class = "",
           shape = "point",
-          x = 269,
-          y = 4098,
+          x = 256,
+          y = 4208,
           width = 0,
           height = 0,
           rotation = 0,
@@ -1982,12 +1969,12 @@ return {
           properties = {}
         },
         {
-          id = 573,
+          id = 582,
           name = "",
           class = "",
           shape = "point",
-          x = 240,
-          y = 3344,
+          x = 236,
+          y = 3453.33,
           width = 0,
           height = 0,
           rotation = 0,
@@ -1995,12 +1982,12 @@ return {
           properties = {}
         },
         {
-          id = 575,
+          id = 583,
           name = "",
           class = "",
           shape = "point",
-          x = 240,
-          y = 2592,
+          x = 268,
+          y = 2702.67,
           width = 0,
           height = 0,
           rotation = 0,
